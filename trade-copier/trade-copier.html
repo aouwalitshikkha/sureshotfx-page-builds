@@ -1266,5 +1266,24 @@
     });
   });
 </script>
+
+<!-- GitHub Pages preview: map production-absolute page links to this repo's folders -->
+<script>
+(function () {
+  if (!/(^|\.)github\.io$/.test(location.hostname)) return;
+  var repo = location.pathname.split('/')[1];
+  if (!repo) return;
+  var pages = ['forex-vip-signals','gold-vip-signals','indices-vip-signals','combo','trade-copier','lot-size-calculator','pip-calculator-mobile-app','currency-heatmap'];
+  document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href.indexOf('//') === 0) return;
+    if (href === '/') { a.setAttribute('href', '/' + repo + '/'); return; }
+    var seg = href.split('/')[1];
+    if (pages.indexOf(seg) !== -1) {
+      a.setAttribute('href', '/' + repo + '/' + seg + '/' + seg + '.html' + href.slice(seg.length + 1));
+    }
+  });
+})();
+</script>
 </body>
 </html>
