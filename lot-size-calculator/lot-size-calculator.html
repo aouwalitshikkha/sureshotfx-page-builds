@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lot Size Calculator — Forex, Gold &amp; Indices | SureShotFX</title>
+<meta name="description" content="Free lot size calculator for forex, gold and indices. Enter your balance, risk percentage and stop loss to get the exact lot size for MT4 and MT5 — no signup." />
+<link rel="canonical" href="https://sureshotfx.com/lot-size-calculator" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="Lot Size Calculator — Forex, Gold &amp; Indices" />
+<meta property="og:description" content="Work out the exact lot size for any trade in seconds. Free forex risk calculator with XAUUSD, indices and MT4/MT5 support." />
+<meta property="og:url" content="https://sureshotfx.com/lot-size-calculator" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free Lot Size Calculator — SureShotFX" />
+<meta name="twitter:description" content="Balance, risk %, stop loss in. Exact lot size out. Forex, gold and indices, free and without an account." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-sm': '0 0 24px -6px rgba(0,245,149,0.35)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(0,245,149,0.12) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-lot {
+    background: linear-gradient(92deg,#22FFA9 0%,#00F595 55%,#7CFFCB 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  .calc-tab { transition: color .2s ease, background-color .2s ease, border-color .2s ease; }
+  .calc-tab[aria-selected="true"] { background:#00F595; color:#000; border-color:#00F595; }
+  .calc-tab[data-tab="gold"][aria-selected="true"] { background:#F5C451; border-color:#F5C451; }
+  .calc-tab[data-tab="indices"][aria-selected="true"] { background:#38BDF8; border-color:#38BDF8; }
+
+  .chip { transition: border-color .2s ease, color .2s ease, background-color .2s ease; }
+  .chip:hover, .chip[aria-pressed="true"] { border-color: rgba(0,245,149,.5); color:#7CFFCB; background: rgba(0,245,149,.06); }
+
+  .result-pop { animation: pop .45s ease; }
+  @keyframes pop { 0% { transform: scale(.97); opacity:.55; } 100% { transform: scale(1); opacity:1; } }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(0,245,149,.55); } 70% { box-shadow:0 0 0 9px rgba(0,245,149,0); } 100% { box-shadow:0 0 0 0 rgba(0,245,149,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  input[type=number] { -moz-appearance:textfield; appearance:textfield; }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-brand-500 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>VIP signals — up to 72% off <span class="hidden sm:inline">· calculator stays free</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="/combo" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">See the deal →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black shadow-glow-sm">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-0.5 lg:flex">
+      <a href="#calculator" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Calculator</a>
+      <a href="#lot-sizes" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Lot sizes</a>
+      <a href="#formula" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Formula</a>
+      <a href="#gold" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Gold</a>
+      <a href="#indices" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Indices</a>
+      <a href="#mt4-mt5" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">MT4/MT5</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-brand-500/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#calculator" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Calculator</a>
+          <a href="#lot-sizes" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Lot sizes</a>
+          <a href="#formula" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Formula</a>
+          <a href="#gold" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Gold (XAUUSD)</a>
+          <a href="#indices" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Indices</a>
+          <a href="#mt4-mt5" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">MT4 &amp; MT5</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="/live-signals" class="hidden whitespace-nowrap rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-brand-500/50 hover:bg-white/5 xl:inline-flex">Free Signals</a>
+      <a href="/combo" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Buy Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO + CALCULATOR ============ -->
+<section id="calculator" class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-brand-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-gold-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 pb-16 pt-12 lg:px-8 lg:pb-20 lg:pt-16">
+    <div class="mx-auto max-w-3xl text-center">
+      <div class="mb-5 flex flex-wrap items-center justify-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span> Free forex risk calculator
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400">
+          No signup
+        </span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.3rem]">
+        Lot Size Calculator<br class="hidden sm:block" />
+        <span class="text-gradient-lot">for Forex, Gold &amp; Indices</span>
+      </h1>
+
+      <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        Enter your balance, risk percentage and stop loss. The calculator returns the exact lot size for your trade — on MT4, MT5 or any FX platform. It is the same maths as a position size calculator, done in one second.
+      </p>
+    </div>
+
+    <!-- calculator card -->
+    <div class="mx-auto mt-10 max-w-5xl">
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-ink-850/90 shadow-card backdrop-blur">
+        <div class="flex flex-col gap-3 border-b border-white/8 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div class="flex rounded-xl border border-white/10 bg-black/40 p-1" role="tablist" aria-label="Market">
+            <button type="button" role="tab" id="tab-forex" data-tab="forex" aria-selected="true" aria-controls="calc-panel" class="calc-tab rounded-lg px-3.5 py-1.5 text-xs font-bold text-neutral-400 sm:text-[13px]">Forex</button>
+            <button type="button" role="tab" id="tab-gold" data-tab="gold" aria-selected="false" aria-controls="calc-panel" class="calc-tab rounded-lg px-3.5 py-1.5 text-xs font-bold text-neutral-400 sm:text-[13px]">Gold</button>
+            <button type="button" role="tab" id="tab-indices" data-tab="indices" aria-selected="false" aria-controls="calc-panel" class="calc-tab rounded-lg px-3.5 py-1.5 text-xs font-bold text-neutral-400 sm:text-[13px]">Indices</button>
+          </div>
+          <p id="rates-note" class="text-[11px] text-neutral-500">Loading exchange rates…</p>
+        </div>
+
+        <div id="calc-panel" role="tabpanel" aria-labelledby="tab-forex" class="grid gap-0 lg:grid-cols-5">
+          <!-- inputs -->
+          <form id="lot-form" class="grid gap-4 p-4 sm:grid-cols-2 sm:p-6 lg:col-span-3" novalidate>
+            <div>
+              <label for="acct-ccy" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Account currency</label>
+              <select id="acct-ccy" class="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-brand-500/60">
+                <option value="USD" selected>USD — US dollar</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="GBP">GBP — British pound</option>
+                <option value="JPY">JPY — Japanese yen</option>
+                <option value="CHF">CHF — Swiss franc</option>
+                <option value="CAD">CAD — Canadian dollar</option>
+                <option value="AUD">AUD — Australian dollar</option>
+                <option value="NZD">NZD — New Zealand dollar</option>
+                <option value="SGD">SGD — Singapore dollar</option>
+                <option value="HKD">HKD — Hong Kong dollar</option>
+                <option value="AED">AED — UAE dirham</option>
+                <option value="SAR">SAR — Saudi riyal</option>
+                <option value="INR">INR — Indian rupee</option>
+                <option value="PKR">PKR — Pakistani rupee</option>
+                <option value="PHP">PHP — Philippine peso</option>
+                <option value="NGN">NGN — Nigerian naira</option>
+                <option value="ZAR">ZAR — South African rand</option>
+                <option value="TRY">TRY — Turkish lira</option>
+                <option value="MXN">MXN — Mexican peso</option>
+                <option value="PLN">PLN — Polish zloty</option>
+                <option value="SEK">SEK — Swedish krona</option>
+                <option value="NOK">NOK — Norwegian krone</option>
+                <option value="DKK">DKK — Danish krone</option>
+                <option value="CNY">CNY — Chinese yuan</option>
+                <option value="KRW">KRW — Korean won</option>
+                <option value="THB">THB — Thai baht</option>
+                <option value="IDR">IDR — Indonesian rupiah</option>
+                <option value="MYR">MYR — Malaysian ringgit</option>
+                <option value="VND">VND — Vietnamese dong</option>
+                <option value="BRL">BRL — Brazilian real</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="instrument" id="instrument-label" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Currency pair</label>
+              <select id="instrument" class="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-brand-500/60"></select>
+              <p id="instrument-hint" class="mt-1.5 text-[10.5px] leading-relaxed text-neutral-600">Pip value is converted from the quote currency to your account currency.</p>
+            </div>
+
+            <div>
+              <label for="balance" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Account size</label>
+              <div class="relative">
+                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-neutral-500" data-ccy-symbol>$</span>
+                <input id="balance" type="number" inputmode="decimal" min="1" step="any" value="10000" class="w-full rounded-xl border border-white/10 bg-black/40 py-2.5 pl-7 pr-3 text-sm text-white outline-none transition focus:border-brand-500/60" />
+              </div>
+              <div class="mt-1.5 flex flex-wrap gap-1">
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-balance="1000">1k</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-balance="5000">5k</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-balance="10000">10k</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-balance="50000">50k</button>
+              </div>
+            </div>
+
+            <div>
+              <label for="risk" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Risk percentage</label>
+              <div class="relative">
+                <input id="risk" type="number" inputmode="decimal" min="0.01" max="100" step="0.01" value="1" class="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 pr-8 text-sm text-white outline-none transition focus:border-brand-500/60" />
+                <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-neutral-500">%</span>
+              </div>
+              <div class="mt-1.5 flex flex-wrap gap-1">
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-risk="0.5">0.5%</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-risk="1">1%</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-risk="2">2%</button>
+                <button type="button" class="chip rounded-md border border-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-500" data-risk="3">3%</button>
+              </div>
+            </div>
+
+            <div>
+              <label for="stop" id="stop-label" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Stop loss (pips)</label>
+              <input id="stop" type="number" inputmode="decimal" min="0.1" step="any" value="20" class="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-brand-500/60" />
+              <p id="stop-hint" class="mt-1.5 text-[10.5px] leading-relaxed text-neutral-600">1 pip = 0.0001 on most pairs, 0.01 on JPY pairs.</p>
+            </div>
+
+            <div id="point-value-wrap" class="hidden">
+              <label for="point-value" class="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">Value per point per lot</label>
+              <div class="relative">
+                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-neutral-500" data-ccy-symbol>$</span>
+                <input id="point-value" type="number" inputmode="decimal" min="0.0001" step="any" value="1" class="w-full rounded-xl border border-white/10 bg-black/40 py-2.5 pl-7 pr-3 text-sm text-white outline-none transition focus:border-brand-500/60" />
+              </div>
+              <p class="mt-1.5 text-[10.5px] leading-relaxed text-neutral-600">Check the contract specification at your broker.</p>
+            </div>
+
+            <div class="flex items-end gap-2 sm:col-span-2">
+              <button type="submit" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-extrabold text-black shadow-glow-sm transition hover:bg-brand-400">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15h0"/></svg>
+                Calculate
+              </button>
+              <button type="button" id="reset-btn" class="rounded-xl border border-white/10 px-4 py-3 text-sm font-semibold text-neutral-400 transition hover:border-white/20 hover:text-white">Reset</button>
+            </div>
+            <p id="calc-error" class="hidden rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11.5px] text-red-300 sm:col-span-2" role="alert"></p>
+          </form>
+
+          <!-- result -->
+          <aside class="relative flex flex-col justify-between border-t border-white/8 bg-gradient-to-br from-brand-500/[0.07] via-ink-850 to-ink-900 p-4 sm:p-6 lg:col-span-2 lg:border-l lg:border-t-0">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-400">Recommended lot size</p>
+              <p class="mt-2 flex items-end gap-2">
+                <span id="res-lots" class="font-display text-5xl font-extrabold leading-none tracking-tight text-white">0.50</span>
+                <span class="pb-1 text-sm font-semibold text-neutral-500">lots</span>
+              </p>
+              <p id="res-under" class="mt-1.5 text-[11px] text-neutral-500">Rounded down to the 0.01 broker step</p>
+
+              <dl class="mt-6 space-y-2.5 border-t border-white/8 pt-4 text-[12.5px]">
+                <div class="flex items-baseline justify-between gap-3">
+                  <dt class="text-neutral-500">Risk amount</dt>
+                  <dd id="res-risk" class="font-semibold text-white">$100.00</dd>
+                </div>
+                <div class="flex items-baseline justify-between gap-3">
+                  <dt id="res-value-label" class="text-neutral-500">Pip value per lot</dt>
+                  <dd id="res-value" class="font-semibold text-white">$10.00</dd>
+                </div>
+                <div class="flex items-baseline justify-between gap-3">
+                  <dt class="text-neutral-500">Position size</dt>
+                  <dd id="res-units" class="font-semibold text-white">50,000 units</dd>
+                </div>
+                <div class="flex items-baseline justify-between gap-3">
+                  <dt class="text-neutral-500">Loss at stop</dt>
+                  <dd id="res-loss" class="font-semibold text-white">$100.00</dd>
+                </div>
+              </dl>
+
+              <p id="res-formula" class="mt-4 rounded-lg border border-white/8 bg-black/30 px-3 py-2 font-mono text-[10.5px] leading-relaxed text-neutral-400">$100.00 ÷ (20 × $10.00) = 0.500 lots</p>
+            </div>
+
+            <div class="mt-5">
+              <button type="button" id="copy-btn" class="w-full rounded-xl border border-brand-500/30 bg-brand-500/10 px-4 py-2.5 text-xs font-bold text-brand-300 transition hover:bg-brand-500/15">
+                Copy result
+              </button>
+              <p class="mt-2.5 text-[10px] leading-relaxed text-neutral-600">Lot size depends on your broker's contract size and pip definition. Verify the first trade in the terminal.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <noscript>
+        <p class="mt-4 rounded-xl border border-bf-500/30 bg-bf-500/10 px-4 py-3 text-center text-sm text-bf-400">The calculator needs JavaScript. Enable it, or use the formula in the <a href="#formula" class="underline">formula section</a>.</p>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUICK ANSWERS ============ -->
+<section class="border-b border-white/5 py-12 lg:py-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-400">How much is 1 lot?</p>
+        <p class="mt-2 font-display text-2xl font-extrabold text-white">100,000 units</p>
+        <p class="mt-1 text-[12px] leading-relaxed text-neutral-500">On EURUSD that is $10 per pip. A 20-pip loss is $200.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-400">How much is 0.01 lot?</p>
+        <p class="mt-2 font-display text-2xl font-extrabold text-white">1,000 units</p>
+        <p class="mt-1 text-[12px] leading-relaxed text-neutral-500">A micro lot. $0.10 per pip on EURUSD, so a 20-pip loss is $2.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-400">Best lot size for $1,000?</p>
+        <p class="mt-2 font-display text-2xl font-extrabold text-white">0.05 lots</p>
+        <p class="mt-1 text-[12px] leading-relaxed text-neutral-500">At 1% risk ($10) with a 20-pip stop on EURUSD. Scale the stop, not the risk.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-400">Best lot size for $10,000?</p>
+        <p class="mt-2 font-display text-2xl font-extrabold text-white">0.50 lots</p>
+        <p class="mt-1 text-[12px] leading-relaxed text-neutral-500">Same 1% risk and 20-pip stop. Ten times the balance, ten times the size.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOT SIZES ============ -->
+<section id="lot-sizes" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">The basics</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What Is Lot Size in Forex? Why Does It Matter?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          Lot size is the trade volume you open — the number of currency units behind a position. In forex it comes in four standard sizes, each suited to a different account balance and experience level. The size you choose decides what one pip is worth, and therefore what a losing trade costs you.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Two traders can take the same EURUSD setup with the same stop and get completely different outcomes, because one risks 0.10 lots and the other risks 1.00. Getting the lot size wrong is the fastest way to overtrade an account.
+        </p>
+        <div class="mt-6 rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-5">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-brand-300">Rule of thumb</p>
+          <p class="mt-1.5 text-[13px] leading-relaxed text-neutral-300">Risk 1–2% of your balance per trade. On a $1,000 account that is $10–$20 — not $100.</p>
+        </div>
+      </div>
+
+      <div class="min-w-0 lg:col-span-7">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[13px]">
+            <thead class="bg-white/[0.04] text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th scope="col" class="px-4 py-3 font-bold">Lot size</th>
+                <th scope="col" class="px-4 py-3 font-bold">Units</th>
+                <th scope="col" class="px-4 py-3 font-bold">Pip value*</th>
+                <th scope="col" class="px-4 py-3 font-bold">Best for</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr>
+                <td class="px-4 py-3.5"><span class="font-semibold text-white">Standard</span> <span class="text-neutral-500">1.00</span></td>
+                <td class="px-4 py-3.5">100,000</td>
+                <td class="px-4 py-3.5">$10.00</td>
+                <td class="px-4 py-3.5 text-neutral-400">Larger accounts, experienced traders</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3.5"><span class="font-semibold text-white">Mini</span> <span class="text-neutral-500">0.10</span></td>
+                <td class="px-4 py-3.5">10,000</td>
+                <td class="px-4 py-3.5">$1.00</td>
+                <td class="px-4 py-3.5 text-neutral-400">Intermediate accounts</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3.5"><span class="font-semibold text-white">Micro</span> <span class="text-neutral-500">0.01</span></td>
+                <td class="px-4 py-3.5">1,000</td>
+                <td class="px-4 py-3.5">$0.10</td>
+                <td class="px-4 py-3.5 text-neutral-400">Beginners and small accounts</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3.5"><span class="font-semibold text-white">Nano</span> <span class="text-neutral-500">0.001</span></td>
+                <td class="px-4 py-3.5">100</td>
+                <td class="px-4 py-3.5">$0.01</td>
+                <td class="px-4 py-3.5 text-neutral-400">Broker-dependent; rare outside cent accounts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] leading-relaxed text-neutral-600">*Pip values shown for a USD account on a pair quoted in USD, such as EURUSD. On USDJPY, USDCHF or a cross, the pip value is converted from the quote currency — the calculator above does that for you.</p>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">15-pip stop · standard lot</p>
+            <p class="mt-1 font-display text-xl font-bold text-white">$150 at risk</p>
+          </div>
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">15-pip stop · micro lot</p>
+            <p class="mt-1 font-display text-xl font-bold text-white">$1.50 at risk</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS A LOT SIZE CALCULATOR ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-5 md:grid-cols-2">
+      <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15h0"/></svg>
+        </span>
+        <h2 class="mt-4 font-display text-2xl font-extrabold tracking-tight text-white">What is a lot size calculator?</h2>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+          A lot size calculator — also called a <strong class="font-semibold text-neutral-200">forex position size calculator</strong> or a <strong class="font-semibold text-neutral-200">forex risk calculator</strong> — works backwards from your risk. You tell it your capital, the percentage you are willing to lose and the distance to your stop loss. It returns the trade volume that makes that stop cost exactly the amount you planned.
+        </p>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+          No manual pip maths, no guessing, no spreadsheet. The forex lot size calculator on this page runs the same formula every time, so two trades with the same risk profile get the same risk in money terms — even when one is EURUSD and the other is gold.
+        </p>
+      </div>
+
+      <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+        <span class="grid h-11 w-11 place-items-center rounded-xl bg-idx-500/12 text-idx-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 4-6"/></svg>
+        </span>
+        <h2 class="mt-4 font-display text-2xl font-extrabold tracking-tight text-white">What is a position size calculator?</h2>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+          The same thing under a different name. Position sizing is the risk-management term; lot size is the forex unit. A <strong class="font-semibold text-neutral-200">position size calculator</strong> answers "how big should this trade be?", and a lot calculator answers "how many lots is that?".
+        </p>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+          If you have searched for a <strong class="font-semibold text-neutral-200">forex lot calculator</strong>, a <strong class="font-semibold text-neutral-200">lot calculator</strong> or a <strong class="font-semibold text-neutral-200">forex risk management calculator</strong>, you are in the right place. The tool above handles all three jobs: position size, lot size and money at risk.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEARCH TERMS ============ -->
+<section class="border-b border-white/5 pb-20 lg:pb-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+      <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Same calculator, different search terms</h2>
+      <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Traders describe this tool in a dozen ways. They all return the same number — the only thing that changes is the tab and the contract size.</p>
+      <div class="mt-5 overflow-x-auto">
+        <table class="w-full text-left text-[12.5px]">
+          <thead class="text-[10px] uppercase tracking-wider text-neutral-500">
+            <tr>
+              <th scope="col" class="border-b border-white/8 px-3 py-2 font-bold">You searched for</th>
+              <th scope="col" class="border-b border-white/8 px-3 py-2 font-bold">What you need</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/8 text-neutral-300">
+            <tr><td class="px-3 py-2.5">lot size calculator forex</td><td class="px-3 py-2.5 text-neutral-400">The Forex tab — 100,000-unit standard lots</td></tr>
+            <tr><td class="px-3 py-2.5">lot size calculator gold · lot size calculator XAUUSD · lot size calculator for gold</td><td class="px-3 py-2.5 text-neutral-400">The Gold tab — 100 oz per lot, $1 per point</td></tr>
+            <tr><td class="px-3 py-2.5">lot size calculator for indices · index lot size calculator</td><td class="px-3 py-2.5 text-neutral-400">The Indices tab — enter your broker's value per point</td></tr>
+            <tr><td class="px-3 py-2.5">position size calculator forex · position size calculator mt4</td><td class="px-3 py-2.5 text-neutral-400">The same result — position sizing is the risk term</td></tr>
+            <tr><td class="px-3 py-2.5">risk calculator forex · forex risk calculator</td><td class="px-3 py-2.5 text-neutral-400">Enter risk % and stop; read the money at risk</td></tr>
+            <tr><td class="px-3 py-2.5">forex calculator · forex calculator lot size · fx calculator · lot calculator forex</td><td class="px-3 py-2.5 text-neutral-400">The same tool under shorter names</td></tr>
+            <tr><td class="px-3 py-2.5">lots size calculator · lot size calc</td><td class="px-3 py-2.5 text-neutral-400">Common misspellings of lot size calculator</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO USE ============ -->
+<section id="how" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Six inputs</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How to Use This Lot Size Calculator</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">With a few inputs you get the exact lot size for your trade. No manual maths, no guesswork — the same six steps work for forex, gold and indices.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">01</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Select your account currency</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Choose USD, EUR, GBP or whichever currency your trading account is denominated in. The result is shown in that currency.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">02</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Choose the instrument</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Pick a currency pair, XAUUSD or an index. The calculator adjusts the pip or point value automatically.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">03</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Enter the account size</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Your current balance, not the balance you wish you had. Use equity if you have open trades.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">04</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Enter the risk percentage</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Most traders risk 1–2% per trade. On a $1,000 account that is $10–$20 at risk, not $100.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">05</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Enter the stop loss</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">The distance from entry to stop, in pips for forex and points for gold or indices. Not the stop price — the distance.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-brand-500">06</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Click calculate</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">The result shows the lot size, the money at risk, the value per pip or point and the position size in units.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORMULA + EXAMPLES ============ -->
+<section id="formula" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">The maths</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">The Lot Size Formula</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Every lot size calculator — including this one — runs the same equation. Learn it once and you can sanity-check any result.</p>
+    </div>
+
+    <div class="mx-auto mt-10 max-w-3xl rounded-2xl border border-brand-500/25 bg-brand-500/[0.05] p-6 text-center">
+      <p class="font-mono text-sm text-brand-300 sm:text-base">Lot size = Risk amount ÷ (Stop loss × Value per pip or point)</p>
+      <p class="mt-2 text-[12px] text-neutral-500">Risk amount = Account balance × Risk %</p>
+    </div>
+
+    <div class="mt-10 grid gap-4 lg:grid-cols-3">
+      <article class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-base font-bold text-white">EURUSD</h3>
+          <span class="rounded-md bg-brand-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-400">Forex</span>
+        </div>
+        <dl class="mt-4 space-y-1.5 text-[12.5px]">
+          <div class="flex justify-between"><dt class="text-neutral-500">Balance</dt><dd class="text-neutral-300">$10,000</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Risk</dt><dd class="text-neutral-300">1% = $100</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Stop loss</dt><dd class="text-neutral-300">20 pips</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Pip value</dt><dd class="text-neutral-300">$10 per lot</dd></div>
+        </dl>
+        <p class="mt-4 border-t border-white/8 pt-3 text-[13px] text-neutral-400">$100 ÷ (20 × $10) = <span class="font-bold text-white">0.50 lots</span></p>
+      </article>
+
+      <article class="rounded-2xl border border-gold-500/25 bg-gold-500/[0.04] p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-base font-bold text-white">XAUUSD</h3>
+          <span class="rounded-md bg-gold-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold-300">Gold</span>
+        </div>
+        <dl class="mt-4 space-y-1.5 text-[12.5px]">
+          <div class="flex justify-between"><dt class="text-neutral-500">Balance</dt><dd class="text-neutral-300">$5,000</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Risk</dt><dd class="text-neutral-300">1% = $50</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Stop loss</dt><dd class="text-neutral-300">500 points ($5.00)</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Point value</dt><dd class="text-neutral-300">$1 per lot</dd></div>
+        </dl>
+        <p class="mt-4 border-t border-white/8 pt-3 text-[13px] text-neutral-400">$50 ÷ (500 × $1) = <span class="font-bold text-white">0.10 lots</span></p>
+      </article>
+
+      <article class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-base font-bold text-white">US30</h3>
+          <span class="rounded-md bg-idx-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-idx-300">Indices</span>
+        </div>
+        <dl class="mt-4 space-y-1.5 text-[12.5px]">
+          <div class="flex justify-between"><dt class="text-neutral-500">Balance</dt><dd class="text-neutral-300">$10,000</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Risk</dt><dd class="text-neutral-300">1% = $100</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Stop loss</dt><dd class="text-neutral-300">100 points</dd></div>
+          <div class="flex justify-between"><dt class="text-neutral-500">Point value</dt><dd class="text-neutral-300">$1 per lot*</dd></div>
+        </dl>
+        <p class="mt-4 border-t border-white/8 pt-3 text-[13px] text-neutral-400">$100 ÷ (100 × $1) = <span class="font-bold text-white">1.00 lot</span></p>
+      </article>
+    </div>
+    <p class="mt-4 text-center text-[11px] text-neutral-600">*Index contract sizes differ by broker. Confirm the value per point before sizing — see the <a href="#indices" class="text-brand-400 hover:underline">indices section</a>.</p>
+
+    <div class="mx-auto mt-12 max-w-4xl">
+      <h3 class="font-display text-lg font-bold text-white">Pip value per standard lot, by pair type</h3>
+      <div class="mt-4 overflow-x-auto rounded-2xl border border-white/10">
+        <table class="w-full text-left text-[12.5px]">
+          <thead class="bg-white/[0.04] text-[10px] uppercase tracking-wider text-neutral-500">
+            <tr>
+              <th scope="col" class="px-4 py-3 font-bold">Pair type</th>
+              <th scope="col" class="px-4 py-3 font-bold">Examples</th>
+              <th scope="col" class="px-4 py-3 font-bold">Pip value per 1.00 lot</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/8 text-neutral-300">
+            <tr>
+              <td class="px-4 py-3">Pair quoted in USD</td>
+              <td class="px-4 py-3 text-neutral-400">EURUSD, GBPUSD, AUDUSD, NZDUSD</td>
+              <td class="px-4 py-3 font-semibold text-white">$10.00 fixed</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Pair quoted in another currency</td>
+              <td class="px-4 py-3 text-neutral-400">USDJPY, USDCHF, USDCAD</td>
+              <td class="px-4 py-3 font-semibold text-white">10 ÷ quote rate</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Cross pair</td>
+              <td class="px-4 py-3 text-neutral-400">EURGBP, GBPJPY, EURAUD</td>
+              <td class="px-4 py-3 font-semibold text-white">10 × quote-to-USD rate</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Gold (XAUUSD)</td>
+              <td class="px-4 py-3 text-neutral-400">100 oz contract</td>
+              <td class="px-4 py-3 font-semibold text-white">$1.00 per 0.01 move</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-[11.5px] leading-relaxed text-neutral-500">Worked example for a cross: EURGBP with GBPUSD at 1.27 pays 10 GBP per pip, which is about $12.70. A 20-pip stop therefore costs about $254 per standard lot — so a $100 risk buys roughly 0.39 lots.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOLD ============ -->
+<section id="gold" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(50%_40%_at_20%_0%,rgba(245,196,81,0.08),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="min-w-0 lg:col-span-6">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-300">XAUUSD</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Gold Lot Size Calculator (XAUUSD)</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          Gold is quoted in US dollars per troy ounce, and one standard lot is <strong class="font-semibold text-neutral-200">100 ounces</strong>. That makes the numbers much bigger than most forex pairs: a $1.00 move in XAUUSD is $100 per lot, and one point (0.01) is $1.00 per lot.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          This is why a "normal" forex lot size destroys a gold account. A 0.50 lot position with a $10 stop is risking $500 — five times a 1% risk on a $10,000 balance. Use the gold tab above, or run the maths with the table on the right.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          If you searched for a lot size calculator for gold, a lot size calculator XAUUSD or a gold size calculator, this is the same tool — the gold tab fixes the 100 oz contract and the $1 point value. It also works as an XAUUSD stop loss calculator: enter the stop distance and it returns the size that keeps the loss fixed.
+        </p>
+        <div class="mt-6 rounded-2xl border border-gold-500/25 bg-gold-500/[0.05] p-5">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-gold-300">Worked example</p>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">$5,000 balance · 1% risk = $50 · 500-point stop ($5.00 move) · $1 per point per lot → <span class="font-bold text-white">0.10 lots</span>.</p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/gold-vip-signals" class="inline-flex items-center gap-2 rounded-xl bg-gold-500 px-5 py-2.5 text-[13px] font-bold text-black transition hover:bg-gold-400">See Gold VIP Signals</a>
+          <a href="#calculator" class="inline-flex items-center gap-2 rounded-xl border border-white/12 px-5 py-2.5 text-[13px] font-semibold text-white transition hover:border-gold-500/40 hover:bg-white/5">Open the gold calculator</a>
+        </div>
+      </div>
+
+      <div class="min-w-0 lg:col-span-6">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[13px]">
+            <caption class="bg-white/[0.04] px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500">XAUUSD contract specification</caption>
+            <tbody class="divide-y divide-white/8">
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">Contract size</th><td class="px-4 py-3 text-right font-semibold text-white">100 troy oz</td></tr>
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">1 lot, 1 point (0.01)</th><td class="px-4 py-3 text-right font-semibold text-white">$1.00</td></tr>
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">1 lot, $1.00 move</th><td class="px-4 py-3 text-right font-semibold text-white">$100.00</td></tr>
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">0.01 lot, 1 point</th><td class="px-4 py-3 text-right font-semibold text-white">$0.01</td></tr>
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">Typical stop</th><td class="px-4 py-3 text-right font-semibold text-white">300–800 points</td></tr>
+              <tr><th scope="row" class="px-4 py-3 text-left font-medium text-neutral-500">Silver (XAGUSD)</th><td class="px-4 py-3 text-right font-semibold text-white">5,000 oz · $50 per point</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] leading-relaxed text-neutral-600">Contract sizes can differ at cent, micro and non-US brokers. If your XAUUSD specification shows a different contract size, enter your own value per point in the indices tab — or use the formula: risk ÷ (points × value per point).</p>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[10.5px] font-bold uppercase tracking-wider text-neutral-500">Gold risk calculator, $1,000</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">1% = $10. A 500-point stop means <span class="font-semibold text-white">0.02 lots</span> — the minimum is 0.01, so this is one of the few setups where the broker floor is close to your risk.</p>
+          </div>
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[10.5px] font-bold uppercase tracking-wider text-neutral-500">XAUUSD position size, $10,000</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">1% = $100. A 500-point stop allows <span class="font-semibold text-white">0.20 lots</span>; a 1,000-point stop halves it to 0.10.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDICES ============ -->
+<section id="indices" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-idx-300">US30 · NAS100 · SPX500</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Indices Lot Size Calculator</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+        Index CFDs are priced in points, not pips, and the contract size is set by your broker. Most quote one lot as one unit of the index — a 1-point move is $1 per lot — but 0.1 and 10 are common too. The calculator above lets you set the value per point, so the result matches your platform. Use it as a lot size calculator for indices, US30, NAS100 or any index your broker lists.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-4 lg:grid-cols-3">
+      <div class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-idx-300">US30 · Dow Jones</p>
+        <p class="mt-2 font-display text-xl font-extrabold text-white">$1 per point*</p>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">100-point stop = $100 per lot. A $10,000 account at 1% risk trades 1.00 lot.</p>
+      </div>
+      <div class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-idx-300">NAS100 · Nasdaq</p>
+        <p class="mt-2 font-display text-xl font-extrabold text-white">$1 per point*</p>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">More volatile than the Dow. A 200-point stop on the same $100 risk gives 0.50 lots.</p>
+      </div>
+      <div class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-5">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-idx-300">SPX500 · GER40 · UK100</p>
+        <p class="mt-2 font-display text-xl font-extrabold text-white">Check the spec</p>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">European and US500 contracts often use a different multiplier. Enter your broker's value per point.</p>
+      </div>
+    </div>
+    <p class="mt-4 text-center text-[11px] text-neutral-600">*Typical CFD contract at brokers that quote one index unit per lot. This is the number to verify first — it changes the result by a factor of ten.</p>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <h3 class="font-display text-base font-bold text-white">Where to find your contract size</h3>
+        <ol class="mt-3 space-y-2 text-[12.5px] leading-relaxed text-neutral-400">
+          <li class="flex gap-2.5"><span class="text-idx-400">1.</span> Open Market Watch in MT4 or MT5.</li>
+          <li class="flex gap-2.5"><span class="text-idx-400">2.</span> Right-click the index and choose <span class="font-semibold text-neutral-200">Specification</span>.</li>
+          <li class="flex gap-2.5"><span class="text-idx-400">3.</span> Read <span class="font-semibold text-neutral-200">Contract size</span> and <span class="font-semibold text-neutral-200">Tick value</span>.</li>
+          <li class="flex gap-2.5"><span class="text-idx-400">4.</span> Enter the tick value as "value per point per lot" in the calculator.</li>
+        </ol>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <h3 class="font-display text-base font-bold text-white">Index sizing, in one line</h3>
+        <p class="mt-3 text-[13px] leading-relaxed text-neutral-400">Lots = risk amount ÷ (stop in points × value per point per lot).</p>
+        <p class="mt-3 text-[12.5px] leading-relaxed text-neutral-500">Example: $200 risk, 250-point NAS100 stop, $1 per point → 0.80 lots. If your broker's NAS100 is $10 per point, the same trade is 0.08 lots.</p>
+        <a href="/indices-vip-signals" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-idx-300 hover:text-idx-200">See Indices VIP Signals →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MT4 / MT5 ============ -->
+<section id="mt4-mt5" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Platforms</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Using the Lot Size Calculator With MT4 and MT5</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          The calculator is platform-agnostic: a lot size calculator MT4 accepts is the same lot size MT5 accepts, because both use the broker's contract specification. What changes is where you type it.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          In both terminals, open a new order, put the result in the <strong class="font-semibold text-neutral-200">Volume</strong> field (called "lots" in MT4), set the stop loss, and check the margin line before you click buy or sell. If the volume box refuses the number, your broker's minimum or step is different — try 0.01 and read the specification.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          MT4 does not include a position size calculator, and neither does MT5 — which is why this page exists. Searching for an MT4 lot size calculator or an MT5 lot size calculator returns the same number; the platform only changes where you type the volume.
+        </p>
+        <div class="mt-6 rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-neutral-500">Quick check</p>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">1.00 lot on EURUSD = 100,000 units. If your terminal shows "1.00" and the margin is $1,000 at 1:100, you are about to trade a standard lot — not a micro.</p>
+        </div>
+      </div>
+
+      <div class="min-w-0 lg:col-span-7">
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">MT4</p>
+            <h3 class="mt-1.5 font-display text-[15px] font-bold text-white">Lot size calculator MT4</h3>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Volume is in lots, minimum 0.01 on most accounts. The order window shows "Volume" and the margin required. MT4 does not calculate risk for you — that is what this page is for.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">MT5</p>
+            <h3 class="mt-1.5 font-display text-[15px] font-bold text-white">Lot size calculator MT5</h3>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Same volume logic, more instrument types. MetaTrader 5 also shows tick value and contract size in the specification window — the two numbers the calculator needs for gold and indices.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">MetaTrader 5</p>
+            <h3 class="mt-1.5 font-display text-[15px] font-bold text-white">MetaTrader 5 lot size calculator</h3>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">If you trade several symbols, calculate each one separately. A 0.10 lot on EURUSD and a 0.10 lot on XAUUSD carry very different risk.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Automation</p>
+            <h3 class="mt-1.5 font-display text-[15px] font-bold text-white">Let the copier size it</h3>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">The SureShotFX Trade Copier can size each copied signal by fixed lot or percentage of balance, so the same rule applies to every trade automatically.</p>
+            <a href="/trade-copier" class="mt-2 inline-flex text-[12px] font-semibold text-brand-400 hover:text-brand-300">Trade Copier →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RISK MANAGEMENT ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Risk management</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What Lot Size Should You Use?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">There is no universal "best" lot size — only a size that fits your balance, your stop and the percentage you accept losing. Here is the rule most consistent traders use.</p>
+    </div>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-7">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[12.5px]">
+            <caption class="bg-white/[0.04] px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500">1% risk · 20-pip stop · EURUSD ($10 per pip per lot)</caption>
+            <thead class="border-t border-white/8 text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th scope="col" class="px-4 py-2.5 font-bold">Balance</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">Risk (1%)</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">Lot size</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">Per pip</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr><td class="px-4 py-2.5">$100</td><td class="px-4 py-2.5">$1</td><td class="px-4 py-2.5 font-semibold text-white">Below 0.01</td><td class="px-4 py-2.5">—</td></tr>
+              <tr><td class="px-4 py-2.5">$500</td><td class="px-4 py-2.5">$5</td><td class="px-4 py-2.5 font-semibold text-white">0.02</td><td class="px-4 py-2.5">$0.20</td></tr>
+              <tr><td class="px-4 py-2.5">$1,000</td><td class="px-4 py-2.5">$10</td><td class="px-4 py-2.5 font-semibold text-white">0.05</td><td class="px-4 py-2.5">$0.50</td></tr>
+              <tr><td class="px-4 py-2.5">$5,000</td><td class="px-4 py-2.5">$50</td><td class="px-4 py-2.5 font-semibold text-white">0.25</td><td class="px-4 py-2.5">$2.50</td></tr>
+              <tr><td class="px-4 py-2.5">$10,000</td><td class="px-4 py-2.5">$100</td><td class="px-4 py-2.5 font-semibold text-white">0.50</td><td class="px-4 py-2.5">$5.00</td></tr>
+              <tr><td class="px-4 py-2.5">$50,000</td><td class="px-4 py-2.5">$500</td><td class="px-4 py-2.5 font-semibold text-white">2.50</td><td class="px-4 py-2.5">$25.00</td></tr>
+              <tr><td class="px-4 py-2.5">$100,000</td><td class="px-4 py-2.5">$1,000</td><td class="px-4 py-2.5 font-semibold text-white">5.00</td><td class="px-4 py-2.5">$50.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] leading-relaxed text-neutral-600">Read the table as a starting point, not a target. A wider stop means a smaller lot for the same risk; a tighter stop means a larger one. The money at risk stays constant.</p>
+      </div>
+
+      <div class="space-y-3 lg:col-span-5">
+        <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <h3 class="font-display text-[14px] font-bold text-white">Leverage does not change your lot size</h3>
+          <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Leverage changes the margin required, not the loss. A 1.00 lot on a 1:500 account loses the same $10 per pip as on 1:30 — the difference is how much free margin the broker locks up.</p>
+        </div>
+        <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <h3 class="font-display text-[14px] font-bold text-white">Cent accounts</h3>
+          <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Cent accounts often use 1,000-unit lots and show the balance in cents. Enter the dollar-equivalent balance, use the result, then confirm the contract size in the specification — it may differ from a standard account.</p>
+        </div>
+        <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <h3 class="font-display text-[14px] font-bold text-white">Prop and funded accounts</h3>
+          <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Use the daily and total drawdown limits as your hard ceiling. Most funded traders size at 0.5–1% per trade so a losing streak cannot breach the rule in a week.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Why use it</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Benefits of a Forex Lot Size Calculator</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-neutral-400">Consistent traders focus on risk, not just entries. Whether you need a lot size calculator MT4, a lot size calculator MT5 or a plain forex risk calculator, the job is the same: make every trade risk the same amount.</p>
+      </div>
+      <a href="#calculator" class="inline-flex shrink-0 items-center gap-2 rounded-xl border border-white/12 px-5 py-2.5 text-[13px] font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Back to the calculator</a>
+    </div>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">Accurate risk control on every pair</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">The same 1% risk whether you trade EURUSD, GBPJPY or XAUUSD.</p></div>
+      </div>
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">No manual calculation errors</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">Decimal points and pip conversions are handled for you.</p></div>
+      </div>
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">Saves time at execution</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">Size the trade in seconds, while the setup is still valid.</p></div>
+      </div>
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">Improves long-term consistency</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">Fixed risk per trade makes your results comparable across weeks.</p></div>
+      </div>
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">Removes overtrading</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">If the correct size is 0.01 and your broker's floor is 0.01, the trade is already at your limit.</p></div>
+      </div>
+      <div class="flex gap-3 rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h3 class="font-display text-[14px] font-bold text-white">Free, with no signup</h3><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">No account, no email, no limit on calculations.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLACK FRIDAY CROSS-SELL ============ -->
+<section class="relative overflow-hidden border-b border-white/5 py-16 lg:py-20">
+  <div class="absolute inset-0 bg-[radial-gradient(55%_50%_at_50%_0%,rgba(245,158,11,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="overflow-hidden rounded-3xl border border-bf-500/30 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-bf-500/35 bg-bf-500/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-bf-400">
+            <svg viewBox="0 0 24 24" class="h-3 w-3" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            Black Friday
+          </span>
+          <h2 class="mt-4 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">You can size the trade. We can find it.</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+            The calculator is free forever. If you want the setups as well, the VIP channels send entries, stops and targets with the lot guidance already worked out — and the Black Friday sale is live on every plan.
+          </p>
+          <p class="mt-3 text-[12px] text-neutral-500">Sale ends in <span id="bf-clock-2" class="font-mono font-bold tabular-nums text-bf-400">00d 00h 00m 00s</span> · up to 72% off</p>
+        </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto">
+          <a href="/combo" class="inline-flex items-center justify-center gap-2 rounded-xl bg-bf-500 px-6 py-3 text-sm font-extrabold text-black shadow-[0_0_30px_-10px_rgba(245,158,11,0.7)] transition hover:bg-bf-400">See the Combo deal</a>
+          <a href="/forex-vip-signals" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Browse VIP signals</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Lot Size Calculator — Common Questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Everything traders ask about lot size, position sizing and the numbers behind the calculator.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is a lot size calculator?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">A lot size calculator works out the trade volume that keeps your loss at a chosen amount. You enter your balance, the percentage you want to risk and the distance to your stop loss; it returns the lot size. It is the same tool as a position size calculator or a forex risk calculator.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How to calculate lot size in forex?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Use the formula: lot size = risk amount ÷ (stop loss in pips × pip value per lot). On a $10,000 account risking 1% ($100) with a 20-pip stop and a $10 pip value, that is $100 ÷ (20 × $10) = 0.50 lots. The calculator above does the conversion when your account currency is not USD.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is a position size calculator?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">A position size calculator tells you how large a trade to open based on your balance, risk percentage and stop loss. It performs the same job as a lot size calculator — one names the risk concept, the other names the forex unit.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Can I use the SureShotFX lot calculator for a micro account?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The calculator returns standard lots, and 0.01 is a micro lot. If the result is below 0.01, the calculator warns you: the trade is too large for your balance and stop distance at that risk level.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Do I need to know the pip value manually?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. The calculator derives the pip value from the pair and converts it into your account currency. You only need the balance, risk percentage and stop distance.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does the calculator work for MT4 and MT5?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The lot size is platform-independent; you enter it in the Volume field of the MT4 or MT5 order ticket. Both terminals use the broker's contract specification, so the result matches as long as the contract size is the standard one. Check the specification for gold and indices.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How do I calculate lot size for gold (XAUUSD)?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Use the gold tab: one standard lot is 100 ounces, so one point (0.01) is $1.00 per lot and a $1.00 move is $100. Risk $50 with a 500-point ($5.00) stop and you get 0.10 lots. If your broker uses a different contract size, enter its value per point.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How do I calculate lot size for indices?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Find the value per point per lot in your broker's contract specification, then divide your risk by (stop in points × value per point). A $100 risk with a 100-point US30 stop at $1 per point is 1.00 lot. If your broker quotes $10 per point, the same trade is 0.10 lots.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is the best lot size for a $1,000 account?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">At 1% risk ($10) with a 20-pip stop on EURUSD, 0.05 lots. At 2% risk the same stop allows 0.10 lots. "Best" means the size that keeps your loss at the percentage you chose — not the largest size the margin allows.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How much is 0.01 lot size in dollars?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">0.01 lots is 1,000 units. On a USD-quoted pair such as EURUSD it is $0.10 per pip, so a 20-pip stop risks $2.00. On gold, 0.01 lots is 1 ounce, so one point is $0.01 and a 500-point stop risks $5.00.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does leverage affect my lot size?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. Leverage changes how much margin your broker holds, not what a pip is worth. A 1.00 lot loses $10 per pip at 1:30 and at 1:500. Higher leverage lets you open a larger position — which is exactly why it is dangerous, not why it changes the correct size.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What lot size should I use on a cent account?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Enter the dollar-equivalent balance and use the calculator's result, then check the contract size in the specification. Cent accounts frequently use 1,000-unit lots, so the volume number can differ from a standard account even though the money at risk is the same.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Can I use this for prop firm or funded accounts?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. Enter the funded account size and the risk your firm allows — many traders use 0.5–1% per trade. Keep the daily loss limit in mind: several small losing trades at 1% can still breach a 3% daily rule.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Why does my broker give a different lot size?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Three usual reasons: a different contract size (common on gold and indices), a different pip definition (0.0001 vs 0.00001 on five-digit quotes), or a different account currency conversion. Check the specification first, then the quote currency.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the lot size calculator free?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — no account, no email and no limit. It stays free during the Black Friday sale and after it. If you want the trade ideas too, the VIP plans are the paid part; the calculator is not.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is this the official SureShotFX lot size calculator?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is built and maintained by the same team behind the SSF trading desk. Traders reach us through several spellings — SureShotFX, SureShot FX, Sure Shot FX, SureShot Forex, Sure Shot Forex, SureShot Gold and SSF trading — all refer to the same brand. The calculator is free, needs no account, and does not ask for your broker login.</p>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Need a second pair of eyes?</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Ask Before You Risk It</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">If your broker's contract size does not match the calculator, or you are not sure how to size a gold trade on a small account, send us the symbol and the numbers. Support answers 24/7 and will walk through the calculation with you.</p>
+          </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Live chat on Telegram
+          </a>
+          <a href="#formula" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Read the formula</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief — Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups — the same context the desk uses before it posts a signal. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks — check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier for MT4 and MT5. Free lot size and pip calculators for every trader. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-neutral-400 transition hover:text-white">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-neutral-400 transition hover:text-white">Guardian</a></li>
+          <li><a href="/sureshot-raven" class="text-neutral-400 transition hover:text-white">Raven</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-neutral-400 transition hover:text-white">Pip Calculator App</a></li>
+          <li><a href="/pip-calculator/forex-pip-calculator" class="text-neutral-400 transition hover:text-white">Pip Calculator</a></li>
+          <li><a href="/lot-size-calculator" class="text-brand-400">Lot Size Calculator</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-neutral-400 transition hover:text-white">Behind the Candle</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">Calculator disclaimer:</strong> The lot size calculator is an educational tool. Results depend on the contract specification and exchange rates at your broker, and may differ from your platform. It is not financial advice and does not guarantee any outcome.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Lot Size Calculator · Forex · Gold · Indices · <span class="text-neutral-500">Free, no signup</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">Free lot size calculator</p>
+      <p class="text-[10px] text-neutral-500">No signup · MT4 &amp; MT5 · Black Friday</p>
+    </div>
+    <a href="/combo" class="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-black">Get Signals</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "SureShotFX Lot Size Calculator",
+      "url": "https://sureshotfx.com/lot-size-calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Free lot size calculator for forex, gold and indices. Enter balance, risk percentage and stop loss to get the exact position size for MT4 and MT5.",
+      "featureList": [
+        "Forex lot size calculator with live currency conversion",
+        "XAUUSD and XAGUSD gold position sizing",
+        "Indices lot size calculator with editable value per point",
+        "Account currencies including USD, EUR, GBP, INR, PKR, PHP and NGN",
+        "Copy-ready result with risk amount, pip value and units",
+        "No signup and no calculation limit"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "publisher": { "@type": "Organization", "name": "SureShotFX", "url": "https://sureshotfx.com/" }
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use the SureShotFX lot size calculator",
+      "description": "Work out the exact lot size for a forex, gold or indices trade from your balance, risk percentage and stop loss.",
+      "totalTime": "PT1M",
+      "tool": [{ "@type": "HowToTool", "name": "SureShotFX lot size calculator" }],
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Select your account currency", "text": "Choose the currency your trading account is denominated in, such as USD, EUR or GBP." },
+        { "@type": "HowToStep", "position": 2, "name": "Choose the instrument", "text": "Pick a currency pair, XAUUSD for gold, or an index. The calculator adjusts the pip or point value automatically." },
+        { "@type": "HowToStep", "position": 3, "name": "Enter the account size", "text": "Use your current balance, or equity if you already have open trades." },
+        { "@type": "HowToStep", "position": 4, "name": "Enter the risk percentage", "text": "Most traders risk 1-2% of the balance per trade." },
+        { "@type": "HowToStep", "position": 5, "name": "Enter the stop loss", "text": "Enter the distance from entry to stop in pips for forex, or points for gold and indices." },
+        { "@type": "HowToStep", "position": 6, "name": "Click calculate", "text": "Read the recommended lot size, the money at risk, the value per pip or point and the position size in units." }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Trading Tools", "item": "https://sureshotfx.com/#tools" },
+        { "@type": "ListItem", "position": 3, "name": "Lot Size Calculator", "item": "https://sureshotfx.com/lot-size-calculator" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a lot size calculator?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A lot size calculator works out the trade volume that keeps your loss at a chosen amount. You enter your balance, the percentage you want to risk and the distance to your stop loss; it returns the lot size. It is the same tool as a position size calculator or a forex risk calculator." }
+        },
+        {
+          "@type": "Question",
+          "name": "How to calculate lot size in forex?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Lot size = risk amount divided by (stop loss in pips x pip value per lot). On a $10,000 account risking 1% ($100) with a 20-pip stop and a $10 pip value, that is $100 / (20 x $10) = 0.50 lots." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate lot size for gold (XAUUSD)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "One standard gold lot is 100 ounces, so one point (0.01) is $1.00 per lot and a $1.00 move is $100. Risking $50 with a 500-point ($5.00) stop gives 0.10 lots. If your broker uses a different contract size, enter its value per point." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate lot size for indices?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Find the value per point per lot in your broker's contract specification, then divide your risk by (stop in points x value per point). A $100 risk with a 100-point US30 stop at $1 per point is 1.00 lot." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best lot size for a $1,000 account?",
+          "acceptedAnswer": { "@type": "Answer", "text": "At 1% risk ($10) with a 20-pip stop on EURUSD, 0.05 lots. At 2% risk the same stop allows 0.10 lots. The correct size is the one that keeps your loss at the percentage you chose." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much is 0.01 lot size in dollars?",
+          "acceptedAnswer": { "@type": "Answer", "text": "0.01 lots is 1,000 units. On EURUSD it is $0.10 per pip, so a 20-pip stop risks $2.00. On gold, 0.01 lots is 1 ounce, so one point is $0.01 and a 500-point stop risks $5.00." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does leverage affect my lot size?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Leverage changes how much margin your broker holds, not what a pip is worth. A 1.00 lot loses $10 per pip at 1:30 and at 1:500." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the lot size calculator free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. No account, no email and no limit on calculations. It stays free during the Black Friday sale and after it." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* ---------- Black Friday countdown (ends 30 Nov 2026, 23:59 UTC) ---------- */
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const els = [document.getElementById('bf-clock'), document.getElementById('bf-clock-2')];
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      els.forEach((el) => { if (el) el.textContent = out; });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* ---------- Lot size calculator ---------- */
+  (function () {
+    const $ = (id) => document.getElementById(id);
+    const FALLBACK = {
+      USD: 1, EUR: 0.92, GBP: 0.79, JPY: 150, CHF: 0.88, CAD: 1.36, AUD: 1.52,
+      NZD: 1.64, SGD: 1.34, HKD: 7.8, AED: 3.6725, SAR: 3.75, INR: 83.5,
+      PKR: 278, PHP: 56.5, NGN: 1500, ZAR: 18.5, TRY: 32, MXN: 17, PLN: 4.0,
+      SEK: 10.5, NOK: 10.7, DKK: 6.9, CNY: 7.2, KRW: 1330, THB: 36,
+      IDR: 15700, MYR: 4.7, VND: 24500, BRL: 5.0
+    };
+    const SYMBOL = {
+      USD: '$', EUR: '€', GBP: '£', JPY: '¥', CHF: 'Fr', CAD: 'C$', AUD: 'A$',
+      NZD: 'NZ$', SGD: 'S$', HKD: 'HK$', INR: '₹', PKR: '₨', PHP: '₱',
+      NGN: '₦', ZAR: 'R', TRY: '₺', MXN: 'MX$', PLN: 'zł', SEK: 'kr',
+      NOK: 'kr', DKK: 'kr', CNY: '¥', KRW: '₩', THB: 'THB', IDR: 'Rp',
+      MYR: 'RM', VND: '₫', BRL: 'R$', AED: 'AED', SAR: 'SAR'
+    };
+
+    const FOREX = [
+      ['EURUSD', 0.0001], ['GBPUSD', 0.0001], ['USDJPY', 0.01], ['USDCHF', 0.0001],
+      ['USDCAD', 0.0001], ['AUDUSD', 0.0001], ['NZDUSD', 0.0001], ['EURGBP', 0.0001],
+      ['EURJPY', 0.01], ['GBPJPY', 0.01], ['AUDJPY', 0.01], ['EURAUD', 0.0001],
+      ['GBPAUD', 0.0001], ['EURCHF', 0.0001], ['GBPCHF', 0.0001], ['AUDNZD', 0.0001]
+    ].map(([s, pip]) => ({ s: s, pip: pip, quote: s.slice(3) }));
+
+    const GOLD = [
+      { s: 'XAUUSD', contract: 100, point: 0.01, label: 'Gold' },
+      { s: 'XAGUSD', contract: 5000, point: 0.01, label: 'Silver' }
+    ];
+
+    const INDICES = [
+      { s: 'US30', v: 1 }, { s: 'NAS100', v: 1 }, { s: 'SPX500', v: 1 },
+      { s: 'GER40', v: 1 }, { s: 'UK100', v: 1 }, { s: 'JP225', v: 1 }
+    ];
+
+    const DEFAULTS = {
+      forex: { stop: 20, label: 'Stop loss (pips)', hint: '1 pip = 0.0001 on most pairs, 0.01 on JPY pairs.' },
+      gold: { stop: 500, label: 'Stop loss (points)', hint: '500 points = a $5.00 move on XAUUSD.' },
+      indices: { stop: 100, label: 'Stop loss (points)', hint: '100 points = 100 index points.' }
+    };
+
+    let RATES = Object.assign({}, FALLBACK);
+    let MODE = 'forex';
+
+    const ccy = $('acct-ccy');
+    const inst = $('instrument');
+    const balance = $('balance');
+    const risk = $('risk');
+    const stop = $('stop');
+    const pv = $('point-value');
+    const pvWrap = $('point-value-wrap');
+    const errorBox = $('calc-error');
+    const ratesNote = $('rates-note');
+
+    const resLots = $('res-lots');
+    const resUnder = $('res-under');
+    const resRisk = $('res-risk');
+    const resValueLabel = $('res-value-label');
+    const resValue = $('res-value');
+    const resUnits = $('res-units');
+    const resLoss = $('res-loss');
+    const resFormula = $('res-formula');
+
+    const nfMoney = (v, c) => {
+      try {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency', currency: c,
+          maximumFractionDigits: Math.abs(v) < 1 ? 4 : 2,
+          minimumFractionDigits: 2
+        }).format(v);
+      } catch (e) { return c + ' ' + v.toFixed(2); }
+    };
+    const nfNum = (v, d) => new Intl.NumberFormat('en-US', { maximumFractionDigits: d || 0 }).format(v);
+    const rate = (from, to) => {
+      if (from === to) return 1;
+      const f = RATES[from] || 1, t = RATES[to] || 1;
+      return t / f;
+    };
+
+    function populate() {
+      inst.innerHTML = '';
+      if (MODE === 'forex') {
+        FOREX.forEach((p) => inst.add(new Option(p.s, p.s)));
+        inst.value = 'EURUSD';
+        $('instrument-label').textContent = 'Currency pair';
+        $('instrument-hint').textContent = 'Pip value is converted from the quote currency to your account currency.';
+      } else if (MODE === 'gold') {
+        GOLD.forEach((g) => inst.add(new Option(g.s, g.s)));
+        inst.value = 'XAUUSD';
+        $('instrument-label').textContent = 'Instrument';
+        $('instrument-hint').textContent = '1 lot = 100 oz · $1 per 0.01 point on XAUUSD.';
+      } else {
+        INDICES.forEach((i) => inst.add(new Option(i.s, i.s)));
+        inst.value = 'US30';
+        $('instrument-label').textContent = 'Index';
+        $('instrument-hint').textContent = 'Enter the tick value from your broker\'s contract specification.';
+      }
+    }
+
+    function setMode(mode) {
+      MODE = mode;
+      document.querySelectorAll('.calc-tab').forEach((b) => {
+        b.setAttribute('aria-selected', String(b.dataset.tab === mode));
+      });
+      $('calc-panel').setAttribute('aria-labelledby', 'tab-' + mode);
+      pvWrap.classList.toggle('hidden', mode !== 'indices');
+      $('stop-label').textContent = DEFAULTS[mode].label;
+      $('stop-hint').textContent = DEFAULTS[mode].hint;
+      stop.value = DEFAULTS[mode].stop;
+      populate();
+      recalc(true);
+    }
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.remove('hidden');
+    }
+    function clearError() {
+      errorBox.classList.add('hidden');
+    }
+
+    function recalc(pulse) {
+      clearError();
+      const acct = ccy.value;
+      const b = parseFloat(balance.value);
+      const r = parseFloat(risk.value);
+      const s = parseFloat(stop.value);
+      const p = parseFloat(pv.value);
+
+      if (!isFinite(b) || b <= 0) return showError('Enter an account balance greater than zero.');
+      if (!isFinite(r) || r <= 0 || r > 100) return showError('Risk percentage must be between 0.01% and 100%.');
+      if (!isFinite(s) || s <= 0) return showError('Enter a stop loss greater than zero.');
+      if (MODE === 'indices' && (!isFinite(p) || p <= 0)) return showError('Enter the value per point per lot from your broker.');
+
+      const riskMoney = b * r / 100;
+      let lots = 0, value = 0, units = 0, unitsText = '', unitName = 'pips';
+
+      if (MODE === 'forex') {
+        const pair = FOREX.find((x) => x.s === inst.value) || FOREX[0];
+        value = pair.pip * 100000 * rate(pair.quote, acct);
+        lots = riskMoney / (s * value);
+        units = lots * 100000;
+        unitsText = nfNum(Math.round(units)) + ' units';
+        unitName = 'pips';
+        resValueLabel.textContent = 'Pip value per lot';
+      } else if (MODE === 'gold') {
+        const g = GOLD.find((x) => x.s === inst.value) || GOLD[0];
+        value = g.contract * g.point * rate('USD', acct);
+        lots = riskMoney / (s * value);
+        units = lots * g.contract;
+        unitsText = nfNum(Math.round(units)) + ' oz';
+        unitName = 'points';
+        resValueLabel.textContent = 'Point value per lot';
+      } else {
+        value = p;
+        lots = riskMoney / (s * value);
+        units = lots;
+        unitsText = lots.toFixed(2) + (lots === 1 ? ' contract' : ' contracts');
+        unitName = 'points';
+        resValueLabel.textContent = 'Point value per lot';
+      }
+
+      const stepLots = Math.floor(lots * 100 + 1e-9) / 100;
+      const actualLoss = stepLots * s * value;
+
+      if (!isFinite(lots) || lots <= 0) {
+        return showError('That stop and risk combination cannot be sized. Check the inputs.');
+      }
+
+      if (stepLots < 0.01) {
+        resLots.textContent = '<0.01';
+        resUnder.textContent = 'Below the 0.01 minimum — reduce risk or widen the stop';
+        resUnder.className = 'mt-1.5 text-[11px] text-bf-400';
+      } else {
+        resLots.textContent = stepLots.toFixed(2);
+        resUnder.textContent = 'Rounded down to the 0.01 broker step · raw ' + lots.toFixed(3);
+        resUnder.className = 'mt-1.5 text-[11px] text-neutral-500';
+      }
+
+      resRisk.textContent = nfMoney(riskMoney, acct);
+      resValue.textContent = nfMoney(value, acct);
+      resUnits.textContent = unitsText;
+      resLoss.textContent = nfMoney(actualLoss, acct);
+      resFormula.textContent = nfMoney(riskMoney, acct) + ' ÷ (' + nfNum(s, 2) + ' × ' + nfMoney(value, acct) + ') = ' + lots.toFixed(3) + ' lots';
+
+      if (pulse) {
+        resLots.classList.remove('result-pop');
+        void resLots.offsetWidth;
+        resLots.classList.add('result-pop');
+      }
+
+      window.__lotResult = {
+        lots: stepLots >= 0.01 ? stepLots.toFixed(2) : lots.toFixed(3),
+        instrument: inst.value,
+        risk: nfMoney(riskMoney, acct),
+        stop: nfNum(s, 2) + ' ' + unitName,
+        loss: nfMoney(actualLoss, acct)
+      };
+    }
+
+    /* events */
+    document.querySelectorAll('.calc-tab').forEach((btn) => {
+      btn.addEventListener('click', () => setMode(btn.dataset.tab));
+    });
+
+    [ccy, inst, balance, risk, stop, pv].forEach((el) => {
+      el.addEventListener('input', () => recalc(false));
+      el.addEventListener('change', () => recalc(false));
+    });
+
+    $('lot-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      recalc(true);
+    });
+
+    document.querySelectorAll('[data-balance]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        balance.value = btn.dataset.balance;
+        document.querySelectorAll('[data-balance]').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        recalc(true);
+      });
+    });
+    document.querySelectorAll('[data-risk]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        risk.value = btn.dataset.risk;
+        document.querySelectorAll('[data-risk]').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        recalc(true);
+      });
+    });
+
+    $('reset-btn').addEventListener('click', () => {
+      balance.value = 10000;
+      risk.value = 1;
+      ccy.value = 'USD';
+      pv.value = 1;
+      setMode(MODE);
+    });
+
+    $('copy-btn').addEventListener('click', async () => {
+      const btn = $('copy-btn');
+      const r = window.__lotResult;
+      if (!r) return;
+      const text = r.lots + ' lots — ' + r.instrument + ' — risk ' + r.risk + ' with a ' + r.stop + ' stop (' + r.loss + ' at stop)';
+      try { await navigator.clipboard.writeText(text); } catch (e) {}
+      const prev = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('text-brand-200');
+      setTimeout(() => { btn.textContent = prev; btn.classList.remove('text-brand-200'); }, 1600);
+    });
+
+    function updateSymbols() {
+      const sym = SYMBOL[ccy.value] || ccy.value;
+      document.querySelectorAll('[data-ccy-symbol]').forEach((el) => { el.textContent = sym; });
+    }
+    ccy.addEventListener('change', updateSymbols);
+
+    /* exchange rates */
+    function loadRates() {
+      fetch('https://open.er-api.com/v6/latest/USD', { cache: 'no-store' })
+        .then((r) => r.json())
+        .then((j) => {
+          if (j && j.rates) {
+            RATES = Object.assign({}, RATES, j.rates);
+            let when = 'updated daily';
+            if (j.time_last_update_utc) {
+              const d = new Date(j.time_last_update_utc);
+              if (!isNaN(d)) when = 'updated ' + d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+            }
+            ratesNote.textContent = 'Live mid-market rates · ' + when;
+            recalc(false);
+          } else {
+            ratesNote.textContent = 'Reference rates — results are approximate.';
+          }
+        })
+        .catch(() => {
+          ratesNote.textContent = 'Offline reference rates — results are approximate.';
+        });
+    }
+
+    /* init */
+    setMode('forex');
+    updateSymbols();
+    loadRates();
+
+    /* close the mobile menu after a link tap */
+    document.querySelectorAll('header details a').forEach((a) => {
+      a.addEventListener('click', () => {
+        const d = a.closest('details');
+        if (d) d.open = false;
+      });
+    });
+  })();
+</script>
+</body>
+</html>

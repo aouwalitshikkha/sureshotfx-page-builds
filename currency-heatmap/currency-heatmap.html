@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Currency Heat Map — Live Forex Strength &amp; Weakness | SureShotFX</title>
+<meta name="description" content="Free live currency heat map for forex. Compare currency strength and weakness across 1 day, 1 week and 1 month. Spot mismatched pairs before they cost you." />
+<link rel="canonical" href="https://sureshotfx.com/currency-heatmap" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="Currency Heat Map — Live Forex Strength" />
+<meta property="og:description" content="See which currencies are gaining and which are weakening before you open a trade. Free live heat map." />
+<meta property="og:url" content="https://sureshotfx.com/currency-heatmap" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Currency Heat Map — Live Forex Strength" />
+<meta name="twitter:description" content="Live currency strength and weakness across 8 major currencies. Free forex heat map." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          amber: {
+            200: '#FDE68A', 300: '#FCD34D', 400: '#FBBF24', 500: '#F59E0B',
+            600: '#D97706', 700: '#B45309', 800: '#92400E',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-sm': '0 0 24px -6px rgba(0,245,149,0.35)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(0,245,149,0.10) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-heat {
+    background: linear-gradient(92deg,#22FFA9 0%,#7DD3FC 60%,#FBBF24 110%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(0,245,149,.55); } 70% { box-shadow:0 0 0 9px rgba(0,245,149,0); } 100% { box-shadow:0 0 0 0 rgba(0,245,149,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  .heat-cell { border:1px solid rgba(255,255,255,0.06); border-radius:6px; padding:6px 4px; text-align:center; cursor:pointer; transition:transform .12s ease, outline-color .12s ease; outline:1px solid transparent; }
+  .heat-cell:hover { transform: scale(1.04); outline-color: rgba(255,255,255,0.25); z-index:1; }
+  .heat-cell[aria-pressed="true"] { outline-color:#00F595; }
+  .heat-cell.dimmed { opacity:.25; }
+  .heat-head { font-weight:700; font-size:10px; color:#94a3b8; padding:4px 2px; text-align:center; }
+  .heat-head.active { color:#7CFFCB; }
+  .heat-empty { opacity:.3; cursor:default; }
+  .tf-btn[aria-selected="true"] { background:#00F595; color:#000; border-color:#00F595; }
+
+  .heat-table { display:grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap:4px; min-width:680px; }
+  .heat-wrap { overflow-x:auto; }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-brand-500 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>VIP signals — up to 72% off <span class="hidden sm:inline">· heat map stays free</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="/combo" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">See the deal →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black shadow-glow-sm">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a href="#heatmap" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Heat map</a>
+      <a href="#read" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">How to read it</a>
+      <a href="#timeframes" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Timeframes</a>
+      <a href="#correlation" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Correlation</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-brand-500/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#heatmap" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Heat map</a>
+          <a href="#read" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">How to read it</a>
+          <a href="#timeframes" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Timeframes</a>
+          <a href="#correlation" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Correlation</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="/live-signals" class="hidden whitespace-nowrap rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-brand-500/50 hover:bg-white/5 xl:inline-flex">Free Signals</a>
+      <a href="/combo" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Buy Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO + HEAT MAP ============ -->
+<section id="heatmap" class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-brand-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-idx-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 pb-16 pt-12 lg:px-8 lg:pb-20 lg:pt-16">
+    <div class="mx-auto max-w-3xl text-center">
+      <div class="mb-5 flex flex-wrap items-center justify-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span> Live currency heat map
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400">
+          Free · 8 majors
+        </span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.3rem]">
+        Currency Heat Map<br class="hidden sm:block" />
+        <span class="text-gradient-heat">Live Forex Strength &amp; Weakness</span>
+      </h1>
+
+      <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        Green means a currency is strengthening against another; red means it is weakening. Read 56 major pairs across 1 day, 1 week and 1 month, and spot mismatched trades before they inflate your risk.
+      </p>
+      </div>
+
+    <!-- heat map tool -->
+    <div class="mx-auto mt-10 max-w-6xl">
+      <div class="rounded-3xl border border-white/10 bg-ink-850/95 shadow-card backdrop-blur">
+        <div class="flex flex-col gap-3 border-b border-white/8 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+          <div class="flex flex-wrap items-center gap-2" role="tablist" aria-label="Timeframe">
+            <span class="mr-1 text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Timeframe</span>
+            <button type="button" role="tab" data-tf="d1" aria-selected="false" class="tf-btn rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-bold text-neutral-300 transition hover:text-white">1 Day</button>
+            <button type="button" role="tab" data-tf="d7" aria-selected="true" class="tf-btn rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-bold text-neutral-300 transition hover:text-white">1 Week</button>
+            <button type="button" role="tab" data-tf="d30" aria-selected="false" class="tf-btn rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-bold text-neutral-300 transition hover:text-white">1 Month</button>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <label for="focus-ccy" class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Focus</label>
+            <select id="focus-ccy" class="rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 text-[11px] font-semibold text-white outline-none">
+              <option value="">All currencies</option>
+              <option>EUR</option><option>USD</option><option>GBP</option><option>JPY</option>
+              <option>AUD</option><option>CAD</option><option>CHF</option><option>NZD</option>
+            </select>
+            <button type="button" id="refresh-btn" class="rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-semibold text-neutral-300 transition hover:border-brand-500/40 hover:text-brand-300">Refresh</button>
+          </div>
+        </div>
+
+        <div class="px-4 pt-4 sm:px-6">
+          <div class="heat-wrap">
+            <div id="heat-grid" class="heat-table" aria-live="polite"></div>
+          </div>
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[10px] text-neutral-500">
+            <p id="heat-status">Loading ECB reference rates…</p>
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="inline-flex items-center gap-1"><span class="inline-block h-2.5 w-2.5 rounded-sm" style="background:rgba(0,245,149,.6)"></span> stronger</span>
+              <span class="inline-flex items-center gap-1"><span class="inline-block h-2.5 w-2.5 rounded-sm" style="background:rgba(148,163,184,.25)"></span> flat</span>
+              <span class="inline-flex items-center gap-1"><span class="inline-block h-2.5 w-2.5 rounded-sm" style="background:rgba(248,113,113,.6)"></span> weaker</span>
+            </div>
+          </div>
+          <p class="mt-1 text-[10px] text-neutral-600 md:hidden">Swipe the grid sideways to see all eight currencies.</p>
+        </div>
+
+        <!-- movers + details -->
+        <div class="grid gap-4 px-4 pb-5 pt-4 sm:px-6 lg:grid-cols-5">
+          <div class="lg:col-span-2">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Biggest movers</p>
+            <div id="movers" class="mt-2 space-y-1.5 text-[11px]"></div>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-black/25 p-4 lg:col-span-3">
+            <div class="flex items-baseline justify-between gap-2">
+              <p id="detail-pair" class="font-display text-lg font-bold text-white">Select a pair</p>
+              <p id="detail-price" class="font-mono text-[12px] text-neutral-400"></p>
+            </div>
+            <p id="detail-copy" class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Click any cell in the heat map to see how that pair moved over the selected timeframe and the others.</p>
+            <dl id="detail-changes" class="mt-3 flex flex-wrap gap-2"></dl>
+            <p id="detail-action" class="mt-3 text-[11px] text-neutral-500"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO READ ============ -->
+<section id="read" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">The basics</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How to Read a Currency Heat Map</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          Every cell compares two currencies. The percentage is how much the pair on that cell moved over your selected timeframe — not how "good" a currency looks by itself. A currency can rise against the dollar and still be red against the euro.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Suppose EUR gains 1.2% against USD in a week while USD gains 0.4% against JPY. EURUSD turns green because the euro outperformed. If both move by the same amount, the cell stays flat — the heat map measures relative strength, not absolute direction.
+        </p>
+      </div>
+      <div class="min-w-0 lg:col-span-7">
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-brand-500/25 bg-brand-500/[0.05] p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Strong green</p>
+            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The base currency is clearly outperforming the quote. Useful as momentum confirmation, not as an entry signal on its own.</p>
+          </div>
+          <div class="rounded-2xl border border-brand-500/15 bg-brand-500/[0.03] p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-300">Pale green</p>
+            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">Mild outperformance. Worth checking against a higher timeframe before you trust it.</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Grey / near zero</p>
+            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The two currencies moved together. No edge in either direction from the heat map alone.</p>
+          </div>
+          <div class="rounded-2xl border border-red-500/25 bg-red-500/[0.05] p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-red-300">Red</p>
+            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The base currency is weakening against the quote. Useful for shorts, or for avoiding a long that fights momentum.</p>
+          </div>
+        </div>
+        <div class="mt-4 rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Three things it cannot do</p>
+          <ul class="mt-2 space-y-2 text-[12.5px] leading-relaxed text-neutral-400">
+            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not predict where price goes next. It reports what already happened.</li>
+            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not include volume or order flow, so it is not a liquidity map.</li>
+            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not replace your stop loss or your position size.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMEFRAMES ============ -->
+<section id="timeframes" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Three windows</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">1 Day, 1 Week, 1 Month — What Changes</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">The same pair can be green on the daily and red on the monthly. That is not a bug; it is the two timeframes describing different moves.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-brand-500/25 bg-brand-500/[0.04] p-6">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">1 Day</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Intraday momentum</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Useful for today's session bias. News-heavy and noisy, so a green daily cell can reverse by London close. Treat it as a filter, not a plan.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">1 Week</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Swing confirmation</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">A whole trading week of evidence. Strength here is more trustworthy than a single daily spike, and it is the window most swing traders watch.</p>
+      </div>
+      <div class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-6">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-idx-300">1 Month</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Trend and reversion</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">A longer look at which currencies are genuinely trending. Extreme readings can also highlight stretched moves that are candidates for mean reversion.</p>
+      </div>
+    </div>
+    <p class="mt-6 text-center text-[11.5px] leading-relaxed text-neutral-500">The grid uses daily ECB reference rates, not a tick feed. A cell reflects the comparison dates shown under it.</p>
+  </div>
+</section>
+
+<!-- ============ CORRELATION ============ -->
+<section id="correlation" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-6">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-red-300">Risk first</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Avoid Blowing Out Your Account</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          The most common way traders lose a week's profit in one session is stacking the same bet under different names. Long EURUSD, long GBPUSD and long AUDUSD are not three trades — they are one large short-USD position.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Use the heat map before you stack. If your candidates are all green on the same side, they are probably correlated. If they move together on the weekly as well, the correlation is structural, not a one-day coincidence.
+        </p>
+        <div class="mt-6 space-y-3">
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Cap total exposure per currency</p>
+            <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Three 1% trades that all lose when the dollar strengthens is a 3% loss in one move. Add them up before you enter.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Size the combined trade, not each ticket</p>
+            <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Split your risk budget across correlated entries instead of applying the same lot size to each. The <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a> does the maths per trade.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Diversify by currency, not by symbol</p>
+            <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">USD risk, JPY risk and commodity-currency risk are different exposures. Holding three symbols that all depend on one driver is not diversification.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="min-w-0 lg:col-span-6">
+        <div class="rounded-3xl border border-white/10 bg-ink-850 p-6 sm:p-7">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Illustration</p>
+          <h3 class="mt-2 font-display text-xl font-bold text-white">One thesis, three tickets</h3>
+          <div class="mt-5 overflow-hidden rounded-xl border border-white/10">
+            <table class="w-full text-left text-[12.5px]">
+              <thead class="bg-white/[0.04] text-[10px] uppercase tracking-wider text-neutral-500">
+                <tr><th class="px-3 py-2.5 font-bold">Position</th><th class="px-3 py-2.5 font-bold">Risk</th><th class="px-3 py-2.5 font-bold">If USD rallies</th></tr>
+              </thead>
+              <tbody class="divide-y divide-white/8 text-neutral-300">
+                <tr><td class="px-3 py-2.5">Long EURUSD</td><td class="px-3 py-2.5">1% of account</td><td class="px-3 py-2.5 text-red-300">Loses</td></tr>
+                <tr><td class="px-3 py-2.5">Long GBPUSD</td><td class="px-3 py-2.5">1% of account</td><td class="px-3 py-2.5 text-red-300">Loses</td></tr>
+                <tr><td class="px-3 py-2.5">Long AUDUSD</td><td class="px-3 py-2.5">1% of account</td><td class="px-3 py-2.5 text-red-300">Loses</td></tr>
+                <tr class="bg-red-500/[0.06]"><td class="px-3 py-2.5 font-semibold text-white">Combined</td><td class="px-3 py-2.5 font-semibold text-white">3% of account</td><td class="px-3 py-2.5 font-semibold text-red-300">One bad move</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">A better version: one position sized for the full thesis, or split the budget across different currencies. The heat map makes the overlap visible before the broker's margin call does.</p>
+          <a href="/forex-vip-signals" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-2.5 text-[13px] font-bold text-black transition hover:bg-brand-400">See Forex VIP Signals</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Currency Heat Map — Common Questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">What the grid shows, where the data comes from, and what it cannot tell you.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is a currency heat map?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">A grid that compares currency pairs and colours them by percentage change over a period. Green shows the base currency outperforming the quote; red shows underperformance. It is a relative-strength view of the forex market.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What do the colours mean?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Deeper green means stronger outperformance, deeper red means stronger underperformance, and grey means the two currencies moved roughly together. The percentage in each cell is the pair's move over the selected timeframe.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the data live?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The grid loads European Central Bank daily reference rates when you open the page, and you can refresh it any time. It is not a tick-by-tick feed, so it suits session bias and swing analysis rather than scalping.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Can it predict where a pair will go?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. It describes relative strength over the past day, week or month. The grid is a filter for momentum and correlation, not a forecast, a signal service or a liquidity map.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Why do some pairs barely change colour?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Because the two currencies moved by nearly the same percentage. Strength is relative: EUR and USD can both rally hard and still leave EURUSD almost unchanged.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Which currencies are included?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Eight majors: EUR, USD, GBP, JPY, AUD, CAD, CHF and NZD, which gives 56 pair comparisons. Exotic pairs and metals are outside this grid.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is there a gold or liquidity heat map?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Not here. This is a currency-only heat map, and it does not measure order-book liquidity. A "liquidity heatmap" shows resting orders at price levels, which is a different dataset. For gold positioning, use the <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a> and the <a href="/gold-vip-signals" class="font-semibold text-brand-400 hover:underline">Gold VIP</a> desk rather than treating this grid as a gold liquidity tool.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the currency heat map free?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — no account, no subscription and no usage cap. The VIP signal plans are the paid products; the heat map and the other web calculators are free.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How should I use it with VIP signals?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Use the grid as a second opinion, not a veto. If a setup already fits the desk's plan, a matching heat map strengthens the case; a conflicting grid is a reason to reduce size or wait. Always size from your own risk rules.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is this the official SureShotFX currency heat map?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is built by the same team behind the SureShotFX signals and Trade Copier. Traders also find us as SureShot FX, Sure Shot FX, SureShot Forex and SSF trading — all the same brand.</p>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Second opinion</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Not Sure Your Read Is Right?</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Send us the pair and the timeframe you are looking at. Support can check your read against the setup you are considering — but your entry, stop and position size stay your decision.</p>
+          </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Live chat on Telegram
+          </a>
+          <a href="/lot-size-calculator" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Size your next trade</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief — Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups — the same context the desk uses before it posts a signal. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks — check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier for MT4 and MT5, and free currency heat map, pip and lot size calculators. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-neutral-400 transition hover:text-white">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-neutral-400 transition hover:text-white">Guardian</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-neutral-400 transition hover:text-white">Pip Calculator App</a></li>
+          <li><a href="/pip-calculator/forex-pip-calculator" class="text-neutral-400 transition hover:text-white">Pip Calculator</a></li>
+          <li><a href="/lot-size-calculator" class="text-neutral-400 transition hover:text-white">Lot Size Calculator</a></li>
+          <li><a href="/currency-heatmap" class="text-brand-400">Currency Heatmap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-neutral-400 transition hover:text-white">Behind the Candle</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">Heat map disclaimer:</strong> The currency heat map is an educational visualization of historical ECB reference-rate changes. It is not a liquidity or order-flow map, not a trading signal and not a forecast. Always size positions from your own risk rules.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Currency Heat Map · 8 majors · <span class="text-neutral-500">Free, no signup</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">Free currency heat map</p>
+      <p class="text-[10px] text-neutral-500">Live strength · 8 majors</p>
+    </div>
+    <a href="/live-signals" class="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-black">Get Signals</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "SureShotFX Currency Heat Map",
+      "url": "https://sureshotfx.com/currency-heatmap",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Free live currency heat map comparing percent changes across 56 major forex pairs over 1 day, 1 week and 1 month.",
+      "featureList": [
+        "56 major pair comparisons",
+        "1 day, 1 week and 1 month timeframes",
+        "Per-pair detail with price and changes",
+        "Strongest and weakest movers",
+        "Focus filter by currency",
+        "No account required"
+      ],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
+      "publisher": { "@type": "Organization", "name": "SureShotFX", "url": "https://sureshotfx.com/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Trading Tools", "item": "https://sureshotfx.com/#tools" },
+        { "@type": "ListItem", "position": 3, "name": "Currency Heat Map", "item": "https://sureshotfx.com/currency-heatmap" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a currency heat map?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A grid that compares currency pairs and colours them by percentage change over a period. Green shows the base currency outperforming the quote; red shows underperformance." }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the colours mean?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Deeper green means stronger outperformance, deeper red means stronger underperformance, and grey means the two currencies moved roughly together." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the data live?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The grid loads European Central Bank daily reference rates when you open the page, and you can refresh it at any time. It is not a tick-by-tick feed." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it predict where a pair will go?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. It describes relative strength over the past day, week or month. It is a momentum and correlation filter, not a forecast." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a gold or liquidity heat map?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not here. This is a currency-only heat map and it does not measure order-book liquidity. A liquidity heat map shows resting orders at price levels, which is a different dataset." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the currency heat map free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. No account, no subscription and no usage cap. VIP signal plans are separate paid products." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* Black Friday countdown */
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      ['bf-clock','bf-clock-2'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = out; });
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
+  /* ---------- Currency heat map ---------- */
+  (function () {
+    const $ = (id) => document.getElementById(id);
+    const CURR = ['EUR','USD','GBP','JPY','AUD','CAD','CHF','NZD'];
+    const SYMBOLS = CURR.filter(c => c !== 'USD').join(',');
+    const TFS = ['d1','d7','d30'];
+    const LABELS = { d1: '1 day', d7: '1 week', d30: '1 month' };
+    const OFFSET = { live: 0, d1: 1, d7: 7, d30: 30 };
+    let RATES = null, tf = 'd7', focus = '', selected = null, liveDate = '', isSample = false, loading = false;
+    const iso = (d) => d.toISOString().slice(0, 10);
+    const fmt = (n) => (n > 0 ? '+' : '') + n.toFixed(2) + '%';
+    const price = (b, q, k) => RATES[k][q] / RATES[k][b];
+    const change = (b, q, k) => (price(b, q, 'live') / price(b, q, k) - 1) * 100;
+
+    function sampleRates() {
+      const mk = (e, g, j, a, c, h, n) => ({ USD: 1, EUR: e, GBP: g, JPY: j, AUD: a, CAD: c, CHF: h, NZD: n });
+      return {
+        live: mk(0.91174, 0.75939, 159.42, 1.4856, 1.4305, 0.84272, 1.819),
+        d1: mk(0.9102, 0.7588, 159.10, 1.4868, 1.4311, 0.84190, 1.8160),
+        d7: mk(0.90245, 0.75440, 159.70, 1.4912, 1.4260, 0.84550, 1.8230),
+        d30: mk(0.91880, 0.76320, 157.90, 1.4701, 1.4388, 0.83640, 1.8040)
+      };
+    }
+
+    async function load() {
+      if (loading) return;
+      loading = true;
+      $('heat-status').textContent = 'Loading ECB reference rates…';
+      const now = new Date();
+      const keys = ['live', 'd1', 'd7', 'd30'];
+      const results = await Promise.allSettled(keys.map(async (key) => {
+        const dt = new Date(now.getTime() - OFFSET[key] * 86400000);
+        const url = key === 'live'
+          ? 'https://api.frankfurter.dev/v1/latest?base=USD&symbols=' + SYMBOLS
+          : 'https://api.frankfurter.dev/v1/' + iso(dt) + '?base=USD&symbols=' + SYMBOLS;
+        const res = await fetch(url, { cache: 'no-store' });
+        const j = await res.json();
+        if (!j || !j.rates) throw new Error('bad payload');
+        return { key, rates: j.rates, date: j.date };
+      }));
+      const byKey = {};
+      let ok = true;
+      results.forEach((r, i) => {
+        const key = keys[i];
+        if (r.status === 'fulfilled') {
+          byKey[key] = Object.assign({ USD: 1 }, r.value.rates);
+          if (key === 'live') liveDate = r.value.date;
+        } else ok = false;
+      });
+      if (ok) { RATES = byKey; isSample = false; }
+      else { RATES = sampleRates(); isSample = true; }
+      loading = false;
+      render();
+    }
+
+    function bg(p) {
+      const a = Math.min(Math.abs(p) / 1.2, 1);
+      if (Math.abs(p) < 0.05) return 'rgba(148,163,184,' + (0.05 + a * 0.14) + ')';
+      return (p > 0 ? 'rgba(0,245,149,' : 'rgba(248,113,113,') + (0.06 + a * 0.55) + ')';
+    }
+
+    function headEl(text, active) {
+      const el = document.createElement('div');
+      el.className = 'heat-head' + (active ? ' active' : '');
+      el.textContent = text;
+      return el;
+    }
+
+    function render() {
+      const grid = $('heat-grid');
+      grid.innerHTML = '';
+      grid.appendChild(headEl('', false));
+      CURR.forEach((c) => grid.appendChild(headEl(c, focus === c)));
+      CURR.forEach((b) => {
+        grid.appendChild(headEl(b, focus === b));
+        CURR.forEach((q) => {
+          if (b === q) {
+            const empty = document.createElement('div');
+            empty.className = 'heat-cell heat-empty';
+            empty.textContent = '—';
+            empty.style.textAlign = 'center';
+            empty.style.fontSize = '11px';
+            grid.appendChild(empty);
+            return;
+          }
+          const p = change(b, q, tf);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'heat-cell' + ((focus && b !== focus && q !== focus) ? ' dimmed' : '');
+          btn.style.background = bg(p);
+          btn.setAttribute('aria-pressed', String(selected && selected.base === b && selected.quote === q));
+          btn.innerHTML = '<span class="block text-[9px] font-bold text-white/95 sm:text-[10px]">' + b + q + '</span>' +
+                          '<span class="mt-0.5 block font-mono text-[9px] font-semibold text-white/95 sm:text-[10px]">' + fmt(p) + '</span>';
+          btn.title = b + '/' + q + ' · ' + fmt(p) + ' over ' + LABELS[tf];
+          btn.addEventListener('click', () => { selected = { base: b, quote: q }; render(); });
+          grid.appendChild(btn);
+        });
+      });
+
+      const pairs = [];
+      CURR.forEach((b) => CURR.forEach((q) => { if (b !== q) pairs.push({ b, q, p: change(b, q, tf) }); }));
+      const filtered = focus ? pairs.filter((x) => x.b === focus || x.q === focus) : pairs;
+      const sorted = [...filtered].sort((a, b) => b.p - a.p);
+      const best = sorted.slice(0, 3);
+      const worst = sorted.slice(-3).reverse();
+      $('movers').innerHTML = best.concat(worst).map((x) => {
+        const col = x.p >= 0 ? 'text-brand-400' : 'text-red-400';
+        return '<div class="flex items-center justify-between rounded-lg border border-white/8 bg-black/20 px-2.5 py-1.5">' +
+               '<span class="font-semibold text-neutral-200">' + x.b + x.q + '</span>' +
+               '<span class="font-mono font-semibold ' + col + '">' + fmt(x.p) + '</span></div>';
+      }).join('');
+
+      $('detail-pair').textContent = selected ? selected.base + selected.quote : 'Select a pair';
+      if (selected) {
+        const b = selected.base, q = selected.quote;
+        $('detail-price').textContent = price(b, q, 'live').toFixed(q === 'JPY' ? 3 : 5);
+        $('detail-changes').innerHTML = TFS.map((k) => {
+          const cj = change(b, q, k);
+          const col = cj >= 0 ? 'text-brand-300 border-brand-500/25' : 'text-red-300 border-red-500/25';
+          return '<span class="rounded-lg border px-2 py-1 text-[11px] font-semibold ' + col + '">' + LABELS[k] + ' ' + fmt(cj) + '</span>';
+        }).join('');
+        const ch = change(b, q, tf);
+        const dir = ch >= 0 ? b + ' outperformed ' + q : b + ' underperformed ' + q;
+        $('detail-copy').textContent = dir + ' by ' + Math.abs(ch).toFixed(2) + '% over ' + LABELS[tf] + '. Price shown is the latest ECB reference rate, not your broker quote.';
+        $('detail-action').innerHTML = 'Momentum confirmation only — not a trading signal. <a href="/forex-vip-signals" class="font-semibold text-brand-400 hover:underline">Forex VIP Signals →</a>';
+      }
+
+      $('heat-status').textContent = isSample
+        ? 'Illustrative sample values — live rates unavailable. Refresh to retry.'
+        : 'ECB reference rates via Frankfurter · ' + liveDate;
+    }
+
+    document.querySelectorAll('.tf-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tf = btn.dataset.tf;
+        document.querySelectorAll('.tf-btn').forEach((x) => x.setAttribute('aria-selected', String(x === btn)));
+        render();
+      });
+    });
+    $('focus-ccy').addEventListener('change', (e) => { focus = e.target.value; render(); });
+    $('refresh-btn').addEventListener('click', load);
+
+    document.querySelectorAll('header details a').forEach((a) => {
+      a.addEventListener('click', () => { const d = a.closest('details'); if (d) d.open = false; });
+    });
+
+    load();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SureShotFX Trade Copier for MT4 &amp; MT5 | Auto-Copy Signals</title>
+<meta name="description" content="Copy every SureShotFX VIP signal to MT4 or MT5 automatically. Up to 3 accounts, dynamic lot sizing, spread and slippage control, free updates. Lifetime licence $49.99 with code FRIDAYCOPY." />
+<link rel="canonical" href="https://sureshotfx.com/trade-copier" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="SureShotFX Trade Copier for MT4 &amp; MT5" />
+<meta property="og:description" content="Mirror every VIP signal — entries, SL/TP updates, partial closes and move-to-breakeven — on up to three MT4/MT5 accounts. Lifetime licence $49.99." />
+<meta property="og:url" content="https://sureshotfx.com/trade-copier" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="SureShotFX Trade Copier — Auto-Copy Signals to MT4 &amp; MT5" />
+<meta name="twitter:description" content="Install once, pick your risk rules, and every VIP signal executes in your own broker account. Lifetime $49.99." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-sm': '0 0 24px -6px rgba(0,245,149,0.35)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(0,245,149,0.10) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-copier {
+    background: linear-gradient(92deg,#22FFA9 0%,#38BDF8 70%,#7DD3FC 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  .mono-grid {
+    background-image:
+      linear-gradient(to right, rgba(56,189,248,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56,189,248,0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(0,245,149,.55); } 70% { box-shadow:0 0 0 9px rgba(0,245,149,0); } 100% { box-shadow:0 0 0 0 rgba(0,245,149,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  .floaty { animation: floaty 7s ease-in-out infinite; }
+
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-track { animation: ticker 38s linear infinite; }
+  .ticker-mask { -webkit-mask-image: linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image: linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+  .ticker-mask:hover .ticker-track { animation-play-state: paused; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  .tier-card { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+  .tier-card:hover { transform: translateY(-5px); }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-brand-500 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>Copier lifetime — $49.99 <span class="hidden sm:inline">· save 33%</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="#pricing" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">Get the deal →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black shadow-glow-sm">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a href="#features" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Features</a>
+      <a href="#how" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">How it works</a>
+      <a href="#install" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Install</a>
+      <a href="#compatibility" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Requirements</a>
+      <a href="#pricing" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Pricing</a>
+      <a href="#reviews" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Reviews</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-brand-500/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#features" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Features</a>
+          <a href="#how" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">How it works</a>
+          <a href="#install" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Installation</a>
+          <a href="#compatibility" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Requirements</a>
+          <a href="#pricing" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Pricing</a>
+          <a href="#reviews" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Reviews</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="/live-signals" class="hidden whitespace-nowrap rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-brand-500/50 hover:bg-white/5 xl:inline-flex">Free Signals</a>
+      <a href="#pricing" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Buy Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-brand-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-idx-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-20 pt-14 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-24 lg:pt-20">
+    <div class="lg:col-span-7">
+      <div class="mb-5 flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span> SSF Trade Copier
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-bf-500/30 bg-bf-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-bf-400">
+          Black Friday — save 33%
+        </span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[2.9rem] xl:text-[3.45rem]">
+        Copy Every VIP Signal<br class="hidden sm:block" />
+        <span class="text-gradient-copier">Straight To MT4 &amp; MT5</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        The <strong class="font-semibold text-neutral-100">SureShotFX Trade Copier</strong> is a Windows application that mirrors every entry, stop-loss change, partial close and move-to-breakeven from our VIP channels into your own broker account — in milliseconds, on up to three accounts at once.
+      </p>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-500">
+        No EA to configure, no coding, no VPS scripts. Install it once, choose your risk rules, and it works quietly in the background while you keep full control of your funds, your broker and your leverage.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href="#pricing" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-bold text-black shadow-glow transition hover:bg-brand-400">
+          Start Auto-Pilot — $49.99
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#how" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/[0.06]">
+          <svg viewBox="0 0 24 24" class="h-4 w-4 text-brand-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z"/></svg>
+          See how it works
+        </a>
+      </div>
+
+      <ul class="mt-8 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:gap-2">
+        <li class="inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 text-xs font-medium text-neutral-300"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>MT4 + MT5</li>
+        <li class="inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 text-xs font-medium text-neutral-300"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Up to 3 accounts</li>
+        <li class="inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 text-xs font-medium text-neutral-300"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Windows PC or VPS</li>
+        <li class="inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 text-xs font-medium text-neutral-300"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Free updates for life</li>
+      </ul>
+    </div>
+
+    <!-- console card -->
+    <div class="lg:col-span-5">
+      <div class="floaty relative mx-auto w-full max-w-md">
+        <div class="absolute -inset-4 rounded-4xl bg-gradient-to-br from-brand-500/10 via-idx-500/10 to-transparent blur-2xl"></div>
+        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-ink-850/95 shadow-card backdrop-blur">
+          <div class="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-4 py-3">
+            <div class="flex items-center gap-2">
+              <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-500 text-black">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+              </span>
+              <div>
+                <p class="text-xs font-semibold text-white">SSF Copier — Console</p>
+                <p class="text-[10px] text-neutral-500">v4 · Windows</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-500/12 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-300">
+              <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span>Armed
+            </span>
+          </div>
+
+          <div class="relative mono-grid p-4">
+            <div class="rounded-2xl border border-white/8 bg-black/50 p-3.5 font-mono text-[11px] leading-relaxed">
+              <p class="flex items-center justify-between text-neutral-500"><span>13:42:07.118</span><span class="text-brand-400">VIP → MT5</span></p>
+              <p class="mt-1 text-white">XAUUSD <span class="rounded bg-brand-500/15 px-1 text-[10px] font-bold text-brand-300">BUY</span> 0.20 @ 2648.40</p>
+              <p class="mt-0.5 text-neutral-500">SL 2641.90 · TP1 2661.00 · TP2 2674.20</p>
+              <p class="mt-1 text-neutral-600">↳ copied to Account #1 &amp; #2 · 0.04s</p>
+            </div>
+
+            <div class="mt-2.5 space-y-2">
+              <div class="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2">
+                <span class="text-[11px] text-neutral-400">Connected accounts</span>
+                <span class="font-mono text-[11px] font-bold text-white">2 / 3</span>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2">
+                <span class="text-[11px] text-neutral-400">Risk mode</span>
+                <span class="font-mono text-[11px] font-bold text-brand-300">1% of balance</span>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2">
+                <span class="text-[11px] text-neutral-400">Auto SL / TP</span>
+                <span class="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-brand-300"><span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span>ON</span>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2">
+                <span class="text-[11px] text-neutral-400">Spread / slippage</span>
+                <span class="font-mono text-[11px] font-bold text-idx-300">auto · 3.0 pts</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between border-t border-white/8 bg-white/[0.02] px-4 py-2.5">
+            <span class="text-[10px] text-neutral-600">Illustrative interface</span>
+            <span class="rounded-md bg-bf-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-bf-400">Lifetime $49.99</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- trust strip -->
+  <div class="relative border-t border-white/5 bg-ink-900/60">
+    <dl class="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/5 px-4 lg:grid-cols-4 lg:px-8">
+      <div class="px-4 py-5 text-center lg:py-6"><dt class="font-display text-xl font-extrabold text-brand-300 sm:text-2xl">&lt;2 min</dt><dd class="mt-0.5 text-[11px] uppercase tracking-wider text-neutral-500">Typical install time</dd></div>
+      <div class="px-4 py-5 text-center lg:py-6"><dt class="font-display text-xl font-extrabold text-white sm:text-2xl">3</dt><dd class="mt-0.5 text-[11px] uppercase tracking-wider text-neutral-500">MT4/MT5 accounts</dd></div>
+      <div class="px-4 py-5 text-center lg:py-6"><dt class="font-display text-xl font-extrabold text-white sm:text-2xl">24/7</dt><dd class="mt-0.5 text-[11px] uppercase tracking-wider text-neutral-500">Customer support</dd></div>
+      <div class="px-4 py-5 text-center lg:py-6"><dt class="font-display text-xl font-extrabold text-white sm:text-2xl">Free</dt><dd class="mt-0.5 text-[11px] uppercase tracking-wider text-neutral-500">Updates &amp; first-install dev help</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(45%_35%_at_50%_0%,rgba(56,189,248,0.07),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Why automate</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Enhancing Your Profit Potential</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+        A seamless blend of automation and control for optimal risk management. Most forex signal trade copier tools stop at the entry price — SSF Copier mirrors the whole trade lifecycle, so your account behaves like the desk's.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <div class="group relative overflow-hidden rounded-3xl border border-brand-500/20 bg-gradient-to-b from-brand-500/[0.06] to-ink-850 p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-2xl bg-brand-500/15 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-lg font-bold text-white">It helps you</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-neutral-400">
+          Copy every profitable signal automatically — plus every follow-up command: set SL and TP, move SL to breakeven, close half, close partial, close all. You never have to read a message and re-enter an order by hand.
+        </p>
+      </div>
+
+      <div class="group relative overflow-hidden rounded-3xl border border-idx-500/20 bg-gradient-to-b from-idx-500/[0.06] to-ink-850 p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-2xl bg-idx-500/15 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-lg font-bold text-white">It's built for you</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-neutral-400">
+          Pick your own risk parameters: fixed lot size, a percentage of balance, partial-close percentage, spread tolerance and slippage. The copier scales the signal to your account instead of forcing one size on everyone.
+        </p>
+      </div>
+
+      <div class="group relative overflow-hidden rounded-3xl border border-gold-500/20 bg-gradient-to-b from-gold-500/[0.05] to-ink-850 p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-2xl bg-gold-500/15 text-gold-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-lg font-bold text-white">It protects you</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-neutral-400">
+          Hard stops, skipped symbols and a spread guard remove the two most expensive mistakes in manual copying: entering late and entering at a worse price. Trade without watching every candle.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-5 grid gap-4 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-3">
+      <div class="flex items-start gap-3">
+        <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/5 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </span>
+        <div><p class="text-sm font-semibold text-white">Signals stay human</p><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-500">The copier executes; analysts still decide. Nothing is generated by the software.</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/5 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+        </span>
+        <div><p class="text-sm font-semibold text-white">Your account, your broker</p><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-500">Funds never leave your brokerage. The copier only sends orders to your terminal.</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/5 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>
+        </span>
+        <div><p class="text-sm font-semibold text-white">One licence, three accounts</p><p class="mt-1 text-[12.5px] leading-relaxed text-neutral-500">Run the same rules on a live account, a second broker and a prop account at the same time.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Features</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Unlock Superior Trading Efficiency</h2>
+        <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+          Eight features built for one job: making your fills look like ours. No add-ons, no subscription tiers — everything below ships with the lifetime licence.
+        </p>
+      </div>
+      <div class="flex shrink-0 items-center gap-2 rounded-2xl border border-white/8 bg-ink-850 px-4 py-3">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        </span>
+        <div>
+          <p class="text-xs font-semibold text-white">MT4 &amp; MT5</p>
+          <p class="text-[10px] uppercase tracking-wider text-neutral-500">Windows 10 / 11 or VPS</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Super Fast Execution</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Take the exact entry we take. Orders are pushed the moment a signal is published, so a one-pip move no longer turns into a missed trade.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Mobile Notifications</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">A real-time Telegram alert lands whenever a signal is inserted or an order closes, including the order details — even when the PC is in another room.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 3v6h-6"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Auto Trade Updates</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Half close, partial close, full close and move-SL-to-entry are applied automatically as the desk posts them. No manual intervention, no forgotten stops.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Risk Management</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Choose fixed lots based on our guidance, or risk a percentage of your balance with dynamic lot sizing that updates as your equity changes.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-idx-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13l-3-3M21 17H8l3 3"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Dynamic Spread</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Spread is calculated for each call before the order goes in, so a wide Asian-session or news spread does not silently eat your risk-to-reward.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-idx-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Exclude Trade</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Not trading a pair, or already exposed to it? Exclude the symbol once and the copier skips every future call on it without touching the rest.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-idx-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Set Slippage</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Cap how far a fill may drift from the signal price. Tune it to your broker's execution instead of accepting whatever the market gives you.</p>
+      </article>
+
+      <article class="group rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/30 hover:bg-ink-800">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/><path d="M9 13l2 2 4-4"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-base font-bold text-white">Easy Install &amp; Setup Help</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Three clicks, under two minutes, plus video documentation and free remote help on your first installation. No technical background needed.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 flex flex-col items-start justify-between gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:flex-row sm:items-center">
+      <p class="text-[13px] leading-relaxed text-neutral-400">
+        Already following the desk manually? The copier is the execution layer for the same <span class="font-semibold text-neutral-200">forex signal copier service</span> — the analysis does not change, only the speed and consistency of your fills.
+      </p>
+      <a href="#how" class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-brand-400 transition hover:text-brand-300">See the workflow →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(45%_35%_at_20%_10%,rgba(0,245,149,0.06),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">How it works</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">From Checkout To Your First Copied Trade</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+        The copier connects your MT4/MT5 terminal to the VIP channels and replays every instruction on your account. You stay in control of the terminal, the broker and the risk — it only removes the delay.
+      </p>
+    </div>
+
+    <ol class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <li class="relative rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-display text-4xl font-extrabold text-white/10">01</span>
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          </span>
+        </div>
+        <h3 class="mt-3 font-display text-base font-bold text-white">Get Your Licence</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Buy the lifetime licence with the Black Friday coupon, then check your inbox for the download link and licence key. No subscription, no renewal.</p>
+      </li>
+      <li class="relative rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-display text-4xl font-extrabold text-white/10">02</span>
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+          </span>
+        </div>
+        <h3 class="mt-3 font-display text-base font-bold text-white">Join The VIP Channels</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">The copier mirrors SureShotFX signals, so it needs channel access. Connect Forex VIP, Gold VIP, Indices VIP — or all three with the <a href="/combo" class="font-semibold text-brand-400 hover:underline">Combo Bundle</a>.</p>
+      </li>
+      <li class="relative rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-display text-4xl font-extrabold text-white/10">03</span>
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+          </span>
+        </div>
+        <h3 class="mt-3 font-display text-base font-bold text-white">Install On Windows</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Run the installer on a Windows PC, laptop or VPS. Press Next, Install, Finish — the whole setup takes under two minutes on a stable connection.</p>
+      </li>
+      <li class="relative rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-display text-4xl font-extrabold text-white/10">04</span>
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/12 text-brand-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+          </span>
+        </div>
+        <h3 class="mt-3 font-display text-base font-bold text-white">Attach Accounts &amp; Arm</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Log in to up to three MT4/MT5 accounts, pick fixed lots or % risk, set slippage, then arm the copier. New signals execute from the next one onward.</p>
+      </li>
+    </ol>
+
+    <!-- multi account -->
+    <div class="mt-5 grid items-center gap-8 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-idx-300">One console</span>
+        <h3 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white">Manage Multiple Accounts From One Place</h3>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+          Unlike other copiers, you do not install a separate piece of software for every MT4/MT5 account. One licence covers three accounts inside one window — a live account, a second broker and a funded/prop account, all following the same rules.
+        </p>
+        <ul class="mt-4 grid gap-2 text-[13px] text-neutral-300 sm:grid-cols-2">
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>Per-account lot sizing</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>Independent symbol filters</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>One-click disconnect</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>Shared licence, no extra fees</li>
+        </ul>
+        <a href="/sureshotfx-guardian" class="mt-5 flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4 transition hover:border-brand-500/30 hover:bg-white/[0.04]">
+          <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gold-500/12 text-gold-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <span>
+            <span class="block text-[12.5px] font-semibold text-white">Running a funded account? Add Guardian</span>
+            <span class="mt-0.5 block text-[11.5px] leading-relaxed text-neutral-500">Guardian enforces daily loss and drawdown limits alongside the copier. See Guardian →</span>
+          </span>
+        </a>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="mx-auto w-full max-w-[380px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+          <img src="assets/mutli-account.png" width="439" height="578" alt="SureShotFX Trade Copier console managing multiple MT4 and MT5 accounts from one window" class="h-auto w-full" loading="lazy" decoding="async" />
+        </div>
+        <p class="mt-2 text-center text-[10px] text-neutral-600">Official SSF Copier interface — one console, three accounts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section id="install" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Installation</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Grandma Can Install It Too</h2>
+        <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+          Zero-hassle installation. Three clicks and you are good to go. Download <span class="rounded bg-white/5 px-1.5 py-0.5 font-mono text-[12.5px] text-neutral-300">SSF-TradeCopier-Setup.exe</span>, run it, and the copier opens on your desktop — no EA files, no MetaEditor, no DLL configuration.
+        </p>
+      </div>
+      <div class="flex shrink-0 flex-col gap-2 sm:flex-row">
+        <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/[0.06]">
+          <svg viewBox="0 0 24 24" class="h-4 w-4 text-brand-400" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+          Ask for remote setup
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <figure class="overflow-hidden rounded-3xl border border-white/8 bg-ink-850">
+        <div class="flex items-center justify-between border-b border-white/8 px-5 py-3">
+          <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Step 01</span>
+          <span class="rounded-md bg-brand-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Press Next</span>
+        </div>
+        <div class="bg-black/40 p-3">
+          <img src="assets/part1.png" width="563" height="462" alt="SSF Trade Copier installer additional tasks screen with the Next button highlighted" class="h-auto w-full rounded-xl border border-white/5" loading="lazy" decoding="async" />
+        </div>
+        <figcaption class="px-5 py-4 text-[12.5px] leading-relaxed text-neutral-400">Run the installer and press <span class="font-semibold text-neutral-200">Next</span> through the setup tasks.</figcaption>
+      </figure>
+
+      <figure class="overflow-hidden rounded-3xl border border-white/8 bg-ink-850">
+        <div class="flex items-center justify-between border-b border-white/8 px-5 py-3">
+          <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Step 02</span>
+          <span class="rounded-md bg-brand-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Press Install</span>
+        </div>
+        <div class="bg-black/40 p-3">
+          <img src="assets/part2.png" width="563" height="462" alt="SSF Trade Copier installer progress screen with the Install button highlighted" class="h-auto w-full rounded-xl border border-white/5" loading="lazy" decoding="async" />
+        </div>
+        <figcaption class="px-5 py-4 text-[12.5px] leading-relaxed text-neutral-400">Choose the install folder — the default is fine — and press <span class="font-semibold text-neutral-200">Install</span>.</figcaption>
+      </figure>
+
+      <figure class="overflow-hidden rounded-3xl border border-white/8 bg-ink-850">
+        <div class="flex items-center justify-between border-b border-white/8 px-5 py-3">
+          <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Step 03</span>
+          <span class="rounded-md bg-brand-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Press Finish</span>
+        </div>
+        <div class="bg-black/40 p-3">
+          <img src="assets/part3.png" width="564" height="463" alt="SSF Trade Copier installer completion screen with the Finish button highlighted" class="h-auto w-full rounded-xl border border-white/5" loading="lazy" decoding="async" />
+        </div>
+        <figcaption class="px-5 py-4 text-[12.5px] leading-relaxed text-neutral-400">Press <span class="font-semibold text-neutral-200">Finish</span> and the copier starts, ready for your licence key and accounts.</figcaption>
+      </figure>
+    </div>
+
+    <div class="mt-5 flex flex-col items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-[12.5px] leading-relaxed text-neutral-500">
+        Stuck on a firewall prompt, antivirus warning or VPS permission? Free development support is included on your first installation.
+      </p>
+      <a href="#faq" class="shrink-0 text-sm font-semibold text-brand-400 hover:text-brand-300">Installation FAQ →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPATIBILITY ============ -->
+<section id="compatibility" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <div class="lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Requirements</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What You Need To Run It</h2>
+        <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+          The copier is deliberately light. If your machine can run MetaTrader and stay online, it can run the copier — most traders use a cheap Windows VPS so execution continues while their laptop is closed.
+        </p>
+
+        <div class="mt-6 rounded-2xl border border-brand-500/20 bg-brand-500/[0.04] p-5">
+          <p class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-300">
+            <span class="grid h-6 w-6 place-items-center rounded-md bg-brand-500 text-black">
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            Non-negotiable
+          </p>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">An active SureShotFX VIP channel subscription. The copier is the execution tool — it copies our signals, so there has to be a signal feed to copy.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <a href="/forex-vip-signals" class="rounded-lg border border-white/10 px-2.5 py-1 text-[11px] font-medium text-neutral-300 transition hover:border-brand-500/40 hover:text-white">Forex VIP</a>
+            <a href="/gold-vip-signals" class="rounded-lg border border-white/10 px-2.5 py-1 text-[11px] font-medium text-neutral-300 transition hover:border-brand-500/40 hover:text-white">Gold VIP</a>
+            <a href="/indices-vip-signals" class="rounded-lg border border-white/10 px-2.5 py-1 text-[11px] font-medium text-neutral-300 transition hover:border-brand-500/40 hover:text-white">Indices VIP</a>
+            <a href="/combo" class="rounded-lg border border-bf-500/30 bg-bf-500/10 px-2.5 py-1 text-[11px] font-semibold text-bf-400 transition hover:bg-bf-500/20">Combo (copier included)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="overflow-hidden rounded-3xl border border-white/8 bg-ink-850">
+          <div class="border-b border-white/8 px-6 py-4">
+            <h3 class="font-display text-base font-bold text-white">System &amp; platform support</h3>
+          </div>
+          <dl class="divide-y divide-white/5">
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Trading platforms</dt>
+              <dd class="text-[13px] font-semibold text-white">MetaTrader 4 &amp; MetaTrader 5</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Operating system</dt>
+              <dd class="text-[13px] font-semibold text-white">Windows 10 / 11 PC, laptop or Windows VPS</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Connection</dt>
+              <dd class="text-[13px] font-semibold text-white">Stable internet — wired or VPS recommended</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Broker</dt>
+              <dd class="text-[13px] font-semibold text-white">Any MT4/MT5 broker — slippage is configurable</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Accounts per licence</dt>
+              <dd class="text-[13px] font-semibold text-white">Up to 3, simultaneously</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Updates</dt>
+              <dd class="text-[13px] font-semibold text-white">Free for the life of the licence</dd>
+            </div>
+            <div class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <dt class="text-[13px] text-neutral-400">Setup time</dt>
+              <dd class="text-[13px] font-semibold text-white">Under 2 minutes, remote help available</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div class="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4">
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-idx-500/12 text-idx-300">
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+            </span>
+            <p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">No EA or coding.</span> It runs as a desktop app beside MetaTrader, not as a chart expert advisor.</p>
+          </div>
+          <div class="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4">
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-500/12 text-brand-300">
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/></svg>
+            </span>
+            <p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Your funds stay put.</span> The copier has no withdrawal rights and never holds client money.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_0%,rgba(245,158,11,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-bf-500/35 bg-bf-500/10 px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-bf-400">
+        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        Black Friday Sale
+      </span>
+      <h2 class="mt-5 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
+        One Licence. One Payment. <span class="text-bf-400">$49.99</span>.
+      </h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+        No monthly fee, no per-account charge, no upgrade path to unlock features. Buy once, use it on three accounts for as long as you trade.
+      </p>
+      <div class="mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-2.5 text-xs text-neutral-400">
+        <span class="font-semibold text-white">Deal ends in</span>
+        <span id="bf-clock-2" class="rounded-lg bg-black px-2.5 py-1 font-mono text-sm font-bold tabular-nums text-bf-400">00d 00h 00m 00s</span>
+        <span class="hidden text-neutral-600 sm:inline">·</span>
+        <span>Coupon applied at checkout</span>
+      </div>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-5">
+      <!-- plan card -->
+      <article class="tier-card relative flex flex-col overflow-hidden rounded-3xl border border-brand-500/35 bg-gradient-to-b from-brand-500/[0.06] to-ink-850 p-6 shadow-card sm:p-8 lg:col-span-3">
+        <span class="absolute right-5 top-5 rounded-md bg-bf-500 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-black">Save 33%</span>
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-300">Lifetime licence</p>
+        <h3 class="mt-2 font-display text-2xl font-extrabold text-white">SureShotFX Trade Copier</h3>
+        <p class="mt-1 text-[13px] text-neutral-500">Windows · MT4 &amp; MT5 · up to 3 accounts</p>
+
+        <div class="mt-6 flex flex-wrap items-end gap-x-3 gap-y-1">
+          <span class="font-display text-5xl font-extrabold tracking-tight text-white">$49.99</span>
+          <span class="pb-2 text-lg font-semibold text-neutral-600 line-through">$74.99</span>
+          <span class="mb-2 rounded-md bg-bf-500/15 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-bf-400">One-time</span>
+        </div>
+        <p class="mt-1 text-[12px] text-neutral-500">Lifetime for 3 accounts · no renewals · free updates</p>
+
+        <ul class="mt-7 grid flex-1 gap-3 text-[13.5px] sm:grid-cols-2">
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Lifetime licence — pay once</span></li>
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Up to 3 MT4/MT5 accounts</span></li>
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">All 8 copier features included</span></li>
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Free updates for life</span></li>
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Video documentation</span></li>
+          <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">24/7 support + free first-install dev help</span></li>
+        </ul>
+
+        <a href="#" class="mt-7 block rounded-xl bg-brand-500 py-3.5 text-center text-sm font-extrabold text-black shadow-glow transition hover:bg-brand-400">Start Auto-Pilot Now</a>
+
+        <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <button type="button" data-coupon="FRIDAYCOPY" class="group flex flex-1 items-center justify-between rounded-lg border border-dashed border-white/15 bg-black/40 px-3 py-2 text-left">
+            <span class="text-[11px] text-neutral-500">Coupon <span class="font-mono font-bold text-bf-400">FRIDAYCOPY</span></span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-500 group-hover:text-brand-400" data-copy-label>Copy</span>
+          </button>
+          <p class="text-[10.5px] text-neutral-600 sm:text-right">Requires an active VIP subscription.</p>
+        </div>
+      </article>
+
+      <!-- side panels -->
+      <div class="flex flex-col gap-5 lg:col-span-2">
+        <div class="rounded-3xl border border-white/8 bg-ink-850 p-6">
+          <span class="inline-flex items-center gap-1.5 rounded-md bg-bf-500/12 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-bf-400">Best value</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-white">The copier is included with Combo</h3>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">
+            Combo members get the Trade Copier, Guardian and all three VIP channels in one lifetime or subscription plan — no separate $49.99 purchase.
+          </p>
+          <ul class="mt-3 space-y-1.5 text-[12.5px] text-neutral-400">
+            <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>3 VIP channels + copier</li>
+            <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>Guardian risk manager</li>
+            <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-brand-500"></span>FX Academy video library</li>
+          </ul>
+          <a href="/combo" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-400 hover:text-brand-300">See the Combo Bundle →</a>
+        </div>
+
+        <div class="rounded-3xl border border-white/8 bg-ink-850 p-6">
+          <h3 class="font-display text-base font-bold text-white">Not sure it fits your setup?</h3>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">
+            Send us your broker, platform and VPS details before you buy. Support will confirm compatibility and can walk you through the install remotely.
+          </p>
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 rounded-xl border border-white/12 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 text-brand-400" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Ask on Telegram
+          </a>
+        </div>
+
+        <p class="px-1 text-[10.5px] leading-relaxed text-neutral-600">
+          Payments are handled by our checkout provider. The copier is a digital product and is non-refundable once the licence key has been issued, except where required by law.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Trader feedback</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What Traders Love About The Copier</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-neutral-400">
+          A SureShotFX review from traders who actually run the software: full-time workers, prop traders and people who simply do not want to stare at charts. All six are reproduced from the official Trade Copier page.
+        </p>
+      </div>
+      <div class="grid shrink-0 grid-cols-3 gap-4 rounded-2xl border border-white/8 bg-ink-850 px-5 py-4 text-center">
+        <div><p class="font-display text-xl font-extrabold text-white">3</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Accounts</p></div>
+        <div><p class="font-display text-xl font-extrabold text-white">8</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Features</p></div>
+        <div><p class="font-display text-xl font-extrabold text-white">Lifetime</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Licence</p></div>
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Highly recommend Copier</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">They give accurate signals with high accuracy and their copier is magic — nothing to do, only auto mode, and you gain profit. Follow risk management and lot size and you will surely gain profit.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-500/15 text-[11px] font-bold text-brand-300">FL</span>
+          <div><p class="text-xs font-semibold text-white">Fitness lifeline</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Copier user</p></div>
+        </figcaption>
+      </figure>
+
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Love Copier Service</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">Love this service. I have purchased the lifetime subscription for both Gold and VIP Forex Signals with the Auto-copier. This week I'm up in excess of 60% on my account thanks to Sureshot FX.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-gold-500/15 text-[11px] font-bold text-gold-300">ES</span>
+          <div><p class="text-xs font-semibold text-white">Eban Szelesl</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Lifetime licence · Gold + Forex</p></div>
+        </figcaption>
+      </figure>
+
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Awesome 50% Profit in 2 Weeks!</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">I have followed SureShotFX with the copier for two weeks and made over 50% profit on my account. That's very awesome! I think it's a wise decision I have made that would change my life.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-500/15 text-[11px] font-bold text-brand-300">F</span>
+          <div><p class="text-xs font-semibold text-white">Fendy</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Copier user</p></div>
+        </figcaption>
+      </figure>
+
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Helpful for busy traders</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">I work full time, so I can't always place trades manually. The SureShotFX copier helps me stay connected to the signals without missing entries. Setup was easier than I expected.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-idx-500/15 text-[11px] font-bold text-idx-300">AK</span>
+          <div><p class="text-xs font-semibold text-white">Ayaan Khan</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Full-time trader · part-time user</p></div>
+        </figcaption>
+      </figure>
+
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Simple and stable</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">Once everything is connected, it runs quietly in the background. That's exactly what I wanted from a copier.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-500/15 text-[11px] font-bold text-brand-300">LM</span>
+          <div><p class="text-xs font-semibold text-white">Lucas Meyer</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Multi-account user</p></div>
+        </figcaption>
+      </figure>
+
+      <figure class="flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <p class="mt-3 text-sm font-bold text-white">Easy to manage</p>
+        <blockquote class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-300">I'm not very technical, but I found the setup manageable. After that, it's mostly hands-off. Trades copy automatically without constant checking.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-gold-500/15 text-[11px] font-bold text-gold-300">DR</span>
+          <div><p class="text-xs font-semibold text-white">Daniel Rossi</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">First-time copier user</p></div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="mt-6 text-center text-[11px] leading-relaxed text-neutral-600">
+      Individual results vary. The 60% and 50% figures are the reviewers' own reported account results, not typical, average or guaranteed outcomes. Trading leveraged products can lose more than your deposit.
+    </p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Trade Copier — Common Questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Everything traders ask before installing the SSF Copier on MT4 or MT5.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is the SureShotFX Trade Copier and what does it do?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">It is a Windows desktop application that connects your MetaTrader 4 or MetaTrader 5 terminal to the SureShotFX VIP channels. When an analyst posts a signal, the copier opens the same trade on your account and then mirrors every follow-up: stop-loss and take-profit levels, partial closes, half closes and move-to-breakeven. It is an execution tool, not an advisory service — the trade ideas come from the VIP desk.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does the SSF Trade Copier work automatically?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. Once your accounts are connected and the copier is armed, it operates automatically — entries, exits and trade management are applied without any manual intervention. You can pause copying at any time from the console.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Do I need access to the SSF VIP channels?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The copier copies our VIP signals, so it needs a signal feed. You can connect Forex VIP, Gold VIP, Indices VIP or all three through the <a href="/combo" class="font-semibold text-brand-400 hover:underline">Combo Bundle</a>. Buying the licence alone gives you the software but nothing to copy.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does it work with MT4 and MT5?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The copier supports both MetaTrader 4 and MetaTrader 5, including accounts on different brokers at the same time. You do not need separate licences or separate installs for each platform.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What do I need to run the SSF Copier?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">A Windows PC or laptop (Windows 10 or 11), or a Windows VPS, plus a stable internet connection and your MT4/MT5 login details. Mac and Linux users typically run it on a Windows VPS. The copier must stay running for trades to copy.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How many trading accounts can I attach?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The lifetime licence allows up to three accounts simultaneously, for example a live account, a second broker and a funded or prop account. Each account can use its own lot sizing and symbol exclusions.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is there any lag or delay in copying trades?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Execution is designed to be near-instant: the copier pushes the order as soon as the signal is published. Actual fill time still depends on your broker, your connection and market conditions — no software can guarantee an identical fill, which is why slippage limits and spread checks exist.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Can I set my own risk parameters?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. You can use a fixed lot size based on our guidance, or risk a percentage of your balance with dynamic lot sizing. You can also set partial-close percentages, a maximum spread, a slippage cap and a list of symbols to skip entirely.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Do I need technical expertise to set it up?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Not at all. Installation is a three-step Windows wizard that takes under two minutes, and video documentation covers the rest. If you get stuck, support can connect remotely and finish the setup for you — free on your first installation.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is customer support available if I face any issues?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — 24/7 support on <a href="https://t.me/ssf_adminbot" class="font-semibold text-brand-400 hover:underline">Telegram</a>, plus free development support during your first installation. Support can check compatibility, help with firewall or antivirus prompts and confirm your account is copying correctly.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Are updates to the SSF Forex Trade Copier free?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. All updates to the Trade Copier are free for the life of your licence, including platform compatibility fixes and new features. You will not be asked to repurchase or upgrade to a new tier.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the copier included in my VIP subscription?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The copier is included with the <a href="/combo" class="font-semibold text-brand-400 hover:underline">Combo Bundle</a> — it is part of what every combo plan unlocks, alongside Forex, Gold and Indices VIP. If you already hold a single-channel subscription, message <a href="https://t.me/ssf_adminbot" class="font-semibold text-brand-400 hover:underline">support</a> with your order details and they will confirm whether the copier is included or what the upgrade costs. Do not assume it is automatic.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Which brokers and account types does it work with?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Any broker that offers MT4 or MT5, including ECN, raw-spread, standard and cent accounts. The copier sends orders through your terminal, so the broker sees them as your own trades. Account type can affect spreads and execution speed, and those are exactly what the dynamic-spread and slippage settings are for.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does the Trade Copier have a news filter?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. The copier executes the VIP signals as they are published, so it does not block trades around economic releases. The Forex News Filter is a feature of <a href="/algo" class="font-semibold text-brand-400 hover:underline">SureShotFX Algo</a>, which is a separate automated strategy product. On the copier you can exclude a symbol entirely through the Exclude Trade setting, but there is no economic-calendar filter built in.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is this the official SureShotFX copier?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. This is the official SureShotFX Trade Copier distributed by the same team behind the SSF trading desk. Traders reach us through many spellings — SureShotFX, SureShot FX, Sure Shot FX, Sure Shot Forex, SureShot Forex, SSF trading or even “sure short” — all refer to the same brand. Download only from the link on this page or from <a href="https://t.me/ssf_adminbot" class="font-semibold text-brand-400 hover:underline">official support</a>; cracked copies are a common source of malware and account theft.</p>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Need help?</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Reach Out To Us Instantly</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Whether you are setting up your first MT4 account, moving to a VPS or wondering how to size lots on a small balance, our team is one click away. Live chat answers within minutes, 24/7.</p>
+          </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Live chat on Telegram
+          </a>
+          <a href="#install" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">See the install steps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief — Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups — the same context the desk uses before it posts a signal. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks — check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier for MT4 and MT5. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-brand-400">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-neutral-400 transition hover:text-white">Guardian</a></li>
+          <li><a href="/sureshot-raven" class="text-neutral-400 transition hover:text-white">Raven</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-neutral-400 transition hover:text-white">Pip Calculator App</a></li>
+          <li><a href="/lot-size-calculator" class="text-neutral-400 transition hover:text-white">Lot Size Calculator</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-neutral-400 transition hover:text-white">Behind the Candle</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">Software disclaimer:</strong> The SSF Trade Copier is provided for trade execution and management only. SureShotFX does not provide financial advice, does not manage accounts and does not control client funds. All trading activity occurs in your own brokerage account, under your control, and any loss is your responsibility.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+      <p><strong class="text-neutral-500">Payments &amp; refunds:</strong> All payments are governed by our published Terms and Refund Policy. The copier is a virtual digital product and is non-refundable once the licence key has been issued, unless explicitly stated otherwise.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Trade Copier · MT4 · MT5 · <span class="text-neutral-500">Automation, not advice</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">Trade Copier — $49.99 lifetime</p>
+      <p class="text-[10px] text-neutral-500">3 accounts · MT4 &amp; MT5 · Black Friday</p>
+    </div>
+    <a href="#pricing" class="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-black">Get Copier</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "SureShotFX Trade Copier",
+      "applicationCategory": "FinanceApplication",
+      "applicationSubCategory": "Forex trade copier",
+      "operatingSystem": "Windows 10, Windows 11, Windows Server (VPS)",
+      "description": "A Windows trade copier for MetaTrader 4 and MetaTrader 5 that copies SureShotFX VIP signals — entries, stop loss, take profit, partial closes and move-to-breakeven — to up to three accounts automatically.",
+      "featureList": [
+        "Copies entries, SL and TP from VIP channels",
+        "Mirrors partial closes, half closes and move-to-breakeven",
+        "Fixed lot or percentage-of-balance risk sizing",
+        "Dynamic spread calculation and configurable slippage",
+        "Exclude selected symbols",
+        "Up to three MT4/MT5 accounts per licence",
+        "Telegram notifications on new and closed orders",
+        "Free updates for life"
+      ],
+      "brand": { "@type": "Brand", "name": "SureShotFX" },
+      "offers": {
+        "@type": "Offer",
+        "name": "SureShotFX Trade Copier — lifetime licence",
+        "price": "49.99",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-11-30",
+        "availability": "https://schema.org/InStock",
+        "url": "https://sureshotfx.com/trade-copier#pricing"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://sureshotfx.com/#products" },
+        { "@type": "ListItem", "position": 3, "name": "Trade Copier", "item": "https://sureshotfx.com/trade-copier" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the SureShotFX Trade Copier and what does it do?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It is a Windows desktop application that connects your MetaTrader 4 or MetaTrader 5 terminal to the SureShotFX VIP channels. When an analyst posts a signal, the copier opens the same trade on your account and mirrors every follow-up: stop loss, take profit, partial closes, half closes and move to breakeven." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the SSF Trade Copier work automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once your accounts are connected and the copier is armed, entries, exits and trade management are applied without manual intervention. You can pause copying at any time from the console." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need access to the SSF VIP channels?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The copier copies SureShotFX VIP signals, so it needs a signal feed. You can connect Forex VIP, Gold VIP, Indices VIP or all three through the Combo Bundle." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work with MT4 and MT5?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The copier supports both MetaTrader 4 and MetaTrader 5, including accounts on different brokers at the same time, with one licence." }
+        },
+        {
+          "@type": "Question",
+          "name": "What do I need to run the SSF Copier?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A Windows 10 or 11 PC or laptop, or a Windows VPS, a stable internet connection, and your MT4 or MT5 login details. The copier must stay running for trades to copy." }
+        },
+        {
+          "@type": "Question",
+          "name": "How many trading accounts can I attach?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The lifetime licence allows up to three MT4 or MT5 accounts simultaneously. Each account can use its own lot sizing and symbol exclusions." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I set my own risk parameters?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can use fixed lot sizes or risk a percentage of balance with dynamic lot sizing, and set partial close percentages, maximum spread, a slippage cap and symbols to skip." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the copier included in my VIP subscription?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The copier is included with the Combo Bundle alongside Forex, Gold and Indices VIP. Holders of a single-channel subscription should contact support with their order details to confirm what their plan includes." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Trade Copier have a news filter?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. The copier executes VIP signals as they are published and does not block trades around economic releases. The Forex News Filter is a feature of SureShotFX Algo, a separate automated strategy product. On the copier you can exclude a symbol entirely through the Exclude Trade setting, but there is no economic-calendar filter." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* Black Friday countdown — ends 30 November 23:59 UTC */
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const els = [document.getElementById('bf-clock'), document.getElementById('bf-clock-2')];
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      els.forEach(function (el) { if (el) el.textContent = out; });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* Coupon copy */
+  document.querySelectorAll('[data-coupon]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      const code = btn.getAttribute('data-coupon');
+      const label = btn.querySelector('[data-copy-label]');
+      try { await navigator.clipboard.writeText(code); } catch (e) {}
+      if (label) {
+        const prev = label.textContent;
+        label.textContent = 'Copied!';
+        label.classList.add('text-brand-400');
+        setTimeout(function () { label.textContent = prev; label.classList.remove('text-brand-400'); }, 1800);
+      }
+    });
+  });
+
+  /* Close the mobile menu after a link tap */
+  document.querySelectorAll('header details a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      const d = a.closest('details');
+      if (d) d.open = false;
+    });
+  });
+</script>
+</body>
+</html>

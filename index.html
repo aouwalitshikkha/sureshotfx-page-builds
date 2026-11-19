@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SureShotFX — Page Builds</title>
+<meta name="description" content="Index of the SureShotFX page rebuilds." />
+<meta name="robots" content="noindex, nofollow" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          teal: { 300: '#5EEAD4', 400: '#2DD4BF', 500: '#14B8A6' },
+          gold: { 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E' },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+      },
+    },
+  }
+</script>
+<style>
+  html { background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,.font-display { font-family: Sora, system-ui, sans-serif; }
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(0,245,149,0.10) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient { background: linear-gradient(92deg,#22FFA9 0%,#7DD3FC 70%,#F5C451 110%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+</style>
+</head>
+<body class="min-h-screen bg-black text-neutral-200 antialiased">
+
+<header class="border-b border-white/5">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 lg:px-8">
+    <a href="./" class="flex items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+    <span class="rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-300">Noindex build</span>
+  </div>
+</header>
+
+<main class="relative overflow-hidden">
+  <div class="absolute inset-0 grid-glow opacity-80"></div>
+  <div class="absolute -left-40 top-0 h-96 w-96 rounded-full bg-brand-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-idx-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-20">
+    <div class="max-w-3xl">
+      <p class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-300">
+        <span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span> 8 pages
+      </p>
+      <h1 class="mt-5 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl">
+        SureShotFX<br />
+        <span class="text-gradient">page rebuilds</span>
+      </h1>
+      <p class="mt-5 max-w-2xl text-[15px] leading-relaxed text-neutral-400">
+        Standalone Tailwind-CDN pages, ready for GitHub Pages. Every page is set to <code class="rounded bg-white/[0.06] px-1.5 py-0.5 text-[12px] text-neutral-300">noindex, nofollow</code> and <code class="rounded bg-white/[0.06] px-1.5 py-0.5 text-[12px] text-neutral-300">robots.txt</code> disallows the whole site.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+
+      <a href="forex-vip-signals/forex-vip-signals.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-brand-500/25 bg-brand-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Signals</span>
+          <span class="font-display text-xs font-bold text-neutral-600">01</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Forex VIP Signals</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">The forex signal landing page: plans, markets, sessions, performance, reviews and the full FAQ.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">forex-vip-signals/</span>
+          <span class="text-brand-400 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="gold-vip-signals/gold-vip-signals.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-gold-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-gold-500/25 bg-gold-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold-300">Signals</span>
+          <span class="font-display text-xs font-bold text-neutral-600">02</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Gold VIP Signals</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">XAUUSD-focused signal page with gold plans, session times, volatility notes and risk copy.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">gold-vip-signals/</span>
+          <span class="text-gold-300 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="indices-vip-signals/indices-vip-signals.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-idx-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-idx-500/25 bg-idx-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-idx-300">Signals</span>
+          <span class="font-display text-xs font-bold text-neutral-600">03</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Indices VIP Signals</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">US30, NAS100 and SPX500 signal page with index plans, market hours and a dedicated FAQ.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">indices-vip-signals/</span>
+          <span class="text-idx-300 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="combo/combo.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-brand-500/25 bg-brand-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Bundle</span>
+          <span class="font-display text-xs font-bold text-neutral-600">04</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Combo Signals</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">Forex + Gold + Indices in one subscription, with three plans, the value breakdown and video reviews.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">combo/</span>
+          <span class="text-brand-400 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="trade-copier/trade-copier.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-brand-500/25 bg-brand-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Product</span>
+          <span class="font-display text-xs font-bold text-neutral-600">05</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Trade Copier</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">Windows copier for MT4 and MT5: features, install steps, compatibility, pricing and reviews.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">trade-copier/</span>
+          <span class="text-brand-400 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="lot-size-calculator/lot-size-calculator.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-brand-500/25 bg-brand-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-300">Tool</span>
+          <span class="font-display text-xs font-bold text-neutral-600">06</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Lot Size Calculator</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">A working lot size calculator for forex, gold and indices, plus the formula and risk guide.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">lot-size-calculator/</span>
+          <span class="text-brand-400 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="pip-calculator-mobile-app/pip-calculator-mobile-app.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-teal-400/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-teal-400/25 bg-teal-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-teal-300">App</span>
+          <span class="font-display text-xs font-bold text-neutral-600">07</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Pip Calculator App</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">Android app landing page with real screenshots, features, the Play link and pip education.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">pip-calculator-mobile-app/</span>
+          <span class="text-teal-300 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+      <a href="currency-heatmap/currency-heatmap.html" class="group flex flex-col rounded-3xl border border-white/8 bg-ink-850 p-6 transition hover:border-idx-500/40 hover:bg-ink-800">
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-idx-500/25 bg-idx-500/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-idx-300">Tool</span>
+          <span class="font-display text-xs font-bold text-neutral-600">08</span>
+        </div>
+        <h2 class="mt-4 font-display text-xl font-extrabold text-white">Currency Heat Map</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-neutral-400">Live 8×8 currency strength grid with three timeframes, biggest movers and per-pair detail.</p>
+        <div class="mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+          <span class="font-mono text-[10.5px] text-neutral-600">currency-heatmap/</span>
+          <span class="text-idx-300 transition group-hover:translate-x-0.5">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="mt-10 rounded-2xl border border-white/8 bg-white/[0.02] p-5 text-[12px] leading-relaxed text-neutral-500">
+      <p><span class="font-semibold text-neutral-300">Documentation</span> lives in each folder: <span class="font-mono text-[11px] text-neutral-400">README.md</span>, keyword map, keyword-coverage comparison and changelog.</p>
+      <p class="mt-2">All pages are <span class="font-semibold text-neutral-300">noindex, nofollow</span>; <span class="font-mono text-[11px] text-neutral-400">/robots.txt</span> disallows every crawler. This index is for review and staging only.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-white/5 py-6">
+  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 text-[11px] text-neutral-600 sm:flex-row lg:px-8">
+    <p>© 2026 SureShotFX. All rights reserved.</p>
+    <p>Static build · GitHub Pages ready</p>
+  </div>
+</footer>
+
+</body>
+</html>

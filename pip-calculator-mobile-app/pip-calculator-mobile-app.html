@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pip Calculator App for Forex, Gold &amp; Indices | SureShotFX</title>
+<meta name="description" content="Free pip calculator app for Android. Work out pip value, profit and loss for forex pairs, XAUUSD and indices — 10,000+ downloads, 4.0 stars on Google Play." />
+<link rel="canonical" href="https://sureshotfx.com/pip-calculator-mobile-app" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="SureShotFX Pip Calculator App" />
+<meta property="og:description" content="Pip value, profit and loss for forex, gold and indices — free on Google Play." />
+<meta property="og:url" content="https://sureshotfx.com/pip-calculator-mobile-app" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Pip Calculator App — Forex, Gold &amp; Indices" />
+<meta name="twitter:description" content="Know what one pip is worth before you click buy or sell. Free Android app from SureShotFX." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          teal: {
+            200: '#99F6E4', 300: '#5EEAD4', 400: '#2DD4BF', 500: '#14B8A6',
+            600: '#0D9488', 700: '#0F766E', 800: '#115E59', 900: '#134E4A',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-sm': '0 0 24px -6px rgba(0,245,149,0.35)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(45,212,191,0.12) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-app {
+    background: linear-gradient(92deg,#5EEAD4 0%,#22FFA9 55%,#B8FFE3 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(0,245,149,.55); } 70% { box-shadow:0 0 0 9px rgba(0,245,149,0); } 100% { box-shadow:0 0 0 0 rgba(0,245,149,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+  dialog::backdrop { background: rgba(0,0,0,.85); backdrop-filter: blur(4px); }
+  dialog[open] { animation: fadeIn .2s ease; }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-brand-500 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>VIP signals — up to 72% off <span class="hidden sm:inline">· app stays free</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="/combo" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">See the deal →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black shadow-glow-sm">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a href="#features" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Features</a>
+      <a href="#screenshots" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Screenshots</a>
+      <a href="#how" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">How it works</a>
+      <a href="#pips" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">What is a pip</a>
+      <a href="#markets" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Markets</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-brand-500/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#features" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Features</a>
+          <a href="#screenshots" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Screenshots</a>
+          <a href="#how" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">How it works</a>
+          <a href="#pips" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">What is a pip</a>
+          <a href="#markets" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Markets</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="/live-signals" class="hidden whitespace-nowrap rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-brand-500/50 hover:bg-white/5 xl:inline-flex">Free Signals</a>
+      <a href="#download" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Download</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-teal-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-brand-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 lg:grid-cols-12 lg:gap-6 lg:px-8 lg:pb-20 lg:pt-16">
+    <div class="lg:col-span-6">
+      <div class="mb-5 flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span> Free Android app
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400">
+          10,000+ downloads
+        </span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[2.5rem] xl:text-[3.5rem]">
+        Pip Calculator App<br class="hidden sm:block" />
+        <span class="text-gradient-app">for Forex, Gold &amp; Indices</span>
+      </h1>
+
+      <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        One pip is not worth the same on every pair. The SureShotFX pip calculator app shows the exact pip value — and the profit or loss at your take profit and stop loss — before you open the trade.
+      </p>
+      <p class="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500">
+        Free on Google Play. Forex pairs, XAUUSD and silver, and the major indices, with buy and sell calculated separately.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href="https://play.google.com/store/apps/details?id=org.dasadweb.sureshotfx" target="_blank" rel="noopener" class="group inline-flex items-center justify-center gap-3 rounded-xl bg-white px-5 py-3 text-black transition hover:bg-neutral-200">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
+            <path fill="#00D2FF" d="M3.6 2.3c-.3.3-.5.8-.5 1.4v16.6c0 .6.2 1.1.5 1.4l.1.1 9.3-9.3v-.2L3.7 2.2l-.1.1z"/>
+            <path fill="#00F076" d="M16.2 15.7l-3.2-3.2v-.2l3.2-3.2.1.1 3.8 2.2c1.1.6 1.1 1.6 0 2.2l-3.8 2.1h-.1z"/>
+            <path fill="#FFD500" d="M16.3 15.6L13 12.4 3.6 21.8c.4.4 1 .4 1.7 0l11-6.2"/>
+            <path fill="#FF3A44" d="M16.3 8.8l-11-6.2c-.7-.4-1.3-.4-1.7 0L13 12l3.3-3.2z"/>
+          </svg>
+          <span class="text-left leading-tight">
+            <span class="block text-[9px] font-semibold uppercase tracking-wider text-neutral-600">Get it on</span>
+            <span class="block font-display text-base font-bold">Google Play</span>
+          </span>
+        </a>
+        <a href="/pip-calculator/forex-pip-calculator" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] px-5 py-3.5 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/[0.06]">
+          Use the web calculator
+        </a>
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <div class="flex items-center gap-2">
+          <div class="flex text-bf-400" aria-hidden="true">
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" opacity=".25"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+          </div>
+          <span class="text-[12px] font-semibold text-white">4.0</span>
+          <span class="text-[12px] text-neutral-500">· 134 reviews on Google Play</span>
+        </div>
+        <p class="text-[11px] text-neutral-600">iPhone: App Store listing currently unavailable — use the web calculator above.</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="relative mx-auto max-w-xl">
+        <div class="absolute inset-8 rounded-full bg-teal-500/15 blur-3xl"></div>
+        <img src="assets/hero-app.png" width="1114" height="798" alt="SureShotFX pip calculator app on three phones showing a XAUUSD calculation, currency selection and the pair list" class="relative h-auto w-full drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="border-b border-white/5 bg-ink-900/50">
+  <div class="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/5 px-4 sm:grid-cols-4 lg:px-8">
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Free</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">No subscription</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">10,000+</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Downloads</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">4.0 ★</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Google Play</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Forex · Gold · Indices</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">One app</p></div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">What's inside</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">A Pip Calculator That Covers the Whole Trade</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">
+        Most pip calculators stop at "one pip is worth $10". This app takes your lot size, entry, stop loss and take profit, then shows the money at both ends — for forex, metals and indices.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-teal-500/12 text-teal-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Multiple currency options</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">View the result in USD, EUR or GBP, so the pip value matches the currency your account is funded in.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 4-6"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">All forex pairs</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Majors and crosses, from EURUSD and GBPUSD to AUDCAD and CHFJPY. The pip value updates for each quote currency.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V9M9 18V5M14 18v-6M19 18v-3"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Indices pairs supported</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">US30, SPX500, US500, NAS100, FTSE100, GER30, STOXX50 and JP225 — with the contract size you set.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-gold-500/12 text-gold-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l4-4h8l4 4-8 12L4 8z"/><path d="M4 8h16M9 4l3 16M15 4l-3 16"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Gold and silver</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">XAUUSD and XAGUSD are built in. On gold the app counts one pip as 0.10, so 0.10 lots is about $1 per pip.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-teal-500/12 text-teal-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h3M8 15h5"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Lot size and entry price</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Enter the lot size and entry price once. Every result is scaled to the position you are actually taking.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">SL and TP prices</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Set both levels and see the pips and approximate amount at each. The stop-loss figure is the one that matters before you click.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h6"/><path d="M17 15l3 3-3 3"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Custom contract size</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Index contracts differ by broker. Choose 1, 10 or 100 so the pip value matches your platform's specification.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M17 4v16"/><path d="M4 8l3-3 3 3M14 16l3 3 3-3"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Buy and sell separately</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Long and short trades have different entry, SL and TP. Calculate each side on its own instead of reusing one number.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-teal-500/12 text-teal-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[15px] font-bold text-white">Profit and loss in your currency</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">The app returns the approximate amount at TP and SL in the account currency you selected — not just a pip number.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREENSHOTS ============ -->
+<section id="screenshots" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">Inside the app</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Six Screens, One Calculation</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-neutral-400">Tap any screenshot to enlarge it. These are the shipping Android screens, not mockups.</p>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=org.dasadweb.sureshotfx" target="_blank" rel="noopener" class="shrink-0 rounded-xl border border-white/12 px-5 py-2.5 text-[13px] font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Open on Google Play</a>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-forex-pairs.jpg" data-caption="All forex pairs">
+        <img src="assets/screen-forex-pairs.jpg" width="333" height="592" alt="SureShotFX pip calculator app showing the full forex pair list from AUDCAD to EURNOK" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">All forex pairs</span>
+      </button>
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-indices.jpg" data-caption="Indices pairs">
+        <img src="assets/screen-indices.jpg" width="333" height="592" alt="SureShotFX pip calculator app showing index CFDs including US30, SPX500, NAS100 and GER30" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">Indices pairs</span>
+      </button>
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-contract.jpg" data-caption="Custom contract size">
+        <img src="assets/screen-contract.jpg" width="333" height="592" alt="SureShotFX pip calculator app with the custom contract size selector set to 1, 10 or 100" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">Custom contract size</span>
+      </button>
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-currency.jpg" data-caption="Multiple currencies">
+        <img src="assets/screen-currency.jpg" width="333" height="592" alt="SureShotFX pip calculator app with USD, EUR and GBP account currency options" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">Multiple currencies</span>
+      </button>
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-buy.jpg" data-caption="Buy calculation">
+        <img src="assets/screen-buy.jpg" width="333" height="592" alt="SureShotFX pip calculator app calculating a XAUUSD buy trade with take profit and stop loss amounts" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">Buy calculation</span>
+      </button>
+      <button type="button" class="group overflow-hidden rounded-2xl border border-white/10 bg-ink-850 text-left transition hover:border-teal-400/50" data-shot="assets/screen-sell.jpg" data-caption="Sell calculation">
+        <img src="assets/screen-sell.jpg" width="333" height="592" alt="SureShotFX pip calculator app calculating a XAUUSD sell trade separately from the buy side" class="h-auto w-full transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+        <span class="block px-3 py-2.5 text-[11px] font-semibold text-neutral-300">Sell calculation</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- lightbox -->
+<dialog id="shot-dialog" class="max-h-[92vh] w-fit max-w-[92vw] rounded-2xl border border-white/10 bg-ink-900 p-0 text-white">
+  <div class="relative">
+    <img id="shot-img" alt="" class="max-h-[82vh] w-auto rounded-2xl" />
+    <p id="shot-caption" class="px-4 py-3 text-center text-[12px] font-semibold text-neutral-300"></p>
+    <button type="button" id="shot-close" class="absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full bg-black/70 text-white transition hover:bg-black" aria-label="Close screenshot">
+      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+</dialog>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">Four fields</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How the Pip Calculator App Works</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">No login, no broker connection, no data feed. You type four things and the app does the arithmetic.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="relative rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-teal-300">01</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Pick the instrument</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Choose a forex pair, XAUUSD or XAGUSD, or an index. The list covers majors, crosses and the indices most CFD brokers quote.</p>
+      </div>
+      <div class="relative rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-teal-300">02</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Enter lot size and entry</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Use the lot size from your platform and the price you expect to be filled at. For indices, set the contract size your broker uses.</p>
+      </div>
+      <div class="relative rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-teal-300">03</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Add SL and TP</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Enter the stop-loss and take-profit prices. The app converts the distance into pips and into money at your lot size.</p>
+      </div>
+      <div class="relative rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="font-display text-xs font-bold text-teal-300">04</span>
+        <h3 class="mt-2 font-display text-[15px] font-bold text-white">Calculate buy or sell</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Switch between buy and sell and press calculate. The result shows the pips and the approximate amount for each side.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-col items-center justify-between gap-4 rounded-2xl border border-teal-400/20 bg-teal-500/[0.05] p-5 sm:flex-row">
+      <p class="text-[13px] leading-relaxed text-neutral-300"><span class="font-semibold text-white">Free signals inside the app.</span> The same screen links to the SureShotFX Telegram channel — the app does not place trades or ask for your broker login.</p>
+      <a href="/live-signals" class="shrink-0 rounded-xl border border-teal-400/30 px-4 py-2 text-[12.5px] font-semibold text-teal-200 transition hover:bg-teal-500/10">See free signals</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS A PIP ============ -->
+<section id="pips" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">The unit</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What Is a Pip — and What Is It Worth?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          A pip is the smallest standard move in a forex quote. On most pairs it is the fourth decimal place: EURUSD moving from 1.0850 to 1.0851 is one pip. On pairs quoted in yen it is the second decimal: USDJPY from 150.00 to 150.01.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          The value of that pip depends on the contract size and the quote currency. One standard lot of EURUSD pays <strong class="font-semibold text-neutral-200">$10 per pip</strong>; a micro lot pays $0.10. That is why a one-pip move can be $10 on one position and ten cents on another — and why traders search for a one pip forex app or a one pip trading app to check before they click.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Gold and indices do not use the same convention. The SureShotFX app counts <strong class="font-semibold text-neutral-200">one gold pip as 0.10</strong>, so a 0.10 lot is about $1 per pip. Index CFDs are counted in points, and the value depends on the contract size you select.
+        </p>
+        <div class="mt-6 rounded-2xl border border-teal-400/20 bg-teal-500/[0.05] p-5">
+          <p class="text-[12px] font-bold uppercase tracking-wider text-teal-300">Pip value formula</p>
+          <p class="mt-2 font-mono text-[13px] leading-relaxed text-neutral-300">Pip value = pip size × contract size × quote-to-account rate</p>
+          <p class="mt-2 text-[11.5px] leading-relaxed text-neutral-500">For EURUSD: 0.0001 × 100,000 = $10 per standard lot. The app does the conversion for JPY pairs and crosses.</p>
+        </div>
+      </div>
+
+      <div class="min-w-0 lg:col-span-7">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[12.5px]">
+            <caption class="bg-white/[0.04] px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500">Pip value examples</caption>
+            <thead class="border-t border-white/8 text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th scope="col" class="px-4 py-2.5 font-bold">Instrument</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">Lot size</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">1 pip / point</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">Value</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr><td class="px-4 py-2.5">EURUSD</td><td class="px-4 py-2.5">1.00</td><td class="px-4 py-2.5">0.0001</td><td class="px-4 py-2.5 font-semibold text-white">$10.00</td></tr>
+              <tr><td class="px-4 py-2.5">EURUSD</td><td class="px-4 py-2.5">0.10</td><td class="px-4 py-2.5">0.0001</td><td class="px-4 py-2.5 font-semibold text-white">$1.00</td></tr>
+              <tr><td class="px-4 py-2.5">EURUSD</td><td class="px-4 py-2.5">0.01</td><td class="px-4 py-2.5">0.0001</td><td class="px-4 py-2.5 font-semibold text-white">$0.10</td></tr>
+              <tr><td class="px-4 py-2.5">USDJPY</td><td class="px-4 py-2.5">1.00</td><td class="px-4 py-2.5">0.01</td><td class="px-4 py-2.5 font-semibold text-white">≈ $6.67 at 150.00</td></tr>
+              <tr><td class="px-4 py-2.5">XAUUSD</td><td class="px-4 py-2.5">0.10</td><td class="px-4 py-2.5">0.10</td><td class="px-4 py-2.5 font-semibold text-white">$1.00</td></tr>
+              <tr><td class="px-4 py-2.5">XAUUSD</td><td class="px-4 py-2.5">1.00</td><td class="px-4 py-2.5">0.10</td><td class="px-4 py-2.5 font-semibold text-white">$10.00</td></tr>
+              <tr><td class="px-4 py-2.5">US30</td><td class="px-4 py-2.5">1.00</td><td class="px-4 py-2.5">1 point</td><td class="px-4 py-2.5 font-semibold text-white">$1.00*</td></tr>
+              <tr><td class="px-4 py-2.5">NAS100</td><td class="px-4 py-2.5">1.00</td><td class="px-4 py-2.5">1 point</td><td class="px-4 py-2.5 font-semibold text-white">$1.00*</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] leading-relaxed text-neutral-600">*At the default contract size of 1. Index contracts vary by broker — use the contract-size selector in the app. USDJPY value moves with the exchange rate.</p>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[10.5px] font-bold uppercase tracking-wider text-neutral-500">Why the SL figure matters</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">The take-profit number is the exciting one. The stop-loss number is the one that decides whether the position fits your risk.</p>
+          </div>
+          <div class="rounded-xl border border-white/8 bg-white/[0.02] p-4">
+            <p class="text-[10.5px] font-bold uppercase tracking-wider text-neutral-500">Need position size instead?</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-neutral-400">Use the <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a> to go from risk % to lots, then come back here for the pip value.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKETS ============ -->
+<section id="markets" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">Coverage</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Forex, Metals and Indices in One App</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Switch instrument type on the same screen. The app keeps the pip definition and contract size correct for each market.</p>
+    </div>
+
+    <div class="mt-10 grid gap-4 lg:grid-cols-3">
+      <div class="rounded-2xl border border-brand-500/25 bg-brand-500/[0.04] p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-lg font-bold text-white">Forex</h3>
+          <span class="rounded-md bg-brand-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-400">100k units</span>
+        </div>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Majors and crosses, including EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, CHFJPY and EURNOK.</p>
+        <p class="mt-3 text-[11.5px] text-neutral-500">Pip: 0.0001, or 0.01 on JPY pairs.</p>
+        <a href="/forex-vip-signals" class="mt-4 inline-flex text-[12px] font-semibold text-brand-400 hover:text-brand-300">Forex VIP signals →</a>
+      </div>
+      <div class="rounded-2xl border border-gold-500/25 bg-gold-500/[0.04] p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-lg font-bold text-white">Metals</h3>
+          <span class="rounded-md bg-gold-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold-300">XAU · XAG</span>
+        </div>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Gold (XAUUSD) and silver (XAGUSD) with their own pip conventions and contract sizes.</p>
+        <p class="mt-3 text-[11.5px] text-neutral-500">Gold: 1 pip = 0.10, 100 oz per lot.</p>
+        <a href="/gold-vip-signals" class="mt-4 inline-flex text-[12px] font-semibold text-gold-300 hover:text-gold-200">Gold VIP signals →</a>
+      </div>
+      <div class="rounded-2xl border border-idx-500/25 bg-idx-500/[0.04] p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-lg font-bold text-white">Indices</h3>
+          <span class="rounded-md bg-idx-500/12 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-idx-300">1 · 10 · 100</span>
+        </div>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">US30, SPX500, US500, NAS100, FTSE100, GER30/DE40, STOXX50 and JP225.</p>
+        <p class="mt-3 text-[11.5px] text-neutral-500">Contract size is selectable per trade.</p>
+        <a href="/indices-vip-signals" class="mt-4 inline-flex text-[12px] font-semibold text-idx-300 hover:text-idx-200">Indices VIP signals →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BUY / SELL ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">Long vs short</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Buy and Sell Are Not Symmetrical</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          A long trade and a short trade on the same instrument have different entry, stop and target. Reusing the buy-side numbers on a sell order is how a "small" loss becomes a large one.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          The app calculates each direction separately. Below are two real XAUUSD screens from the Android build: same 0.10 lot, opposite sides, different pip counts and different money.
+        </p>
+        <a href="#download" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Get the app</a>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+        <div class="rounded-2xl border border-brand-500/25 bg-ink-850 p-5">
+          <div class="flex items-center justify-between">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Buy XAUUSD</p>
+            <span class="rounded bg-brand-500/15 px-2 py-0.5 text-[10px] font-bold text-brand-300">LONG</span>
+          </div>
+          <dl class="mt-4 space-y-2 text-[12.5px]">
+            <div class="flex justify-between"><dt class="text-neutral-500">Entry</dt><dd class="text-neutral-200">1780.20</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Take profit</dt><dd class="text-neutral-200">1800.00</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Stop loss</dt><dd class="text-neutral-200">1760.40</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Lot size</dt><dd class="text-neutral-200">0.10</dd></div>
+          </dl>
+          <div class="mt-4 grid grid-cols-2 gap-2 border-t border-white/8 pt-3">
+            <div><p class="text-[10px] uppercase tracking-wider text-neutral-500">TP</p><p class="font-display text-lg font-bold text-brand-400">+198 pips</p><p class="text-[11px] text-neutral-400">+$198</p></div>
+            <div><p class="text-[10px] uppercase tracking-wider text-neutral-500">SL</p><p class="font-display text-lg font-bold text-red-400">−198 pips</p><p class="text-[11px] text-neutral-400">−$198</p></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-idx-500/25 bg-ink-850 p-5">
+          <div class="flex items-center justify-between">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-idx-300">Sell XAUUSD</p>
+            <span class="rounded bg-idx-500/15 px-2 py-0.5 text-[10px] font-bold text-idx-200">SHORT</span>
+          </div>
+          <dl class="mt-4 space-y-2 text-[12.5px]">
+            <div class="flex justify-between"><dt class="text-neutral-500">Entry</dt><dd class="text-neutral-200">1780.20</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Take profit</dt><dd class="text-neutral-200">1760.00</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Stop loss</dt><dd class="text-neutral-200">1790.40</dd></div>
+            <div class="flex justify-between"><dt class="text-neutral-500">Lot size</dt><dd class="text-neutral-200">0.10</dd></div>
+          </dl>
+          <div class="mt-4 grid grid-cols-2 gap-2 border-t border-white/8 pt-3">
+            <div><p class="text-[10px] uppercase tracking-wider text-neutral-500">TP</p><p class="font-display text-lg font-bold text-idx-300">+202 pips</p><p class="text-[11px] text-neutral-400">+$202</p></div>
+            <div><p class="text-[10px] uppercase tracking-wider text-neutral-500">SL</p><p class="font-display text-lg font-bold text-red-400">−102 pips</p><p class="text-[11px] text-neutral-400">−$102</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mt-6 text-[11px] leading-relaxed text-neutral-600">Screens reproduced from the shipping app at 0.10 lots. Amounts are approximate and depend on the broker's contract specification and exchange rate. They are examples, not signals or recommendations.</p>
+  </div>
+</section>
+
+<!-- ============ DOWNLOAD ============ -->
+<section id="download" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(55%_50%_at_50%_0%,rgba(45,212,191,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="overflow-hidden rounded-3xl border border-teal-400/25 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-6 sm:p-9">
+      <div class="flex flex-col items-start gap-7 sm:flex-row sm:items-center">
+        <img src="assets/app-icon.png" width="480" height="480" alt="SureShotFX Pip Calculator app icon" class="h-16 w-16 shrink-0 rounded-2xl border border-white/10" loading="lazy" decoding="async" />
+        <div class="min-w-0 flex-1">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-teal-300">Free download</p>
+          <h2 class="mt-1.5 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Get the Pip Calculator App</h2>
+          <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Android on Google Play. No account, no broker login, no card. The app is a calculator — it does not place trades.</p>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=org.dasadweb.sureshotfx" target="_blank" rel="noopener" class="inline-flex w-full shrink-0 items-center justify-center gap-3 rounded-xl bg-white px-5 py-3 text-black transition hover:bg-neutral-200 sm:w-auto">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true">
+            <path fill="#00D2FF" d="M3.6 2.3c-.3.3-.5.8-.5 1.4v16.6c0 .6.2 1.1.5 1.4l.1.1 9.3-9.3v-.2L3.7 2.2l-.1.1z"/>
+            <path fill="#00F076" d="M16.2 15.7l-3.2-3.2v-.2l3.2-3.2.1.1 3.8 2.2c1.1.6 1.1 1.6 0 2.2l-3.8 2.1h-.1z"/>
+            <path fill="#FFD500" d="M16.3 15.6L13 12.4 3.6 21.8c.4.4 1 .4 1.7 0l11-6.2"/>
+            <path fill="#FF3A44" d="M16.3 8.8l-11-6.2c-.7-.4-1.3-.4-1.7 0L13 12l3.3-3.2z"/>
+          </svg>
+          <span class="text-left leading-tight">
+            <span class="block text-[9px] font-semibold uppercase tracking-wider text-neutral-600">Get it on</span>
+            <span class="block font-display text-base font-bold">Google Play</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="mt-6 grid gap-3 border-t border-white/8 pt-5 text-[11.5px] text-neutral-500 sm:grid-cols-3">
+        <p><span class="font-semibold text-neutral-300">4.0 ★</span> · 134 reviews</p>
+        <p><span class="font-semibold text-neutral-300">10,000+</span> downloads</p>
+        <p><span class="font-semibold text-neutral-300">Free</span> · no subscription</p>
+      </div>
+
+      <p class="mt-4 text-[11px] leading-relaxed text-neutral-600">iPhone: the App Store listing is currently unavailable. The <a href="/pip-calculator/forex-pip-calculator" class="font-semibold text-brand-400 hover:underline">web pip calculator</a> does the same job in Safari or Chrome.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEB FALLBACK ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">No Android?</span>
+        <h2 class="mt-3 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Use the Browser Calculators Instead</h2>
+        <p class="mt-3 text-[14px] leading-relaxed text-neutral-400">Both tools are free, need no signup, and work on desktop, iPhone and any tablet.</p>
+      </div>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      <a href="/pip-calculator/forex-pip-calculator" class="group rounded-2xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15h0"/></svg>
+        </span>
+        <h3 class="mt-3 font-display text-lg font-bold text-white">Forex pip calculator</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Pip value for any pair, in your account currency, without installing anything.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-brand-400 group-hover:text-brand-300">Open the calculator →</span>
+      </a>
+      <a href="/lot-size-calculator" class="group rounded-2xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-teal-500/12 text-teal-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 4-6"/></svg>
+        </span>
+        <h3 class="mt-3 font-display text-lg font-bold text-white">Lot size calculator</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Go from balance and risk % to the exact position size for forex, gold or indices.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-brand-400 group-hover:text-brand-300">Open the calculator →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLACK FRIDAY CROSS-SELL ============ -->
+<section class="relative overflow-hidden border-b border-white/5 py-16 lg:py-20">
+  <div class="absolute inset-0 bg-[radial-gradient(55%_50%_at_50%_0%,rgba(245,158,11,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="overflow-hidden rounded-3xl border border-bf-500/30 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-bf-500/35 bg-bf-500/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-bf-400">
+            <svg viewBox="0 0 24 24" class="h-3 w-3" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            Black Friday
+          </span>
+          <h2 class="mt-4 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Know the pip. Then find the trade.</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+            The app is free and stays free. If you want the setups as well, the VIP channels send entries, stops and targets with the lot guidance already worked out — and the Black Friday sale is live on every plan.
+          </p>
+          <p class="mt-3 text-[12px] text-neutral-500">Sale ends in <span id="bf-clock-2" class="font-mono font-bold tabular-nums text-bf-400">00d 00h 00m 00s</span> · up to 72% off</p>
+        </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto">
+          <a href="/combo" class="inline-flex items-center justify-center gap-2 rounded-xl bg-bf-500 px-6 py-3 text-sm font-extrabold text-black shadow-[0_0_30px_-10px_rgba(245,158,11,0.7)] transition hover:bg-bf-400">See the Combo deal</a>
+          <a href="/live-signals" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Free signals</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Pip Calculator App — Common Questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Downloads, platforms, pairs and the maths behind the result.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Is the pip calculator app free?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The app is free to download and free to use, with no subscription and no in-app purchase needed for the calculator. It stays free during the Black Friday sale and after it.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Is it available on iPhone?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The Android app is live on Google Play. The iOS App Store listing is currently unavailable, so iPhone users should use the <a href="/pip-calculator/forex-pip-calculator" class="font-semibold text-brand-400 hover:underline">web pip calculator</a> — it does the same calculation in Safari or Chrome.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Which forex pairs does the app support?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The full major and cross list, including EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, USDCHF, NZDUSD, AUDCAD, AUDCHF, AUDJPY, AUDNZD, CADCHF, CADJPY, CHFJPY, EURAUD, EURCAD, EURCHF, EURNOK, EURGBP and more. If you can trade it on MT4 or MT5, it is almost certainly in the list.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Does it work for gold (XAUUSD)?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes, along with silver (XAGUSD). The app counts one gold pip as 0.10, so at 0.10 lots one pip is about $1. The screenshots on this page show a 0.10 lot XAUUSD buy and sell calculation.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Does it work for indices?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — US30, SPX500, US500, NAS100, FTSE100, GER30/DE40, STOXX50 and JP225. Index contracts differ by broker, so the app lets you choose the contract size (1, 10 or 100) before calculating.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">How is pip value calculated?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Pip value = pip size × contract size × the quote-to-account exchange rate. For EURUSD at one standard lot that is 0.0001 × 100,000 = $10. The app applies the same formula and converts the result into the account currency you select.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">What is one pip in forex?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">One pip is the fourth decimal place on most pairs — EURUSD 1.0850 to 1.0851 — and the second decimal on yen pairs — USDJPY 150.00 to 150.01. Gold and indices use different conventions, which the app handles per instrument.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Can I calculate buy and sell separately?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. Switch between buy and sell and the app recalculates the pip distance and amount for that direction. Long and short trades rarely share the same stop and target, so calculate each one on its own.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Do I need a broker account or login?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. The app is a calculator, not a trading terminal. It does not connect to your broker, does not place orders and does not ask for your MT4/MT5 credentials. You type the numbers and read the result.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">How accurate is the pip calculator?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The arithmetic is exact for the contract size and exchange rate used. The result can differ from your platform if your broker uses a non-standard contract size, a five-digit pip convention or a different conversion rate. Check the specification once, then trust the app for that symbol.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Is there a web version?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — the <a href="/pip-calculator/forex-pip-calculator" class="font-semibold text-brand-400 hover:underline">forex pip calculator</a> and the <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a> both run in the browser, free and without an account.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">How do I download the pip calculator app?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Open the Google Play listing from the buttons on this page and tap Install. The app is published as <span class="font-semibold text-neutral-200">SureShotFX - Pip Calculator</span>. Avoid APK mirrors — the Play listing is the only official download.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-teal-300">Is this the official SureShotFX app?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-teal-300">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is published by the same team behind the SureShotFX signals and the Trade Copier. Traders reach us as SureShotFX, SureShot FX, Sure Shot FX, SureShot Forex or SSF trading — all the same brand. The app is free and does not sell signals inside the calculator.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-teal-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-teal-300">App support</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Stuck on a Number?</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Send us the symbol, lot size and the prices you entered. Support will check the result against your broker's contract specification and tell you which number is off — 24/7 on Telegram.</p>
+          </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Live chat on Telegram
+          </a>
+          <a href="/pip-calculator/forex-pip-calculator" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Use the web calculator</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief — Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups — the same context the desk uses before it posts a signal. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks — check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier for MT4 and MT5, and free pip and lot size calculators for Android and the web. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-neutral-400 transition hover:text-white">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-neutral-400 transition hover:text-white">Guardian</a></li>
+          <li><a href="/sureshot-raven" class="text-neutral-400 transition hover:text-white">Raven</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-brand-400">Pip Calculator App</a></li>
+          <li><a href="/pip-calculator/forex-pip-calculator" class="text-neutral-400 transition hover:text-white">Pip Calculator</a></li>
+          <li><a href="/lot-size-calculator" class="text-neutral-400 transition hover:text-white">Lot Size Calculator</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-neutral-400 transition hover:text-white">Behind the Candle</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">App disclaimer:</strong> The pip calculator app is an educational calculator. Results depend on the contract specification and exchange rate at your broker and may differ from your platform. It is not financial advice, does not place trades and does not connect to your brokerage account.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Pip Calculator App · Forex · Gold · Indices · <span class="text-neutral-500">Free on Google Play</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">Pip calculator app — free</p>
+      <p class="text-[10px] text-neutral-500">Android · 10,000+ downloads</p>
+    </div>
+    <a href="https://play.google.com/store/apps/details?id=org.dasadweb.sureshotfx" target="_blank" rel="noopener" class="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-black">Get App</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "name": "SureShotFX - Pip Calculator",
+      "url": "https://sureshotfx.com/pip-calculator-mobile-app",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Android",
+      "description": "Free pip calculator app for forex, gold and indices. Enter lot size, entry, stop loss and take profit to see the pip value and the approximate profit or loss in your account currency.",
+      "featureList": [
+        "Multiple account currencies: USD, EUR, GBP",
+        "All major and cross forex pairs",
+        "Indices including US30, SPX500, NAS100, FTSE100 and GER30",
+        "Gold (XAUUSD) and silver (XAGUSD)",
+        "Lot size and entry price inputs",
+        "Stop loss and take profit calculations",
+        "Custom contract size for indices",
+        "Separate buy and sell calculations",
+        "Approximate profit and loss in the selected currency"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "downloadUrl": "https://play.google.com/store/apps/details?id=org.dasadweb.sureshotfx",
+      "publisher": { "@type": "Organization", "name": "SureShotFX", "url": "https://sureshotfx.com/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Trading Tools", "item": "https://sureshotfx.com/#tools" },
+        { "@type": "ListItem", "position": 3, "name": "Pip Calculator App", "item": "https://sureshotfx.com/pip-calculator-mobile-app" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the pip calculator app free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The app is free to download and free to use, with no subscription and no in-app purchase needed for the calculator." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it available on iPhone?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Android app is live on Google Play. The iOS App Store listing is currently unavailable, so iPhone users should use the web pip calculator, which does the same calculation in Safari or Chrome." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work for gold (XAUUSD)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, along with silver (XAGUSD). The app counts one gold pip as 0.10, so at 0.10 lots one pip is about $1." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work for indices?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes: US30, SPX500, US500, NAS100, FTSE100, GER30, STOXX50 and JP225, with a contract size selector of 1, 10 or 100." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is pip value calculated?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Pip value = pip size x contract size x the quote-to-account exchange rate. For EURUSD at one standard lot that is 0.0001 x 100,000 = $10." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a broker account or login?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. The app is a calculator, not a trading terminal. It does not connect to your broker, does not place orders and does not ask for MT4 or MT5 credentials." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a web version?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The forex pip calculator and the lot size calculator both run in the browser, free and without an account." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the official SureShotFX app?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is published by the same team behind the SureShotFX signals and the Trade Copier. The app is free and does not sell signals inside the calculator." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* Black Friday countdown */
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const els = [document.getElementById('bf-clock'), document.getElementById('bf-clock-2')];
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      els.forEach((el) => { if (el) el.textContent = out; });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* Screenshot lightbox */
+  (function () {
+    const dlg = document.getElementById('shot-dialog');
+    const img = document.getElementById('shot-img');
+    const cap = document.getElementById('shot-caption');
+    document.querySelectorAll('[data-shot]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const inner = btn.querySelector('img');
+        img.src = btn.dataset.shot;
+        img.alt = inner ? inner.alt : btn.dataset.caption;
+        cap.textContent = btn.dataset.caption;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+      });
+    });
+    document.getElementById('shot-close').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+    /* close the mobile menu after a link tap */
+    document.querySelectorAll('header details a').forEach((a) => {
+      a.addEventListener('click', () => {
+        const d = a.closest('details');
+        if (d) d.open = false;
+      });
+    });
+  })();
+</script>
+</body>
+</html>
