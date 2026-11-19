@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Currency Heat Map — Live Forex Strength &amp; Weakness | SureShotFX</title>
-<meta name="description" content="Free live currency heat map for forex. Compare currency strength and weakness across 1 day, 1 week and 1 month. Spot mismatched pairs before they cost you." />
+<title>Currency Heat Map: Live Forex Strength and Weakness | SureShotFX</title>
+<meta name="description" content="A free currency heat map that shows which currencies are strong or weak across 1 day, 1 week and 1 month. Uses European Central Bank daily rates. No signup." />
 <link rel="canonical" href="https://sureshotfx.com/currency-heatmap" />
 <meta name="robots" content="noindex, nofollow" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SureShotFX" />
-<meta property="og:title" content="Currency Heat Map — Live Forex Strength" />
-<meta property="og:description" content="See which currencies are gaining and which are weakening before you open a trade. Free live heat map." />
+<meta property="og:title" content="Currency Heat Map: Live Forex Strength" />
+<meta property="og:description" content="See which currencies are gaining and which are weakening before you open a trade. Free heat map with ECB daily rates." />
 <meta property="og:url" content="https://sureshotfx.com/currency-heatmap" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Currency Heat Map — Live Forex Strength" />
+<meta name="twitter:title" content="Currency Heat Map: Live Forex Strength" />
 <meta name="twitter:description" content="Live currency strength and weakness across 8 major currencies. Free forex heat map." />
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -121,7 +121,7 @@
   <div class="shimmer absolute inset-0 pointer-events-none"></div>
   <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
     <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
-    <span>VIP signals — up to 72% off <span class="hidden sm:inline">· heat map stays free</span></span>
+    <span>VIP signals: up to 72% off <span class="hidden sm:inline">· heat map stays free</span></span>
     <span class="hidden text-black/60 md:inline">•</span>
     <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
     <a href="/combo" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">See the deal →</a>
@@ -142,6 +142,7 @@
       <a href="#heatmap" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Heat map</a>
       <a href="#read" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">How to read it</a>
       <a href="#timeframes" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Timeframes</a>
+      <a href="#data" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Data</a>
       <a href="#correlation" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Correlation</a>
       <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
     </nav>
@@ -155,6 +156,7 @@
           <a href="#heatmap" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Heat map</a>
           <a href="#read" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">How to read it</a>
           <a href="#timeframes" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Timeframes</a>
+          <a href="#data" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Data</a>
           <a href="#correlation" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Correlation</a>
           <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
           <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
@@ -189,8 +191,13 @@
       </h1>
 
       <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
-        Green means a currency is strengthening against another; red means it is weakening. Read 56 major pairs across 1 day, 1 week and 1 month, and spot mismatched trades before they inflate your risk.
+        A currency heat map is a grid that shows which currencies are stronger or weaker than others over a set period. Green cells mean the base currency is outperforming the quote. Red cells mean it is underperforming. This page compares 56 major pairs across 1 day, 1 week and 1 month.
       </p>
+      <div class="mx-auto mt-5 max-w-2xl rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] px-4 py-3 text-left">
+        <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-300">TL;DR</p>
+        <p class="mt-1 text-[13px] leading-relaxed text-neutral-300">Green means the base currency is stronger, red means weaker. The data is European Central Bank daily reference rates, not a live tick feed.</p>
+        <p class="mt-1.5 text-[10px] text-neutral-500">Updated <time datetime="2026-11-19">19 November 2026</time> · Source: ECB via Frankfurter</p>
+      </div>
       </div>
 
     <!-- heat map tool -->
@@ -256,39 +263,72 @@
     <div class="grid gap-10 lg:grid-cols-12">
       <div class="min-w-0 lg:col-span-5">
         <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">The basics</span>
-        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How to Read a Currency Heat Map</h2>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What does a currency heat map show?</h2>
         <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
-          Every cell compares two currencies. The percentage is how much the pair on that cell moved over your selected timeframe — not how "good" a currency looks by itself. A currency can rise against the dollar and still be red against the euro.
+          Each cell compares two currencies. The percentage shows how much that pair moved over the selected timeframe. It does not measure how good a currency looks on its own. A currency can rise against the dollar and still fall against the euro.
         </p>
         <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
-          Suppose EUR gains 1.2% against USD in a week while USD gains 0.4% against JPY. EURUSD turns green because the euro outperformed. If both move by the same amount, the cell stays flat — the heat map measures relative strength, not absolute direction.
+          For example, if EUR gains 1.2% against USD in a week while USD gains 0.4% against JPY, EURUSD turns green because the euro outperformed. If both currencies move by the same amount, the cell stays flat. The map measures relative strength, not absolute direction.
         </p>
+        <div class="mt-6 rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <h3 class="font-display text-[14px] font-bold text-white">How do you use it in practice?</h3>
+          <ol class="mt-2 list-decimal space-y-1.5 pl-5 text-[12.5px] leading-relaxed text-neutral-400">
+            <li>Pick a timeframe that matches your trade: 1 day for intraday, 1 week for swings.</li>
+            <li>Compare the strongest and weakest currency on the same row or column.</li>
+            <li>Check open and planned positions for the same exposure before you add risk.</li>
+          </ol>
+        </div>
       </div>
       <div class="min-w-0 lg:col-span-7">
-        <div class="grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-brand-500/25 bg-brand-500/[0.05] p-5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Strong green</p>
-            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The base currency is clearly outperforming the quote. Useful as momentum confirmation, not as an entry signal on its own.</p>
-          </div>
-          <div class="rounded-2xl border border-brand-500/15 bg-brand-500/[0.03] p-5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-brand-300">Pale green</p>
-            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">Mild outperformance. Worth checking against a higher timeframe before you trust it.</p>
-          </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Grey / near zero</p>
-            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The two currencies moved together. No edge in either direction from the heat map alone.</p>
-          </div>
-          <div class="rounded-2xl border border-red-500/25 bg-red-500/[0.05] p-5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-red-300">Red</p>
-            <p class="mt-2 text-[13px] leading-relaxed text-neutral-300">The base currency is weakening against the quote. Useful for shorts, or for avoiding a long that fights momentum.</p>
-          </div>
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[12.5px]">
+            <caption class="bg-white/[0.04] px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500">Heat map colours</caption>
+            <thead class="border-t border-white/8 text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th scope="col" class="px-4 py-2.5 font-bold">Colour</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">What it means</th>
+                <th scope="col" class="px-4 py-2.5 font-bold">How to use it</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr>
+                <td class="px-4 py-2.5 font-semibold text-brand-300">Strong green</td>
+                <td class="px-4 py-2.5">The base currency is clearly outperforming the quote.</td>
+                <td class="px-4 py-2.5 text-neutral-400">Momentum confirmation, not an entry signal on its own.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-semibold text-brand-200">Pale green</td>
+                <td class="px-4 py-2.5">Mild outperformance.</td>
+                <td class="px-4 py-2.5 text-neutral-400">Check a higher timeframe before you trust it.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-semibold text-neutral-300">Grey</td>
+                <td class="px-4 py-2.5">The two currencies moved together.</td>
+                <td class="px-4 py-2.5 text-neutral-400">No edge from the heat map alone.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 font-semibold text-red-300">Red</td>
+                <td class="px-4 py-2.5">The base currency is weakening against the quote.</td>
+                <td class="px-4 py-2.5 text-neutral-400">Useful for shorts, or for avoiding a long that fights momentum.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="mt-4 rounded-2xl border border-white/8 bg-ink-850 p-5">
-          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Three things it cannot do</p>
-          <ul class="mt-2 space-y-2 text-[12.5px] leading-relaxed text-neutral-400">
-            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not predict where price goes next. It reports what already happened.</li>
-            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not include volume or order flow, so it is not a liquidity map.</li>
-            <li class="flex gap-2.5"><span class="text-red-300">—</span> It does not replace your stop loss or your position size.</li>
+          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Three things this map cannot do</p>
+          <ul class="mt-2 list-disc space-y-2 pl-5 text-[12.5px] leading-relaxed text-neutral-400">
+            <li>It cannot predict where price goes next. It reports what already happened.</li>
+            <li>It cannot show volume or order flow, so it is not a liquidity map.</li>
+            <li>It cannot replace your stop loss or your position size.</li>
+          </ul>
+        </div>
+        <div class="mt-4 rounded-2xl border border-brand-500/20 bg-brand-500/[0.04] p-5">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-brand-300">Key takeaways</p>
+          <ul class="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed text-neutral-400">
+            <li>Eight currencies, 56 pairs.</li>
+            <li>Green means the base currency is stronger, red means weaker.</li>
+            <li>1 week is the default view because daily ECB snapshots can be flat.</li>
+            <li>The grid is context, not a signal.</li>
           </ul>
         </div>
       </div>
@@ -301,8 +341,8 @@
   <div class="mx-auto max-w-7xl px-4 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Three windows</span>
-      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">1 Day, 1 Week, 1 Month — What Changes</h2>
-      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">The same pair can be green on the daily and red on the monthly. That is not a bug; it is the two timeframes describing different moves.</p>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Which timeframe should you use?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Use 1 day for intraday bias, 1 week for swing confirmation and 1 month for trend context. The same pair can be green on one timeframe and red on another. Each window describes a different move, so neither colour is wrong.</p>
     </div>
 
     <div class="mt-12 grid gap-4 md:grid-cols-3">
@@ -326,18 +366,38 @@
   </div>
 </section>
 
+<!-- ============ DATA SOURCE ============ -->
+<section id="data" class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Data</span>
+      <h2 class="mt-3 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Where does the heat map data come from?</h2>
+      <p class="mt-4 text-[13.5px] leading-relaxed text-neutral-400">
+        The grid uses <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener" class="font-semibold text-brand-400 hover:underline">European Central Bank reference rates</a>, fetched through the <a href="https://frankfurter.dev/" target="_blank" rel="noopener" class="font-semibold text-brand-400 hover:underline">Frankfurter API</a>. The ECB publishes these rates once each business day, usually around 16:00 CET. The page loads the latest set when you open it, and the reference date appears under the grid.
+      </p>
+      <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+        It is not a broker quote and not a tick feed. Your platform's bid and ask will differ. The request is made from your browser to Frankfurter, and no account data is sent.
+      </p>
+      <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/8 pt-4 text-[11.5px] text-neutral-500">
+        <p>Last updated: <time datetime="2026-11-19" class="font-semibold text-neutral-300">19 November 2026</time></p>
+        <p>Reviewed by the SureShotFX trading desk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CORRELATION ============ -->
 <section id="correlation" class="border-b border-white/5 py-20 lg:py-24">
   <div class="mx-auto max-w-7xl px-4 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-12">
       <div class="min-w-0 lg:col-span-6">
         <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-red-300">Risk first</span>
-        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Avoid Blowing Out Your Account</h2>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How do you avoid stacking correlated trades?</h2>
         <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
-          The most common way traders lose a week's profit in one session is stacking the same bet under different names. Long EURUSD, long GBPUSD and long AUDUSD are not three trades — they are one large short-USD position.
+          Check correlated positions before you enter. Long EURUSD, long GBPUSD and long AUDUSD are one short USD position, not three separate trades. A single dollar move can hit all three at once.
         </p>
         <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
-          Use the heat map before you stack. If your candidates are all green on the same side, they are probably correlated. If they move together on the weekly as well, the correlation is structural, not a one-day coincidence.
+          Use the heat map before you stack. If your candidates are all green on the same side, they are probably correlated. If they also move together on the weekly view, the correlation is structural, not a one-day coincidence.
         </p>
         <div class="mt-6 space-y-3">
           <div class="rounded-2xl border border-white/8 bg-ink-850 p-4">
@@ -353,6 +413,7 @@
             <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">USD risk, JPY risk and commodity-currency risk are different exposures. Holding three symbols that all depend on one driver is not diversification.</p>
           </div>
         </div>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">If three positions share one driver, size the group as one trade.</p>
       </div>
 
       <div class="min-w-0 lg:col-span-6">
@@ -385,8 +446,8 @@
   <div class="mx-auto max-w-4xl px-4 lg:px-8">
     <div class="text-center">
       <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Answers</span>
-      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Currency Heat Map — Common Questions</h2>
-      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">What the grid shows, where the data comes from, and what it cannot tell you.</p>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What else should you know about the currency heat map?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">The questions below cover what the grid shows, where the data comes from and what it cannot tell you.</p>
     </div>
 
     <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
@@ -411,7 +472,7 @@
           <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the data live?</h3>
           <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
         </summary>
-        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The grid loads European Central Bank daily reference rates when you open the page, and you can refresh it any time. It is not a tick-by-tick feed, so it suits session bias and swing analysis rather than scalping.</p>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The page loads European Central Bank daily reference rates when you open it. You can refresh the data at any time. It is not a tick-by-tick feed, so use it for session bias and swing analysis, not scalping.</p>
       </details>
 
       <details class="faq group py-5">
@@ -443,7 +504,7 @@
           <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is there a gold or liquidity heat map?</h3>
           <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
         </summary>
-        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Not here. This is a currency-only heat map, and it does not measure order-book liquidity. A "liquidity heatmap" shows resting orders at price levels, which is a different dataset. For gold positioning, use the <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a> and the <a href="/gold-vip-signals" class="font-semibold text-brand-400 hover:underline">Gold VIP</a> desk rather than treating this grid as a gold liquidity tool.</p>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. This is a currency-only heat map, and it does not measure order-book liquidity. A liquidity heat map shows resting orders at price levels, which is a different dataset. For gold position sizing, use the <a href="/lot-size-calculator" class="font-semibold text-brand-400 hover:underline">lot size calculator</a>.</p>
       </details>
 
       <details class="faq group py-5">
@@ -451,7 +512,7 @@
           <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is the currency heat map free?</h3>
           <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
         </summary>
-        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes — no account, no subscription and no usage cap. The VIP signal plans are the paid products; the heat map and the other web calculators are free.</p>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. There is no account, no subscription and no usage cap. The VIP signal plans are the paid products. The heat map and the other web calculators are free.</p>
       </details>
 
       <details class="faq group py-5">
@@ -467,7 +528,7 @@
           <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is this the official SureShotFX currency heat map?</h3>
           <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
         </summary>
-        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is built by the same team behind the SureShotFX signals and Trade Copier. Traders also find us as SureShot FX, Sure Shot FX, SureShot Forex and SSF trading — all the same brand.</p>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is built by the same team behind the SureShotFX signals and Trade Copier. Traders also find us as SureShot FX, Sure Shot FX, SureShot Forex and SSF trading. All are the same brand.</p>
       </details>
     </div>
 
@@ -483,7 +544,7 @@
         <div class="max-w-xl">
           <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Second opinion</span>
           <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Not Sure Your Read Is Right?</h2>
-          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Send us the pair and the timeframe you are looking at. Support can check your read against the setup you are considering — but your entry, stop and position size stay your decision.</p>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Send us the pair and the timeframe you are looking at. Support can check your read against the setup you are considering. Your entry, stop and position size remain your decision.</p>
           </div>
         <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
           <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
@@ -500,9 +561,9 @@
 <!-- ============ NEWSLETTER ============ -->
 <section class="border-b border-white/5 py-14">
   <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
-    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief — Every Sunday</h2>
-    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups — the same context the desk uses before it posts a signal. No spam.</p>
-    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks — check your inbox to confirm.';">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief: Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups. This is the same context the desk uses before it posts a signal. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks. Check your inbox to confirm.';">
       <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
       <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
     </form>
@@ -614,7 +675,8 @@
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Any modern web browser",
       "browserRequirements": "Requires JavaScript",
-      "description": "Free live currency heat map comparing percent changes across 56 major forex pairs over 1 day, 1 week and 1 month.",
+      "description": "Free currency heat map comparing percent changes across 56 major forex pairs over 1 day, 1 week and 1 month. Uses European Central Bank daily reference rates.",
+      "dateModified": "2026-11-19",
       "featureList": [
         "56 major pair comparisons",
         "1 day, 1 week and 1 month timeframes",
@@ -640,32 +702,52 @@
         {
           "@type": "Question",
           "name": "What is a currency heat map?",
-          "acceptedAnswer": { "@type": "Answer", "text": "A grid that compares currency pairs and colours them by percentage change over a period. Green shows the base currency outperforming the quote; red shows underperformance." }
+          "acceptedAnswer": { "@type": "Answer", "text": "A currency heat map is a grid that colours currency pairs by their percentage change over a period. Green means the base currency is outperforming the quote. Red means it is underperforming. It shows relative strength across the forex market." }
         },
         {
           "@type": "Question",
           "name": "What do the colours mean?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Deeper green means stronger outperformance, deeper red means stronger underperformance, and grey means the two currencies moved roughly together." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Deeper green means stronger outperformance. Deeper red means stronger underperformance. Grey means the two currencies moved roughly together. The percentage in each cell is the pair's move over the selected timeframe." }
         },
         {
           "@type": "Question",
           "name": "Is the data live?",
-          "acceptedAnswer": { "@type": "Answer", "text": "The grid loads European Central Bank daily reference rates when you open the page, and you can refresh it at any time. It is not a tick-by-tick feed." }
+          "acceptedAnswer": { "@type": "Answer", "text": "The page loads European Central Bank daily reference rates when you open it. You can refresh the data at any time. It is not a tick-by-tick feed, so use it for session bias and swing analysis, not scalping." }
         },
         {
           "@type": "Question",
           "name": "Can it predict where a pair will go?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. It describes relative strength over the past day, week or month. It is a momentum and correlation filter, not a forecast." }
+          "acceptedAnswer": { "@type": "Answer", "text": "No. It describes relative strength over the past day, week or month. The grid is a filter for momentum and correlation. It is not a forecast, a signal service or a liquidity map." }
         },
         {
           "@type": "Question",
           "name": "Is there a gold or liquidity heat map?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Not here. This is a currency-only heat map and it does not measure order-book liquidity. A liquidity heat map shows resting orders at price levels, which is a different dataset." }
+          "acceptedAnswer": { "@type": "Answer", "text": "No. This is a currency-only heat map, and it does not measure order-book liquidity. A liquidity heat map shows resting orders at price levels, which is a different dataset. For gold position sizing, use the SureShotFX lot size calculator." }
         },
         {
           "@type": "Question",
           "name": "Is the currency heat map free?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. No account, no subscription and no usage cap. VIP signal plans are separate paid products." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. There is no account, no subscription and no usage cap. The VIP signal plans are the paid products. The heat map and the other web calculators are free." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do some pairs barely change colour?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Because the two currencies moved by nearly the same percentage. Strength is relative. EUR and USD can both rally hard and still leave EURUSD almost unchanged." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which currencies are included?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Eight majors: EUR, USD, GBP, JPY, AUD, CAD, CHF and NZD. That gives 56 pair comparisons. Exotic pairs and metals are outside this grid." }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I use it with VIP signals?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use the grid as a second opinion, not a veto. If a setup already fits the desk's plan, a matching heat map strengthens the case. A conflicting grid is a reason to reduce size or wait. Always size from your own risk rules." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the official SureShotFX currency heat map?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is built by the same team behind the SureShotFX signals and Trade Copier. Traders also find us as SureShot FX, Sure Shot FX, SureShot Forex and SSF trading. All are the same brand." }
         }
       ]
     }
@@ -769,7 +851,7 @@
           if (b === q) {
             const empty = document.createElement('div');
             empty.className = 'heat-cell heat-empty';
-            empty.textContent = '—';
+            empty.textContent = '·';
             empty.style.textAlign = 'center';
             empty.style.fontSize = '11px';
             grid.appendChild(empty);
@@ -814,11 +896,11 @@
         const ch = change(b, q, tf);
         const dir = ch >= 0 ? b + ' outperformed ' + q : b + ' underperformed ' + q;
         $('detail-copy').textContent = dir + ' by ' + Math.abs(ch).toFixed(2) + '% over ' + LABELS[tf] + '. Price shown is the latest ECB reference rate, not your broker quote.';
-        $('detail-action').innerHTML = 'Momentum confirmation only — not a trading signal. <a href="/forex-vip-signals" class="font-semibold text-brand-400 hover:underline">Forex VIP Signals →</a>';
+        $('detail-action').innerHTML = 'Momentum confirmation only. Not a trading signal. <a href="/forex-vip-signals" class="font-semibold text-brand-400 hover:underline">Forex VIP Signals →</a>';
       }
 
       $('heat-status').textContent = isSample
-        ? 'Illustrative sample values — live rates unavailable. Refresh to retry.'
+        ? 'Illustrative sample values. Live rates unavailable. Refresh to retry.'
         : 'ECB reference rates via Frankfurter · ' + liveDate;
     }
 

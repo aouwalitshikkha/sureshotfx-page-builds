@@ -16,7 +16,7 @@ Redesign of `https://sureshotfx.com/currency-heatmap` with Tailwind CDN (single 
 3. Decide whether the TradingView embed should return as a secondary block. The self-contained grid should stay for SEO.
 4. Check the "up to 72%" Black Friday claim against the live sale.
 5. Add an OG image; supply the Recognize By badges if they should return.
-6. Set the countdown end date and review the Arabic line.
+6. Set the countdown end date.
 
 ## Structure
 

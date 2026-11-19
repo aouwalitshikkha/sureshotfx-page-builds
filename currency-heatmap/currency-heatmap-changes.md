@@ -2,7 +2,7 @@
 
 Rebuild of `https://sureshotfx.com/currency-heatmap` as a single Tailwind-CDN HTML file. Same design system as the rebuilt signal, combo, copier, lot-size and pip-app pages — brand `#00F595`, black base, Sora + Inter — with a green→sky→gold accent for the heat gradient.
 
-**Size:** 60 KB, 1,597 visible words (live: 828), 7 sections, 10 FAQs.
+**Size:** 64 KB, 1,780 visible words (live: 828), 8 sections, 10 FAQs.
 
 ---
 
@@ -47,10 +47,21 @@ Rebuild of `https://sureshotfx.com/currency-heatmap` as a single Tailwind-CDN HT
 
 ### 2.3 Technical SEO
 
-- JSON-LD: `WebApplication` (free offer, 56 pairs), `BreadcrumbList`, `FAQPage` (6 questions).
+- JSON-LD: `WebApplication` (free offer, 56 pairs), `BreadcrumbList`, `FAQPage` (10 questions).
 - No `aggregateRating`.
 - Semantic headings, `<details>` FAQ, internal links to `/lot-size-calculator`, `/pip-calculator/forex-pip-calculator`, `/pip-calculator-mobile-app`, `/forex-vip-signals`, `/gold-vip-signals`, `/trade-copier`, `/combo`, `/live-signals`, `/blog`.
-- Arabic subheading for the query `الخريطة الحرارية للفوركس` (4 impressions), reviewed as a single line rather than a fake translation.
+
+### 2.3.1 LLM-friendly content pass
+
+The page was rewritten for AI extraction and citation:
+
+- **TL;DR in the first screen** (under 40 words) plus a definition in the opening paragraph.
+- **Question-based H2s** for every content block: what it shows, which timeframe, where the data comes from, how to avoid correlated trades, FAQ.
+- **Tables** for colour meanings and the correlation example; **numbered steps** for using the map; **key takeaways** list.
+- **Data source section** naming the European Central Bank and Frankfurter, with outbound links, a visible "Last updated" date and a review credit.
+- **10-question FAQ** with 25–45 word answers, all mirrored in `FAQPage` schema.
+- **No em dashes or en dashes** anywhere in the file, and no AI-footprint filler.
+- Arabic support line removed with the other non-English lines.
 
 ---
 
@@ -75,7 +86,7 @@ Rebuild of `https://sureshotfx.com/currency-heatmap` as a single Tailwind-CDN HT
 3. **Decide on TradingView.** This build removes the embed. If the client prefers to keep the widget, it can be added back as a secondary block — but the self-contained grid should stay for SEO.
 4. **Check the "up to 72%" banner** against the live sale.
 5. **Add an OG image** and supply the Recognize By badges if they should return.
-6. **Review the Arabic line** with a native speaker.
+6. **Re-check the data links** quarterly: ECB reference rates and Frankfurter.
 7. **Set the countdown end date** (`2026-11-30T23:59:59Z`).
 8. **Keep the "not a liquidity map" answer.** It protects the page from a query it cannot honestly satisfy (`liquidity heatmap gold`).
 
