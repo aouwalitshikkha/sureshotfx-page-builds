@@ -79,19 +79,36 @@ rows = df[df["page_key"].str.endswith("/" + slug)]
 print(rows["page"].value_counts())
 ```
 
-Read that output before going further. Every blog post exists under two URLs: `/blog/slug` and `/slug/`. The old URL often has more rows than the current one. Both belong to the same article, so audit the union.
+Read that output before going further. Every blog post appears under two URLs: `/blog/slug` and `/slug/`. The old URL redirects to the new one. Google still reports the impressions it served before the redirect, which is why the old URL often carries most of the traffic in this file.
 
-If you skip this, you will undercount the page and may wrongly decide it is not worth fixing.
+Those rows are history, not a second live page.
 
-Then build the query view:
+| What you see | What it means |
+|---|---|
+| `/slug/` and `/blog/slug` | Same article. The old URL redirects. Merge the rows |
+| Old URL has most impressions | Historical demand. Still valid for choosing keywords |
+| Old URL has better positions | Rankings from before the move. Not a current ranking |
+| New URL has fewer impressions | Expected after a redirect. Judge it on position, not volume |
+
+Merge the two for demand. Use only the live URL's position as the current position. Averaging them mixes pre-redirect and post-redirect rankings and produces a number that describes neither.
 
 ```python
-view = (rows.groupby("query")
-        .agg(clicks=("clicks", "sum"),
-             impressions=("impressions", "sum"),
-             position=("position", "mean"))
+# Demand: both URLs
+demand = (rows.groupby("query")
+          .agg(clicks=("clicks", "sum"),
+               impressions=("impressions", "sum")))
+
+# Current position: the live URL only
+live = rows[rows["page"].str.contains("/blog/")]
+current = live.groupby("query").agg(position=("position", "mean"))
+
+view = (demand.join(current["position"])
         .sort_values("impressions", ascending=False))
 ```
+
+If the live URL has no row for a query, the position is blank. Do not fill it from the old URL. A blank position means the live page did not rank for that query in the window, which is a finding in itself.
+
+If you skip the variant check, you will undercount the page and may wrongly decide it is not worth fixing.
 
 ---
 
@@ -197,6 +214,7 @@ Rules:
 - Put the exact phrase in the title, one H2, the definition and the FAQ. Repeating it twenty times is not a plan.
 - If the head term already appears many times and still sits at position 60, say so. The fix is depth, structure and internal links.
 - Never write "currently ranks" without the phrase "16-month average, to 19 November 2026". You do not know where it ranks today.
+- When a page has two URLs, say which one is live and quote positions from that one only. Label the old URL's numbers as pre-redirect history.
 
 Save as `blog-audits/<slug>.md`. Commit: `Add <topic> keyword audit and plan`.
 
@@ -242,6 +260,7 @@ Set expectations with whoever receives the audit.
 
 - **No live rankings.** Everything is an average over 16 months.
 - **No trends.** There are no dates in the file, so you cannot show growth or decline.
+- **No redirect dates.** You cannot tell when an old URL stopped serving, so treat all of its rows as pre-redirect history by default.
 - **No device, country or SERP feature data.** The export does not include it.
 - **No total traffic.** Google hides rare queries, so query rows never sum to the site total.
 - **No indexing or technical data.** If a page is missing from the file entirely, that is not proof it is deindexed. It may simply have no impressions in the window.
@@ -258,7 +277,8 @@ If a decision depends on any of those, say it is out of scope rather than guessi
 | Position 8, 40 impressions | Striking distance. Include in P1 or P2 |
 | Position 1, 0 clicks | Suspicious. Check for a fake or branded query |
 | Query matches the Black Friday banner | False coverage. Discount it |
-| Page has two URLs | Merge them before judging |
+| Page has two URLs | Old URL redirects. Merge demand, quote only the live URL's position |
+| Old URL ranks better than the new one | Pre-redirect history. Do not report it as a current ranking |
 | All traffic is brand | Positioning problem, not a content gap |
 | Query asks for a broker, price or sign-up | Send it to a commercial page |
 | Query asks about tax, investing or automation | Send it to its own article |
