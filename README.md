@@ -1,6 +1,6 @@
 # SureShotFX page builds
 
-Eight pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GSC keyword analysis and changelog.
+Ten pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GSC keyword analysis and changelog.
 
 | Folder | Page | Live URL |
 |---|---|---|
@@ -12,6 +12,8 @@ Eight pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GSC
 | `lot-size-calculator/` | Lot Size Calculator (forex, gold, indices) | `https://sureshotfx.com/lot-size-calculator` |
 | `pip-calculator-mobile-app/` | Pip Calculator App (Android) | `https://sureshotfx.com/pip-calculator-mobile-app` |
 | `currency-heatmap/` | Currency Heat Map (live forex strength) | `https://sureshotfx.com/currency-heatmap` |
+| `sure-profit-trading-secret/` | Sure Profit Trading Secret (beginner book) | `https://sureshotfx.com/sure-profit-trading-secret` |
+| `behind-the-candle/` | Behind the Candle (SMC book) | `https://sureshotfx.com/behind-the-candle` |
 
 Each folder contains:
 

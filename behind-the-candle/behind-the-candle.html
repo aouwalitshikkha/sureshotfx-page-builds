@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Behind the Candle: Smart Money Concepts Book | SureShotFX</title>
+<meta name="description" content="An advanced SMC book: market structure, six liquidity types, order blocks, fair value gaps and a criteria-based entry model with 10 worked examples. $24.99 PDF." />
+<link rel="canonical" href="https://sureshotfx.com/behind-the-candle" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="Behind the Candle: The Smart Money Concepts Book" />
+<meta property="og:description" content="An advanced SMC trading book with 5 chapters, six liquidity types and 10 worked examples. Instant PDF, $24.99." />
+<meta property="og:url" content="https://sureshotfx.com/behind-the-candle" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Behind the Candle: The Smart Money Concepts Book" />
+<meta name="twitter:description" content="Market structure, liquidity, order blocks, FVGs and a criteria-based entry model. $24.99 PDF." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-gold': '0 0 50px -12px rgba(245,196,81,0.4)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#F5C451; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(245,196,81,0.10) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-smc {
+    background: linear-gradient(92deg,#FFF0BF 0%,#F5C451 45%,#5EEAD4 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(245,196,81,.55); } 70% { box-shadow:0 0 0 9px rgba(245,196,81,0); } 100% { box-shadow:0 0 0 0 rgba(245,196,81,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  .media-logo { filter: grayscale(1); opacity:.55; transition: opacity .2s ease; }
+  .media-logo:hover { opacity:.9; }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-gold-400 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>SMC book $24.99 <span class="hidden sm:inline">· save 50% with code FIRSTREAD</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="#pricing" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">Get the book →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-gold-400 text-black shadow-glow-gold">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-gold-400">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a href="#inside" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Inside</a>
+      <a href="#smc" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">SMC basics</a>
+      <a href="#author" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Author</a>
+      <a href="#reviews" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Reviews</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-gold-400/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#inside" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Inside</a>
+          <a href="#smc" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">SMC basics</a>
+          <a href="#author" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Author</a>
+          <a href="#reviews" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Reviews</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="#pricing" class="hidden min-[380px]:inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-gold-400 px-4 py-2 text-sm font-bold text-black shadow-glow-gold transition hover:bg-gold-300">Get the book</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-gold-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-brand-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-12 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-20 lg:pt-16">
+    <div class="lg:col-span-7">
+      <div class="mb-5 flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-gold-400"></span> Advanced SMC ebook
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400">5 chapters · 10+ examples</span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3rem] xl:text-[3.5rem]">
+        Behind the Candle<br class="hidden sm:block" />
+        <span class="text-gradient-smc">The Smart Money Concepts Book</span>
+      </h1>
+
+      <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        An advanced SMC trading book by William. Learn market structure, six liquidity types, order blocks, fair value gaps and a criteria-based entry model, with 10 worked examples. Instant PDF for $24.99.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href="#pricing" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gold-400 px-6 py-3.5 text-sm font-extrabold text-black shadow-glow-gold transition hover:bg-gold-300">
+          Get the book: $24.99
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#inside" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white transition hover:border-gold-400/40 hover:bg-white/[0.06]">See what's inside</a>
+      </div>
+
+      <div class="mt-8 grid max-w-lg grid-cols-2 gap-3 text-[12px] sm:grid-cols-4">
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">5</p><p class="text-neutral-500">Chapters</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">10+</p><p class="text-neutral-500">Examples</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">1:2-1:4</p><p class="text-neutral-500">R:R</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">$24.99</p><p class="text-neutral-500">One-time</p></div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="relative mx-auto max-w-sm">
+        <div class="absolute inset-6 rounded-full bg-gold-500/20 blur-3xl"></div>
+        <img src="assets/book-cover.jpg" width="760" height="1074" alt="Behind the Candle book cover with a green candlestick showing liquidity, order block, breaker zone, FVG and market structure break" class="relative h-auto w-full rounded-2xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.95)]" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </div>
+
+  <!-- media strip -->
+  <div class="relative mx-auto max-w-7xl px-4 pb-10 lg:px-8">
+    <p class="text-center text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600">As featured on</p>
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+      <img src="assets/media-1.png" width="243" height="64" alt="AP News" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+      <img src="assets/media-2.png" width="161" height="64" alt="Digital Journal" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+      <img src="assets/media-3.png" width="197" height="64" alt="Business Insider" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+      <img src="assets/media-4.png" width="340" height="64" alt="Street Insider" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+      <img src="assets/media-5.png" width="337" height="64" alt="Benzinga" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+      <img src="assets/media-6.png" width="243" height="64" alt="Apple News" class="media-logo h-4 w-auto sm:h-5" loading="lazy" decoding="async" />
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUICK FACTS ============ -->
+<section class="border-b border-white/5 bg-ink-900/50">
+  <div class="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/5 px-4 sm:grid-cols-4 lg:px-8">
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Intermediate</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Level</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">SMC + liquidity</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Focus</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Instant PDF</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Delivery</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">$24.99</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">One-time</p></div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS IT ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-7">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">The basics</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What is Behind the Candle?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          Behind the Candle is an advanced Smart Money Concepts book by William. It covers market structure, six liquidity types, order blocks, fair value gaps, breaker zones and a criteria-based entry model, with 10 worked examples.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          It is written for traders who already read a basic chart and want one repeatable SMC framework instead of scattered videos and forum posts. The final chapter covers the path to a funded account. It is a smart money concepts PDF for traders who want the full framework in one file.
+        </p>
+        <div class="mt-5 rounded-2xl border border-gold-400/25 bg-gold-500/[0.06] p-4">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300">TL;DR</p>
+          <p class="mt-1 text-[13px] leading-relaxed text-neutral-300">An advanced SMC book in five chapters. It maps liquidity, order blocks, FVGs and breaker zones, then teaches a criteria-based entry model with 10 worked examples. Instant PDF, $24.99.</p>
+        </div>
+        <div class="mt-5 rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Key takeaways</p>
+          <ul class="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed text-neutral-400">
+            <li>Written for intermediate traders, not complete beginners.</li>
+            <li>One entry checklist, not a collection of indicators.</li>
+            <li>Every worked example targets 1:2 to 1:4 risk-to-reward.</li>
+            <li>Ends with a backtest and demo-trade plan before live risk.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="min-w-0 lg:col-span-5">
+        <div class="grid gap-3">
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Format</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">PDF ebook</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">5 in-depth chapters, 10+ worked examples, instant download.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Level</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">Intermediate</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">You should already understand candlesticks and basic chart reading.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Author</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">William</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">5+ years trading live, inside the SureShotFX signal desk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER SUMMARY ============ -->
+<section id="inside" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Book summary</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What is inside the book?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Five chapters, each building on the last. This is the same order William teaches it in. If you want to summarise the book before buying, this overview does that.</p>
+    </div>
+
+    <div class="mt-12 space-y-4">
+      <article class="grid gap-5 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-12 sm:p-7">
+        <div class="sm:col-span-3">
+          <p class="font-display text-xs font-bold text-gold-400">Chapter 01</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Read market structure</h3>
+        </div>
+        <div class="sm:col-span-9">
+          <p class="text-[13px] leading-relaxed text-neutral-400">Understand trend direction, structure breaks and Structure Points with total clarity. Learn when a break is genuine and when price is setting a trap.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-[10.5px] text-neutral-500">
+            <span class="rounded-md border border-white/10 px-2 py-1">Market structure points</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Market structure breaks</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Trend direction</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid gap-5 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-12 sm:p-7">
+        <div class="sm:col-span-3">
+          <p class="font-display text-xs font-bold text-gold-400">Chapter 02</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Map the liquidity</h3>
+        </div>
+        <div class="sm:col-span-9">
+          <p class="text-[13px] leading-relaxed text-neutral-400">Identify liquidity types and spot raids as they happen, not after. The chapter covers higher-time-frame swings, equal highs and lows, the Asia range and previous day or week levels.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-[10.5px] text-neutral-500">
+            <span class="rounded-md border border-white/10 px-2 py-1">HTF swing liquidity</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Equal highs and lows</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Asia session range</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Previous day and week levels</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid gap-5 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-12 sm:p-7">
+        <div class="sm:col-span-3">
+          <p class="font-display text-xs font-bold text-gold-400">Chapter 03</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Mark points of interest</h3>
+        </div>
+        <div class="sm:col-span-9">
+          <p class="text-[13px] leading-relaxed text-neutral-400">Mark only the zones that qualify. Fair value gaps, order blocks and breaker zones are defined with strict criteria, so the chart stays clean and the entry is defensible.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-[10.5px] text-neutral-500">
+            <span class="rounded-md border border-white/10 px-2 py-1">Fair value gaps</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Order blocks</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Breaker zones</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid gap-5 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-12 sm:p-7">
+        <div class="sm:col-span-3">
+          <p class="font-display text-xs font-bold text-gold-400">Chapter 04</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Execute the entry model</h3>
+        </div>
+        <div class="sm:col-span-9">
+          <p class="text-[13px] leading-relaxed text-neutral-400">One checklist replaces guesswork. If the criteria are not met, you do not enter. Ten worked examples across multiple instruments and sessions show how the model adapts.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-[10.5px] text-neutral-500">
+            <span class="rounded-md border border-white/10 px-2 py-1">Criteria checklist</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">10 worked examples</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">1:2 to 1:4 R:R</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid gap-5 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:grid-cols-12 sm:p-7">
+        <div class="sm:col-span-3">
+          <p class="font-display text-xs font-bold text-gold-400">Chapter 05</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Get funded, get paid</h3>
+        </div>
+        <div class="sm:col-span-9">
+          <p class="text-[13px] leading-relaxed text-neutral-400">The sequence William followed to a funded account: back-test 50 to 100 examples, run 30+ live demo trades, then risk capital. No live money before proof.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-[10.5px] text-neutral-500">
+            <span class="rounded-md border border-white/10 px-2 py-1">Back-test 50-100 examples</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">30+ demo trades</span>
+            <span class="rounded-md border border-white/10 px-2 py-1">Funded account path</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SMC BASICS ============ -->
+<section id="smc" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">SMC basics</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What are smart money concepts?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Smart Money Concepts (SMC) is a way of reading price that focuses on where liquidity sits and how institutions move through it. The book uses six ideas.</p>
+    </div>
+
+    <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Smart Money Concepts (SMC)</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">A framework that reads market structure, liquidity and institutional order flow instead of relying on lagging indicators.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Liquidity sweep</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">A move through a known high or low that triggers resting stop orders, then reverses. Also called a stop hunt or raid.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Market structure break (MSB)</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">A decisive break of a swing high or low that changes the short-term trend. A break is not the same as a sweep.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Order block</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">The last opposing candle before an impulsive move. Traders watch it as a potential reaction zone when price returns.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Fair value gap (FVG)</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">A three-candle imbalance where price leaves a gap in delivery. Markets often return to rebalance it before continuing.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <h3 class="font-display text-[14px] font-bold text-white">Breaker zone</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">A failed order block that flips into an opposing zone. Often the sharpest reversal area when structure agrees.</p>
+      </div>
+    </div>
+
+    <div class="mt-10 rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+      <h3 class="font-display text-xl font-bold text-white">Where does liquidity sit?</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-neutral-400">Liquidity pools are clusters of stop orders. The book maps six types. These are the four most visible on a normal chart:</p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[12.5px] font-semibold text-white">Higher-time-frame swing highs and lows</p><p class="mt-1 text-[11.5px] leading-relaxed text-neutral-500">The first pools institutions target.</p></div>
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[12.5px] font-semibold text-white">Equal highs and equal lows</p><p class="mt-1 text-[11.5px] leading-relaxed text-neutral-500">Obvious stop clusters that invite a raid.</p></div>
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[12.5px] font-semibold text-white">Asia session range</p><p class="mt-1 text-[11.5px] leading-relaxed text-neutral-500">Sets the liquidity table for London and New York.</p></div>
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[12.5px] font-semibold text-white">Previous day and week levels</p><p class="mt-1 text-[11.5px] leading-relaxed text-neutral-500">Reliable external reference points on any chart.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENTRY MODEL ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Execution</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How does the SMC entry model work?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          The model waits for three things to agree: market structure, a liquidity raid and a point of interest. If one is missing, there is no trade.
+        </p>
+        <ol class="mt-5 space-y-3">
+          <li class="flex gap-3"><span class="font-display text-xs font-bold text-gold-400">01</span><p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Confirm structure.</span> Identify the trend and the last structure point.</p></li>
+          <li class="flex gap-3"><span class="font-display text-xs font-bold text-gold-400">02</span><p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Wait for the raid.</span> Let price sweep the liquidity pool, then look for a reaction.</p></li>
+          <li class="flex gap-3"><span class="font-display text-xs font-bold text-gold-400">03</span><p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Mark the POI.</span> Use the order block, FVG or breaker zone that price returns to.</p></li>
+          <li class="flex gap-3"><span class="font-display text-xs font-bold text-gold-400">04</span><p class="text-[12.5px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Take the trigger.</span> Entry, stop and target are set before the trade, at a minimum of 1:2.</p></li>
+        </ol>
+      </div>
+
+      <div class="min-w-0 lg:col-span-7">
+        <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-7">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Worked example</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold text-white">Anatomy of a stop hunt</h3>
+          <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">A short setup from the book, reduced to four steps.</p>
+
+          <div class="mt-5 space-y-2">
+            <div class="flex gap-3 rounded-xl border border-white/8 bg-black/20 p-3">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-gold-500/15 text-[10px] font-bold text-gold-300">1</span>
+              <p class="text-[12px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Equal highs form.</span> Retail stop losses rest above the double top.</p>
+            </div>
+            <div class="flex gap-3 rounded-xl border border-white/8 bg-black/20 p-3">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-gold-500/15 text-[10px] font-bold text-gold-300">2</span>
+              <p class="text-[12px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">A candle sweeps the highs.</span> The stop run takes the liquidity above the equal highs.</p>
+            </div>
+            <div class="flex gap-3 rounded-xl border border-white/8 bg-black/20 p-3">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-gold-500/15 text-[10px] font-bold text-gold-300">3</span>
+              <p class="text-[12px] leading-relaxed text-neutral-400"><span class="font-semibold text-neutral-200">Structure breaks lower.</span> Price breaks the last swing low and returns to the order block.</p>
+            </div>
+            <div class="flex gap-3 rounded-xl border border-gold-400/25 bg-gold-500/[0.06] p-3">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-gold-500/20 text-[10px] font-bold text-gold-200">4</span>
+              <p class="text-[12px] leading-relaxed text-neutral-300"><span class="font-semibold text-white">Short entry at the retest.</span> Stop above the sweep, target at three times the risk.</p>
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div class="rounded-xl border border-white/8 bg-black/20 px-2 py-2.5"><p class="text-[9px] uppercase tracking-wider text-neutral-500">Entry</p><p class="font-mono text-[12px] font-semibold text-white">Retest</p></div>
+            <div class="rounded-xl border border-white/8 bg-black/20 px-2 py-2.5"><p class="text-[9px] uppercase tracking-wider text-neutral-500">Stop</p><p class="font-mono text-[12px] font-semibold text-red-300">Above sweep</p></div>
+            <div class="rounded-xl border border-white/8 bg-black/20 px-2 py-2.5"><p class="text-[9px] uppercase tracking-wider text-neutral-500">Target</p><p class="font-mono text-[12px] font-semibold text-brand-300">1:3</p></div>
+          </div>
+          <p class="mt-3 text-[10.5px] leading-relaxed text-neutral-600">Schematic, not a specific trade or signal. The book contains 10 worked examples with full context.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RISK MATH ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-6">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Risk</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Does the risk math work?</h2>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-neutral-400">At 1:2 risk-to-reward, four wins out of ten covers six losses. That is the point of a fixed R:R model: you do not need to win most trades to grow the account.</p>
+        <p class="mt-3 text-[12.5px] leading-relaxed text-neutral-500">Illustrative math only. R is the amount risked per trade. Spreads, commissions and slippage are excluded. This is not a forecast of results.</p>
+      </div>
+      <div class="min-w-0 lg:col-span-6">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[12.5px]">
+            <caption class="bg-white/[0.04] px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500">Net result at 1:2 risk-to-reward</caption>
+            <thead class="border-t border-white/8 text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr><th class="px-4 py-2.5 font-bold">Wins</th><th class="px-4 py-2.5 font-bold">Losses</th><th class="px-4 py-2.5 font-bold">Net R</th></tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr><td class="px-4 py-2.5">3</td><td class="px-4 py-2.5">7</td><td class="px-4 py-2.5 text-red-300">-1R</td></tr>
+              <tr><td class="px-4 py-2.5">4</td><td class="px-4 py-2.5">6</td><td class="px-4 py-2.5 text-brand-300">+2R</td></tr>
+              <tr><td class="px-4 py-2.5">5</td><td class="px-4 py-2.5">5</td><td class="px-4 py-2.5 text-brand-300">+5R</td></tr>
+              <tr><td class="px-4 py-2.5">6</td><td class="px-4 py-2.5">4</td><td class="px-4 py-2.5 text-brand-300">+8R</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUTHOR ============ -->
+<section id="author" class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="rounded-3xl border border-white/8 bg-ink-850 p-6 sm:p-8">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+        <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gold-500/12 font-display text-xl font-extrabold text-gold-300">W</div>
+        <div>
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">The author</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white">Who is William?</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
+            William has 5+ years of hands-on forex experience and works inside SureShotFX's signal service, trade management and trader education. The book distills the system he uses day to day, tested with real capital and member accounts.
+          </p>
+          <div class="mt-4 grid gap-2 text-[12px] text-neutral-500 sm:grid-cols-3">
+            <p><span class="font-semibold text-neutral-300">5+ years</span><br />Live market experience</p>
+            <p><span class="font-semibold text-neutral-300">Runs the desk</span><br />Signals and trade management</p>
+            <p><span class="font-semibold text-neutral-300">Real money</span><br />Not backtested theory alone</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="max-w-2xl">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Reader feedback</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What traders say about the system</h2>
+      <p class="mt-3 text-[15px] leading-relaxed text-neutral-400">Three reviews from the live product page. Individual results, not typical outcomes.</p>
+    </div>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-gold-400/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">The worked examples in Chapter 4 are worth the price alone. I went back and mapped every one on my live charts and the confluence was right there.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-gold-500/15 text-[11px] font-bold text-gold-300">JO</span>
+          <div><p class="text-xs font-semibold text-white">James O.</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Prop trader</p></div>
+        </figcaption>
+      </figure>
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-gold-400/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">Finally a book that connects structure, liquidity, and entries into one clean system. The entry model checklist alone changed how I approach every trade.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-500/15 text-[11px] font-bold text-brand-300">KM</span>
+          <div><p class="text-xs font-semibold text-white">Khalid M.</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Forex trader, 2 years</p></div>
+        </figcaption>
+      </figure>
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-gold-400/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">I have consumed a lot of SMC content. This is the first resource that gave me a repeatable framework I can actually follow without second-guessing myself.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-idx-500/15 text-[11px] font-bold text-idx-300">PR</span>
+          <div><p class="text-xs font-semibold text-white">Priya R.</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">SSF community member</p></div>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="mt-5 text-[11px] leading-relaxed text-neutral-600">Reviews are reproduced from the live product page. They are individual opinions, not typical results. Trading carries risk.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_0%,rgba(245,196,81,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-gold-400/35 bg-gold-500/10 px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-gold-300">
+        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        Black Friday: save 50%
+      </span>
+      <h2 class="mt-5 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">One book. One payment. <span class="text-gold-400">$24.99</span>.</h2>
+      <p class="mt-3 text-[14px] leading-relaxed text-neutral-400">The regular price is $50. The coupon FIRSTREAD brings it to $24.99. Instant PDF, lifetime access and edition updates.</p>
+    </div>
+
+    <div class="mt-10 overflow-hidden rounded-3xl border border-gold-400/30 bg-gradient-to-b from-gold-500/[0.06] to-ink-850 p-6 shadow-card sm:p-8">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+        <div class="w-full shrink-0 rounded-2xl border border-white/10 bg-black/30 p-2 sm:w-40">
+          <img src="assets/book-cover.jpg" width="760" height="1074" alt="Behind the Candle book cover" class="h-auto w-full rounded-xl" loading="lazy" decoding="async" />
+        </div>
+        <div class="flex-1">
+          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-300">Advanced SMC ebook</p>
+          <h3 class="mt-1.5 font-display text-2xl font-extrabold text-white">Behind the Candle</h3>
+          <p class="mt-1 text-[12.5px] text-neutral-500">5 chapters · 10+ worked examples · PDF</p>
+          <div class="mt-4 flex flex-wrap items-end gap-x-3 gap-y-1">
+            <span class="font-display text-5xl font-extrabold tracking-tight text-white">$24.99</span>
+            <span class="pb-1 text-lg font-semibold text-neutral-600 line-through">$50</span>
+            <span class="mb-2 rounded-md bg-gold-500/15 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-gold-300">Save 50%</span>
+          </div>
+          <ul class="mt-5 grid gap-2 text-[12.5px] sm:grid-cols-2">
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">5 in-depth chapters</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">10+ worked examples</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Entry checklist</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Instant PDF download</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Lifetime access + updates</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Coupon FIRSTREAD</span></li>
+          </ul>
+          <a href="#pricing" class="mt-6 block rounded-xl bg-gold-400 py-3.5 text-center text-sm font-extrabold text-black shadow-glow-gold transition hover:bg-gold-300">Get the book: $24.99</a>
+          <p class="mt-3 text-[10.5px] leading-relaxed text-neutral-600">Secure checkout. Apply FIRSTREAD at checkout. If your payment method is missing, message @SSF_Support. Digital products are covered by the Terms and Refund Policy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Fit</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Who is this SMC book for?</h2>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-neutral-400">It is for traders who can already read a basic chart and want one structured Smart Money framework. Complete beginners should start with the foundations first.</p>
+      </div>
+      <div class="min-w-0 lg:col-span-7">
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gold-400/25 bg-gold-500/[0.04] p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-gold-300">It's for you if</p>
+            <ul class="mt-2 list-disc space-y-1.5 pl-4 text-[12.5px] leading-relaxed text-neutral-400">
+              <li>You understand candlesticks and basic chart reading.</li>
+              <li>You want one system, not more indicators.</li>
+              <li>You trade forex, gold or indices on any timeframe.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Start somewhere else if</p>
+            <ul class="mt-2 list-disc space-y-1.5 pl-4 text-[12.5px] leading-relaxed text-neutral-400">
+              <li>You have never read a chart. Start with <a href="/sure-profit-trading-secret" class="font-semibold text-gold-300 hover:underline">Sure Profit Trading Secret</a>.</li>
+              <li>You want trade calls without analysis. Use <a href="/live-signals" class="font-semibold text-brand-400 hover:underline">VIP signals</a>.</li>
+              <li>You want guaranteed profits. No book can promise that.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Behind the Candle: common questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Level, contents, delivery and how the SMC framework compares with the beginner book.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">What level of trader is this book for?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">It is written for intermediate traders who already understand basic chart reading and want to move into Smart Money Concepts. Complete beginners should start with Sure Profit Trading Secrets. Experienced traders will get the most from the entry model and worked examples.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">What is SMC trading?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">SMC trading is a way of reading price that focuses on market structure, liquidity pools, order blocks, fair value gaps and breaker zones. The aim is to trade with the moves that sweep retail stops, not against them.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Who is William?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">William has 5+ years of hands-on forex experience and works inside SureShotFX's signal service, trade management and trader education. The book distills the system he uses day to day, tested with real capital and member accounts.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Is this different from Sure Profit Trading Secrets?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. Sure Profit Trading Secrets covers forex fundamentals, technical analysis basics and indicators. Behind the Candle is an advanced SMC framework focused on institutional liquidity, order blocks, fair value gaps and a criteria-based entry model. They complement each other but do not overlap.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Is Behind the Candle a PDF?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. It is an SMC trading PDF, delivered instantly after checkout. You can read it on a phone, tablet or desktop and keep lifetime access to the file plus any updates to this edition.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">How do I receive the book after purchase?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Delivery is instant and digital. After checkout you receive download access immediately. If you have any issues, contact @SSF_Support on Telegram and the team will sort it out quickly.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Does the book cover specific currency pairs or timeframes?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The framework applies to any liquid market, including forex pairs, gold and indices, across timeframes. The worked examples in Chapter 4 span multiple instruments and sessions, showing how the model adapts to different conditions.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Is this a one-time payment?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. $24.99 once with the FIRSTREAD coupon, and the book is yours. There is no subscription, no upsell and no hidden fee. You get lifetime access to the PDF and any updates to the edition.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">What payment methods are accepted?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Multiple payment methods are available at checkout, including major cards, Apple Pay and crypto. If you cannot find your preferred method, contact @SSF_Support on Telegram for assistance.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-gold-300">Can I get a refund?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-gold-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">The book is an instant digital download, so purchases are covered by the Terms and Refund Policy. If a download fails or the file will not open, message @SSF_Support and the team will fix it or replace the file.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CROSS-SELL ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <h2 class="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Start with the foundations</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <a href="/sure-profit-trading-secret" class="group rounded-2xl border border-gold-400/25 bg-gold-500/[0.04] p-6 transition hover:bg-gold-500/[0.08]">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-gold-300">Beginner · $4.99</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Sure Profit Trading Secret</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">New to forex? The 81-page beginner book covers technical analysis, MT4, risk and chart patterns before SMC.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-gold-300 group-hover:text-gold-200">See the beginner book →</span>
+      </a>
+      <a href="/live-signals" class="group rounded-2xl border border-brand-500/25 bg-brand-500/[0.04] p-6 transition hover:bg-brand-500/[0.08]">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-brand-300">Ready-made trades</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">SureShotFX VIP signals</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">If you would rather follow the desk than study first, the VIP channels send entries, stops and targets.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-brand-300 group-hover:text-brand-200">See free signals →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gold-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-400">Before you buy</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Questions About the Book?</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">The SureShotFX team answers level, contents, delivery and payment questions on Telegram. If you are not sure whether to start here or with the beginner book, ask before you pay.</p>
+        </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gold-400 px-6 py-3 text-sm font-bold text-black shadow-glow-gold transition hover:bg-gold-300">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Ask on Telegram
+          </a>
+          <a href="/sure-profit-trading-secret" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-gold-400/40 hover:bg-white/5">Compare the beginner book</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief: Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks. Check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-gold-400/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-gold-400 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-gold-400">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier for MT4 and MT5, and beginner and advanced trading books. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-gold-400/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-gold-400/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-gold-400/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-gold-400/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-neutral-400 transition hover:text-white">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-neutral-400 transition hover:text-white">Guardian</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-neutral-400 transition hover:text-white">Pip Calculator App</a></li>
+          <li><a href="/lot-size-calculator" class="text-neutral-400 transition hover:text-white">Lot Size Calculator</a></li>
+          <li><a href="/currency-heatmap" class="text-neutral-400 transition hover:text-white">Currency Heatmap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-gold-400">Behind the Candle</a></li>
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">Education disclaimer:</strong> This ebook is educational material. It is not financial advice, does not guarantee results and does not replace a licensed adviser. Worked examples are illustrative.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Behind the Candle · Smart Money Concepts book · <span class="text-neutral-500">$24.99 one-time</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">SMC book: $24.99</p>
+      <p class="text-[10px] text-neutral-500">Save 50% · instant PDF</p>
+    </div>
+    <a href="#pricing" class="shrink-0 rounded-xl bg-gold-400 px-4 py-2.5 text-xs font-extrabold text-black">Get Book</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Book",
+      "name": "Behind the Candle",
+      "alternateName": "Behind the Candle: The Smart Money Concepts Book",
+      "author": { "@type": "Person", "name": "William" },
+      "publisher": { "@type": "Organization", "name": "SureShotFX", "url": "https://sureshotfx.com" },
+      "bookFormat": "https://schema.org/EBook",
+      "inLanguage": "en",
+      "dateModified": "2026-11-20",
+      "about": ["Smart Money Concepts", "SMC trading", "Liquidity", "Order Blocks", "Fair Value Gaps", "Forex trading"],
+      "description": "An advanced Smart Money Concepts book covering market structure, six liquidity types, order blocks, fair value gaps, breaker zones and a criteria-based entry model with 10 worked examples.",
+      "offers": {
+        "@type": "Offer",
+        "price": "24.99",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-11-30",
+        "url": "https://sureshotfx.com/behind-the-candle#pricing"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://sureshotfx.com/#learn" },
+        { "@type": "ListItem", "position": 3, "name": "Behind the Candle", "item": "https://sureshotfx.com/behind-the-candle" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What level of trader is this book for?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It is written for intermediate traders who already understand basic chart reading and want to move into Smart Money Concepts. Complete beginners should start with Sure Profit Trading Secrets." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is SMC trading?",
+          "acceptedAnswer": { "@type": "Answer", "text": "SMC trading is a way of reading price that focuses on market structure, liquidity pools, order blocks, fair value gaps and breaker zones. The aim is to trade with the moves that sweep retail stops, not against them." }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is William?",
+          "acceptedAnswer": { "@type": "Answer", "text": "William has 5+ years of hands-on forex experience and works inside SureShotFX's signal service, trade management and trader education. The book distills the system he uses day to day." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this different from Sure Profit Trading Secrets?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Sure Profit Trading Secrets covers forex fundamentals, technical analysis basics and indicators. Behind the Candle is an advanced SMC framework focused on liquidity, order blocks, fair value gaps and a criteria-based entry model." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Behind the Candle a PDF?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is a PDF ebook, delivered instantly after checkout. You can read it on a phone, tablet or desktop and keep lifetime access to the file plus updates to this edition." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a one-time payment?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. $24.99 once with the FIRSTREAD coupon, and the book is yours. There is no subscription, no upsell and no hidden fee. You get lifetime access to the PDF and any updates to the edition." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      ['bf-clock','bf-clock-2'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = out; });
+    }
+    tick(); setInterval(tick, 1000);
+
+    document.querySelectorAll('header details a').forEach((a) => {
+      a.addEventListener('click', () => { const d = a.closest('details'); if (d) d.open = false; });
+    });
+  })();
+</script>
+
+<!-- GitHub Pages preview: map production-absolute page links to this repo's folders -->
+<script>
+(function () {
+  if (!/(^|\.)github\.io$/.test(location.hostname)) return;
+  var repo = location.pathname.split('/')[1];
+  if (!repo) return;
+  var pages = ['forex-vip-signals','gold-vip-signals','indices-vip-signals','combo','trade-copier','lot-size-calculator','pip-calculator-mobile-app','currency-heatmap','sure-profit-trading-secret','behind-the-candle'];
+  document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href.indexOf('//') === 0) return;
+    if (href === '/') { a.setAttribute('href', '/' + repo + '/'); return; }
+    var seg = href.split('/')[1];
+    if (pages.indexOf(seg) !== -1) {
+      a.setAttribute('href', '/' + repo + '/' + seg + '/' + seg + '.html' + href.slice(seg.length + 1));
+    }
+  });
+})();
+</script>
+</body>
+</html>
