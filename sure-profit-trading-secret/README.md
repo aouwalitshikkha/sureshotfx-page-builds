@@ -5,7 +5,7 @@ Redesign of `https://sureshotfx.com/sure-profit-trading-secret` with Tailwind CD
 | File | What it is |
 |---|---|
 | `sure-profit-trading-secret.html` | The page. Open directly in a browser. |
-| `assets/book-cover.jpg` | Cover and contents spread used in the hero and pricing card. |
+| `assets/` | Cover and contents spread for the hero, plus a cropped cover thumbnail for the pricing card. |
 | `keyword-coverage-comparison.md` | Old GSC queries vs the new category targeting. |
 | `sure-profit-trading-secret-keywords.md` | Keyword map, exclusions and cannibalisation notes. |
 | `sure-profit-trading-secret-changes.md` | Changelog vs the live page, verification and pre-launch checklist. |
