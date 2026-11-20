@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prop Firm Drawdown EA for MT4 &amp; MT5 | SureShotFX Guardian</title>
+<meta name="description" content="Guardian is a drawdown EA for prop firm challenges. Set daily and overall loss limits, auto-close trades at the limit and get Telegram alerts. $19.99 lifetime for 2 accounts." />
+<link rel="canonical" href="https://sureshotfx.com/sureshotfx-guardian" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SureShotFX" />
+<meta property="og:title" content="Guardian: Prop Firm Drawdown EA for MT4 &amp; MT5" />
+<meta property="og:description" content="Daily and overall drawdown limits, automatic trade halt and Telegram alerts. $19.99 lifetime for 2 accounts." />
+<meta property="og:url" content="https://sureshotfx.com/sureshotfx-guardian" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Guardian: Prop Firm Drawdown EA" />
+<meta name="twitter:description" content="Protect the account before the loss limit does. MT4 and MT5 drawdown EA." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Sora', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            200: '#B8FFE3', 300: '#7CFFCB', 400: '#22FFA9', 500: '#00F595',
+            600: '#00D280', 700: '#0FB373', 800: '#06554E', 900: '#012215',
+          },
+          idx: {
+            200: '#BAE6FD', 300: '#7DD3FC', 400: '#38BDF8', 500: '#0EA5E9',
+            600: '#0284C7', 700: '#0369A1', 800: '#075985', 900: '#0C4A6E',
+          },
+          gold: {
+            200: '#FFF0BF', 300: '#FFE08A', 400: '#F5C451', 500: '#E0A82E',
+            600: '#B47F17', 700: '#8A5F10', 800: '#4A3408',
+          },
+          ink: {
+            950: '#000000', 900: '#050807', 850: '#080C0A', 800: '#0C1210',
+            700: '#121A16', 600: '#1B2621', 500: '#2A3833',
+          },
+          bf: { 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706' },
+        },
+        boxShadow: {
+          glow: '0 0 40px -8px rgba(0,245,149,0.45)',
+          'glow-sm': '0 0 24px -6px rgba(0,245,149,0.35)',
+          card: '0 18px 50px -24px rgba(0,0,0,0.9)',
+        },
+        borderRadius: { '4xl': '2rem' },
+      },
+    },
+  }
+</script>
+<style>
+  html { scroll-padding-top: 6rem; background:#000; color-scheme: dark; }
+  body { font-family: Inter, system-ui, sans-serif; background:#000; }
+  h1,h2,h3,h4,.font-display { font-family: Sora, system-ui, sans-serif; }
+
+  ::selection { background:#00F595; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#050807; }
+  ::-webkit-scrollbar-thumb { background:#1B2621; border-radius:9999px; }
+  ::-webkit-scrollbar-thumb:hover { background:#2A3833; }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(0,245,149,0.10) 0%, transparent 70%),
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+  .text-gradient-guardian {
+    background: linear-gradient(92deg,#22FFA9 0%,#7CFFCB 55%,#FBBF24 110%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .glass { background: rgba(12,18,16,0.72); backdrop-filter: blur(14px); }
+
+  @keyframes shimmer { 0% { background-position: -140% 0; } 100% { background-position: 240% 0; } }
+  .shimmer {
+    background: linear-gradient(100deg, rgba(245,158,11,0) 20%, rgba(245,158,11,.45) 45%, rgba(245,158,11,0) 70%);
+    background-size: 220% 100%;
+    animation: shimmer 3.4s linear infinite;
+  }
+
+  @keyframes pulseDot { 0% { box-shadow:0 0 0 0 rgba(0,245,149,.55); } 70% { box-shadow:0 0 0 9px rgba(0,245,149,0); } 100% { box-shadow:0 0 0 0 rgba(0,245,149,0); } }
+  .live-dot { animation: pulseDot 2.1s infinite; }
+
+  details.faq[open] .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform .25s ease; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  summary::-webkit-details-marker { display:none; }
+
+  .gauge { height:6px; border-radius:9999px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .gauge > span { display:block; height:100%; border-radius:9999px; }
+</style>
+</head>
+<body class="bg-black text-neutral-200 font-body antialiased selection:bg-brand-500 selection:text-black">
+
+<!-- ============ ANNOUNCEMENT / BLACK FRIDAY BAR ============ -->
+<div class="relative z-50 overflow-hidden border-b border-bf-500/30 bg-gradient-to-r from-bf-600 via-bf-500 to-bf-600 text-black">
+  <div class="shimmer absolute inset-0 pointer-events-none"></div>
+  <div class="relative mx-auto flex max-w-7xl items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+    <span class="hidden rounded bg-black px-1.5 py-0.5 text-[10px] font-extrabold text-bf-400 sm:inline">Black Friday</span>
+    <span>Guardian lifetime $19.99 <span class="hidden sm:inline">· save 33% with code GUARDIAN19</span></span>
+    <span class="hidden text-black/60 md:inline">•</span>
+    <span class="hidden md:inline">Ends in <span id="bf-clock" class="font-mono tabular-nums">00d 00h 00m 00s</span></span>
+    <a href="#pricing" class="ml-1 hidden rounded-full bg-black px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-bf-400 hover:bg-neutral-900 sm:inline">Get Guardian →</a>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 glass">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3.5 sm:gap-4 sm:px-4 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black shadow-glow-sm">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      </span>
+      <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a href="#features" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Features</a>
+      <a href="#how" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">How it works</a>
+      <a href="#compatibility" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Compatibility</a>
+      <a href="#pricing" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Pricing</a>
+      <a href="#reviews" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">Reviews</a>
+      <a href="#faq" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 transition hover:bg-white/5 hover:text-white">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <details class="relative lg:hidden">
+        <summary class="grid cursor-pointer list-none place-items-center rounded-xl border border-white/10 p-2.5 text-white transition hover:border-brand-500/40">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="absolute right-0 top-12 w-64 rounded-2xl border border-white/10 bg-ink-850 p-2 shadow-card">
+          <a href="#features" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Features</a>
+          <a href="#how" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">How it works</a>
+          <a href="#compatibility" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Compatibility</a>
+          <a href="#pricing" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Pricing</a>
+          <a href="#reviews" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">Reviews</a>
+          <a href="#faq" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white">FAQ</a>
+          <a href="/live-signals" class="mt-1 block rounded-lg bg-white/5 px-3 py-2.5 text-sm font-semibold text-brand-400">Free Signals</a>
+        </div>
+      </details>
+      <a href="#pricing" class="hidden min-[380px]:inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-brand-500 px-4 py-2 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">Get Guardian</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden border-b border-white/5">
+  <div class="absolute inset-0 grid-glow opacity-90"></div>
+  <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-brand-500/10 blur-[120px]"></div>
+  <div class="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-gold-500/10 blur-[110px]"></div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-20 lg:pt-16">
+    <div class="lg:col-span-6">
+      <div class="mb-5 flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-300">
+          <span class="live-dot h-1.5 w-1.5 rounded-full bg-brand-400"></span> Prop firm drawdown EA
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400">MT4 &amp; MT5</span>
+      </div>
+
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[2.5rem] xl:text-[2.8rem]">
+        Guardian<br class="hidden sm:block" />
+        <span class="text-gradient-guardian">Prop Firm Drawdown<br class="hidden sm:block" />Protection for MT4 &amp; MT5</span>
+      </h1>
+
+      <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-neutral-400 sm:text-base">
+        Guardian is a drawdown EA for prop firm challenges. It watches your daily and overall loss limits in real time, closes trades at the limit and sends alerts to MT4/MT5 and Telegram.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href="#pricing" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-extrabold text-black shadow-glow transition hover:bg-brand-400">
+          Get Guardian: $19.99
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#how" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/[0.06]">See how it works</a>
+      </div>
+
+      <div class="mt-8 grid max-w-lg grid-cols-2 gap-3 text-[12px] sm:grid-cols-4">
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">2</p><p class="text-neutral-500">Accounts</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">$19.99</p><p class="text-neutral-500">Lifetime</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">MT4/5</p><p class="text-neutral-500">Platforms</p></div>
+        <div class="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2"><p class="font-display text-base font-extrabold text-white">Telegram</p><p class="text-neutral-500">Alerts</p></div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="relative rounded-3xl border border-white/10 bg-ink-850 p-5 shadow-card sm:p-6">
+        <div class="flex items-center justify-between">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">Guardian console</p>
+          <span class="inline-flex items-center gap-1.5 rounded-md bg-brand-500/12 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-wider text-brand-300"><span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span> Guarded</span>
+        </div>
+        <div class="mt-4 rounded-xl border border-white/8 bg-black/30 p-4">
+          <div class="flex items-baseline justify-between">
+            <p class="text-[11px] text-neutral-500">Prop account</p>
+            <p class="font-mono text-[12px] font-semibold text-white">$10,000.00</p>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-baseline justify-between text-[11px]">
+              <p class="text-neutral-400">Daily loss</p>
+              <p class="font-mono text-red-300">-$180.00 <span class="text-neutral-600">/ $500 limit</span></p>
+            </div>
+            <div class="gauge mt-1.5"><span style="width:36%;background:linear-gradient(90deg,#22FFA9,#FBBF24)"></span></div>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-baseline justify-between text-[11px]">
+              <p class="text-neutral-400">Overall drawdown</p>
+              <p class="font-mono text-red-300">-$420.00 <span class="text-neutral-600">/ $1,000 limit</span></p>
+            </div>
+            <div class="gauge mt-1.5"><span style="width:42%;background:linear-gradient(90deg,#22FFA9,#38BDF8)"></span></div>
+          </div>
+          <div class="mt-4 flex items-center justify-between border-t border-white/8 pt-3 text-[10.5px] text-neutral-500">
+            <span>Next reset: 00:00 server</span>
+            <span class="text-brand-300">Alerts: Telegram ✓</span>
+          </div>
+        </div>
+        <div class="mt-3 flex gap-2">
+          <span class="flex-1 rounded-lg border border-red-500/25 bg-red-500/[0.06] px-3 py-2 text-center text-[10.5px] font-bold uppercase tracking-wider text-red-300">Close all: CLOSE</span>
+          <span class="flex-1 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[10.5px] font-semibold text-neutral-400">Auto-halt armed</span>
+        </div>
+        <p class="mt-3 text-[10px] leading-relaxed text-neutral-600">Illustrative console, not a live account. Limits and balances are examples.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUICK FACTS ============ -->
+<section class="border-b border-white/5 bg-ink-900/50">
+  <div class="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/5 px-4 sm:grid-cols-4 lg:px-8">
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Daily + overall</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Limits</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Real time</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Monitoring</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Auto-close</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">At the limit</p></div>
+    <div class="px-2 py-5 text-center"><p class="font-display text-lg font-extrabold text-white">Lifetime</p><p class="text-[10.5px] uppercase tracking-wider text-neutral-500">Licence</p></div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS IT ============ -->
+<section class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-7">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">The basics</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What is a prop firm drawdown EA?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          A drawdown EA is an Expert Advisor that monitors your account against a loss limit and acts when you reach it. Guardian is built for prop firm challenges: it tracks the daily loss and the overall drawdown, then closes trades or halts trading before the limit is breached.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Most prop firms fail an account when the daily or maximum loss is exceeded. Guardian turns that rule into an automated guard, so a fast losing session does not end the challenge while you are away from the screen.
+        </p>
+        <div class="mt-5 rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-4">
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-300">TL;DR</p>
+          <p class="mt-1 text-[13px] leading-relaxed text-neutral-300">Guardian is a $19.99 lifetime EA for 2 MT4/MT5 accounts. Set daily and overall loss limits; it monitors, alerts and closes trades before the limit is breached.</p>
+        </div>
+        <div class="mt-5 rounded-2xl border border-white/8 bg-ink-850 p-5">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Key takeaways</p>
+          <ul class="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed text-neutral-400">
+            <li>Built for prop firm daily and maximum loss rules.</li>
+            <li>Runs on MT4 and MT5, alongside your other EAs.</li>
+            <li>Closes trades at the limit and alerts you on Telegram.</li>
+            <li>Two accounts per lifetime licence.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="min-w-0 lg:col-span-5">
+        <div class="grid gap-3">
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Best for</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">Prop firm challenges</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">Funded accounts, evaluation accounts and copy-trading setups that share one loss limit.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Platforms</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">MetaTrader 4 &amp; 5</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">One licence covers both platforms on two accounts.</p>
+          </div>
+          <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Not the same as</p>
+            <p class="mt-1.5 font-display text-base font-bold text-white">A trade copier</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-neutral-400">Guardian does not copy signals. It monitors risk. Use <a href="/trade-copier" class="font-semibold text-brand-400 hover:underline">the Trade Copier</a> for execution.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Features</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What does the Guardian drawdown EA do?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Eight features, all pointed at one job: keeping the account inside the prop firm's loss rules.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Daily loss limit</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Set the percentage or amount your firm allows for the day. Guardian tracks it from the daily reset.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 4-6"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Overall drawdown limit</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">A second ceiling for the whole challenge, so a slow bleed cannot breach the maximum loss either.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Real-time monitoring</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">The EA checks equity and floating loss continuously, not once at the end of the day.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-red-500/12 text-red-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Auto-halt and close all</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">At the limit, Guardian stops opening new trades and closes positions, so the breach does not happen.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h6"/><path d="M17 15l3 3-3 3"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">CLOSE command</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Send "CLOSE" from Telegram to end all trades immediately, even when you are away from the terminal.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Telegram and MT4/MT5 alerts</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Drawdown warnings and account status reach your phone, so you can act before the limit.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-500/12 text-brand-400">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1116 0"/><path d="M4 12v4a2 2 0 002 2h1v-6H6M20 12v4a2 2 0 01-2 2h-1v-6h1"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Per-day reset</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Daily limits reset on the server clock, matching how prop firms calculate the new trading day.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-5">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-idx-500/12 text-idx-300">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+        </span>
+        <h3 class="mt-4 font-display text-[14px] font-bold text-white">Runs beside other EAs</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-neutral-400">Guardian manages risk in the background without replacing the strategy or EA on the chart.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Three steps</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">How does Guardian protect a prop account?</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">Install it, set the two limits, and let it watch the account. No manual monitoring.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <span class="font-display text-xs font-bold text-brand-400">01</span>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Attach Guardian</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Install the EA on the MT4 or MT5 account and connect the Telegram bot. Remote setup help is available on the first install.</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <span class="font-display text-xs font-bold text-brand-400">02</span>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Set daily and overall limits</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Enter the percentages or amounts from your prop firm's rules. Use one limit per rule, not a guess.</p>
+      </div>
+      <div class="rounded-2xl border border-brand-500/25 bg-brand-500/[0.04] p-6">
+        <span class="font-display text-xs font-bold text-brand-400">03</span>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Monitor, alert, close</h3>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-neutral-400">Guardian tracks floating loss, sends warnings and closes or halts at the threshold. You can also send "CLOSE" at any time.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-white/8 bg-ink-850 p-5">
+      <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500">Example, $10,000 prop account</p>
+      <div class="mt-3 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[10px] uppercase tracking-wider text-neutral-500">5% daily limit</p><p class="mt-1 font-display text-xl font-extrabold text-white">$500</p><p class="text-[11px] text-neutral-500">Guardian closes before this loss.</p></div>
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[10px] uppercase tracking-wider text-neutral-500">10% overall limit</p><p class="mt-1 font-display text-xl font-extrabold text-white">$1,000</p><p class="text-[11px] text-neutral-500">A second ceiling on total drawdown.</p></div>
+        <div class="rounded-xl border border-white/8 bg-black/20 p-4"><p class="text-[10px] uppercase tracking-wider text-neutral-500">Per licence</p><p class="mt-1 font-display text-xl font-extrabold text-white">2 accounts</p><p class="text-[11px] text-neutral-500">Challenge and funded account together.</p></div>
+      </div>
+      <p class="mt-3 text-[10.5px] leading-relaxed text-neutral-600">Illustrative only. Use the exact percentages and calculation method from your prop firm. Guardian does not guarantee that a firm will accept a trade history or pass a challenge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPATIBILITY ============ -->
+<section id="compatibility" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="min-w-0 lg:col-span-5">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Requirements</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What does Guardian work with?</h2>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-neutral-400">
+          Any MT4 or MT5 account, including prop firm evaluations, funded accounts and demo accounts. You should check that your firm permits EAs before you install it.
+        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-neutral-400">
+          Guardian does not connect to your broker, place trades on its own or ask for your broker password. It reads account equity and acts on the limits you set.
+        </p>
+      </div>
+      <div class="min-w-0 lg:col-span-7">
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-[12.5px]">
+            <thead class="bg-white/[0.04] text-[10px] uppercase tracking-wider text-neutral-500">
+              <tr><th class="px-4 py-3 font-bold">Item</th><th class="px-4 py-3 font-bold">Support</th></tr>
+            </thead>
+            <tbody class="divide-y divide-white/8 text-neutral-300">
+              <tr><td class="px-4 py-3 text-neutral-500">Platforms</td><td class="px-4 py-3 font-semibold text-white">MetaTrader 4 &amp; MetaTrader 5</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Account types</td><td class="px-4 py-3 font-semibold text-white">Prop evaluation, funded, live, demo</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Prop firms</td><td class="px-4 py-3 font-semibold text-white">Any MT4/MT5 firm that permits EAs</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Accounts per licence</td><td class="px-4 py-3 font-semibold text-white">2</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Other EAs</td><td class="px-4 py-3 font-semibold text-white">Runs alongside them</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Alerts</td><td class="px-4 py-3 font-semibold text-white">MT4/MT5 + Telegram</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Updates</td><td class="px-4 py-3 font-semibold text-white">Free for the licence</td></tr>
+              <tr><td class="px-4 py-3 text-neutral-500">Setup</td><td class="px-4 py-3 font-semibold text-white">Remote help on first install</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Trader feedback</span>
+        <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">What prop traders say about Guardian</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-neutral-400">Three reviews from the live product page. One quote had a brand typo corrected; wording is otherwise unchanged.</p>
+      </div>
+      <div class="grid shrink-0 grid-cols-3 gap-4 rounded-2xl border border-white/8 bg-ink-850 px-5 py-4 text-center">
+        <div><p class="font-display text-xl font-extrabold text-white">2</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Accounts</p></div>
+        <div><p class="font-display text-xl font-extrabold text-white">MT4/5</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Platforms</p></div>
+        <div><p class="font-display text-xl font-extrabold text-white">24/7</p><p class="text-[9.5px] uppercase tracking-wider text-neutral-500">Support</p></div>
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">Thanks to SSF Guardian, I could concentrate on my trading strategies and stay calm during the challenge. It felt like having a safety net, allowing me to take calculated risks without fear of going over my limits.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-500/15 text-[11px] font-bold text-brand-300">C</span>
+          <div><p class="text-xs font-semibold text-white">Christ</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Prop challenge trader</p></div>
+        </figcaption>
+      </figure>
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">SSF Guardian helped me pass the prop. I struggled to keep track of the drawdown limits while trading. After getting the Guardian EA from SureShotFX, it made things so much easier.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-gold-500/15 text-[11px] font-bold text-gold-300">LP</span>
+          <div><p class="text-xs font-semibold text-white">Lenny Pasho</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Prop trader</p></div>
+        </figcaption>
+      </figure>
+      <figure class="flex flex-col rounded-2xl border border-white/8 bg-ink-850 p-6">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-brand-500/40" fill="currentColor"><path d="M7.5 5C5 5 3 7.2 3 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C10.5 7.2 9.6 5 7.5 5zm10 0C15 5 13 7.2 13 10c0 2.6 1.8 4.7 4.2 4.9-.5 1.6-1.8 2.6-3.4 3.1l.6 1.9c3.6-1 6.1-4.1 6.1-8.4V10C20.5 7.2 19.6 5 17.5 5z"/></svg>
+        <blockquote class="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-300">Since using Guardian, my overall trading performance has improved. I feel more in control of my trades, and my profits have become more consistent. It is like having a personal trading coach with me.</blockquote>
+        <figcaption class="mt-4 flex items-center gap-2.5 border-t border-white/5 pt-4">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-idx-500/15 text-[11px] font-bold text-idx-300">DD</span>
+          <div><p class="text-xs font-semibold text-white">Dominiq Diosio</p><p class="text-[10px] uppercase tracking-wider text-neutral-500">Funded trader</p></div>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="mt-5 text-[11px] leading-relaxed text-neutral-600">Reviews are reproduced from the live product page. Individual opinions, not typical results. Guardian does not guarantee a challenge pass or profit.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="relative overflow-hidden border-b border-white/5 py-20 lg:py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_0%,rgba(0,245,149,0.10),transparent_70%)]"></div>
+  <div class="relative mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-bf-500/35 bg-bf-500/10 px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-bf-400">
+        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        Black Friday: save 33%
+      </span>
+      <h2 class="mt-5 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">One licence. Two accounts. <span class="text-brand-400">$19.99</span>.</h2>
+      <p class="mt-3 text-[14px] leading-relaxed text-neutral-400">Lifetime access, no subscription and free updates. Use GUARDIAN19 at checkout.</p>
+    </div>
+
+    <div class="mt-10 overflow-hidden rounded-3xl border border-brand-500/30 bg-gradient-to-b from-brand-500/[0.06] to-ink-850 p-6 shadow-card sm:p-8">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+        <div class="grid w-full shrink-0 place-items-center rounded-2xl border border-white/8 bg-black/30 p-6 sm:w-40">
+          <svg viewBox="0 0 24 24" class="h-16 w-16 text-brand-400" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          <p class="mt-2 text-[10px] font-bold uppercase tracking-wider text-neutral-500">Guardian EA</p>
+          <p class="text-[10px] text-neutral-600">MT4 &amp; MT5</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-300">Lifetime licence</p>
+          <h3 class="mt-1.5 font-display text-2xl font-extrabold text-white">SureShotFX Guardian</h3>
+          <p class="mt-1 text-[12.5px] text-neutral-500">2 accounts · MT4 &amp; MT5 · lifetime</p>
+          <div class="mt-4 flex flex-wrap items-end gap-x-3 gap-y-1">
+            <span class="font-display text-5xl font-extrabold tracking-tight text-white">$19.99</span>
+            <span class="pb-1 text-lg font-semibold text-neutral-600 line-through">$29.99</span>
+            <span class="mb-2 rounded-md bg-bf-500/15 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-bf-400">Save 33%</span>
+          </div>
+          <ul class="mt-5 grid gap-2 text-[12.5px] sm:grid-cols-2">
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">2 accounts, lifetime</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">MT4 &amp; MT5</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Daily + overall limits</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Telegram alerts + CLOSE</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Free updates</span></li>
+            <li class="flex gap-2"><svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span class="text-neutral-300">Remote setup help</span></li>
+          </ul>
+          <a href="#pricing" class="mt-6 block rounded-xl bg-brand-500 py-3.5 text-center text-sm font-extrabold text-black shadow-glow transition hover:bg-brand-400">Get Guardian: $19.99</a>
+          <p class="mt-3 text-[10.5px] leading-relaxed text-neutral-600">Coupon GUARDIAN19. Secure checkout. If your payment method is missing, message @SSF_Support. Digital products are covered by the Terms and Refund Policy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CROSS-SELL ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <h2 class="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Pairs with the rest of the desk</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <a href="/trade-copier" class="group rounded-2xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-brand-300">Execution</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">SureShotFX Trade Copier</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Guardian manages drawdown; the copier handles entries, stops and partial closes on MT4/MT5.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-brand-400 group-hover:text-brand-300">See the copier →</span>
+      </a>
+      <a href="/blog/prop-firms-that-allow-ea-trading" class="group rounded-2xl border border-white/8 bg-ink-850 p-6 transition hover:border-brand-500/40">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-brand-300">Before you install</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-white">Prop firms that allow EA trading</h3>
+        <p class="mt-1.5 text-[12.5px] leading-relaxed text-neutral-400">Check your firm's EA rules before adding any Expert Advisor, including Guardian.</p>
+        <span class="mt-3 inline-flex text-[12.5px] font-semibold text-brand-400 group-hover:text-brand-300">Read the guide →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="border-b border-white/5 py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 lg:px-8">
+    <div class="text-center">
+      <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Answers</span>
+      <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Guardian: common questions</h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-neutral-400">How the drawdown EA works, what it needs, and what it cannot do.</p>
+    </div>
+
+    <div class="mt-10 divide-y divide-white/8 border-y border-white/8">
+      <details class="faq group py-5" open>
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is SSF Guardian?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">SSF Guardian is a proprietary Expert Advisor for MT4 and MT5 that manages drawdown limits. It tracks daily and overall loss, warns you before the limit and closes or halts trades at the threshold set by your prop firm.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How does it differ from other risk management tools?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Guardian is built around prop firm rules: a daily loss limit, an overall drawdown limit and a daily reset. It monitors in real time, stops trading at the limit and sends alerts to Telegram and MT4/MT5.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Do I need technical expertise to use it?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. Installation is an EA attach and a short settings form. If you get stuck, support can connect remotely and finish the first setup for you.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">How quickly does it respond to excessive drawdown?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">It responds in real time. As soon as floating equity reaches the limit you set, Guardian stops opening new trades and closes positions. Execution still depends on your broker and market conditions.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Can I set different limits for different days?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">You can set a daily limit and an overall limit. The daily limit resets on the server clock, and the overall limit stays for the life of the account or challenge.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Will it interfere with my other EAs or strategy?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. Guardian runs in the background and focuses only on drawdown management. It does not generate entries or replace the EA already on your chart. Check your prop firm's rules on running multiple EAs.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does it close trades automatically?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. When the loss limit is reached, Guardian closes open positions and stops new entries. You can also send the word CLOSE from Telegram to close everything immediately.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Does it work with any prop firm?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">It works with any prop firm that allows MT4 or MT5 Expert Advisors. Check your firm's rules first, especially the daily loss calculation method, because firms calculate balances and equity differently.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is Guardian compatible with MT4 and MT5?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. The same licence covers MetaTrader 4 and MetaTrader 5 on two accounts, so you can guard a challenge account and a funded account at the same time.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Are updates to Guardian free?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">Yes. Updates are free for the life of the licence. You will not be asked to repurchase or move to a new tier.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">Is Guardian a trade copier?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">No. Guardian manages drawdown and does not copy signals. If you want signals mirrored to your account, use the <a href="/trade-copier" class="font-semibold text-brand-400 hover:underline">SureShotFX Trade Copier</a>. The two products can run together.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What support is included?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">24/7 support on Telegram, plus free remote help on your first installation. Support can check your settings and confirm the EA is monitoring the account.</p>
+      </details>
+
+      <details class="faq group py-5">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+          <h3 class="font-display text-[15px] font-semibold text-white group-hover:text-brand-300">What is the official Guardian page?</h3>
+          <span class="faq-icon mt-0.5 shrink-0 text-xl leading-none text-brand-400">+</span>
+        </summary>
+        <p class="mt-3 pr-8 text-[13.5px] leading-relaxed text-neutral-400">This page is the official Guardian product page. Buy only from sureshotfx.com, and download the EA from the link support sends after purchase. Traders also find us as SureShot FX, Sure Shot FX, SureShot Forex and SSF trading.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="border-b border-white/5 py-16 lg:py-20">
+  <div class="mx-auto max-w-5xl px-4 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 via-ink-850 to-black p-7 sm:p-9">
+      <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div class="max-w-xl">
+          <span class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-400">Setup help</span>
+          <h2 class="mt-2 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Not Sure Your Limits Are Right?</h2>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-neutral-400">Send support your firm, account size and the daily and overall limits from the rulebook. They will help you set the EA correctly before you trade.</p>
+        </div>
+        <div class="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row lg:flex-col">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-bold text-black shadow-glow-sm transition hover:bg-brand-400">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg>
+            Live chat on Telegram
+          </a>
+          <a href="/blog/prop-firms-that-allow-ea-trading" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-brand-500/40 hover:bg-white/5">Read the EA rules guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="border-b border-white/5 py-14">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <h2 class="font-display text-xl font-extrabold tracking-tight text-white sm:text-2xl">Market Brief: Every Sunday</h2>
+    <p class="mt-2 text-[13.5px] text-neutral-500">High-impact news, forex levels, gold catalysts and the week's index setups. No spam.</p>
+    <form class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row" onsubmit="event.preventDefault();this.reset();this.querySelector('[data-note]').textContent='Thanks. Check your inbox to confirm.';">
+      <input type="email" name="email" aria-label="Email address" autocomplete="email" required placeholder="your@email.com" class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-500/60 focus:outline-none" />
+      <button type="submit" class="shrink-0 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-200">Subscribe</button>
+    </form>
+    <p data-note class="mt-2 text-[11px] text-neutral-600">Check Promotion or SPAM for email.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-ink-900 pt-14">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-black">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7"/><path d="M17 7h4v4"/></svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight text-white">SureShot<span class="text-brand-500">FX</span></span>
+        </a>
+        <p class="mt-4 text-[12px] leading-relaxed text-neutral-500">SureShotFX signals across forex, gold and indices, with the SureShotFX Trade Copier and Guardian drawdown EA for MT4 and MT5, and free calculators and trading books. Trading since 2019, with public SureShotFX Myfxbook reviews and SureShotFX Trustpilot reviews. Official SureShotFX Telegram support, 24/7.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://t.me/ssf_adminbot" target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.9 1.4 1.1 2 .4l2.5-2.5 4.7 3.5c.8.6 1.9.2 2.1-.8l3-15.2c.2-1-.8-1.9-1.8-1.7z"/></svg></a>
+          <a href="https://x.com/SureShotFX01" target="_blank" rel="noopener nofollow" aria-label="X" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5.1-6.1L4.6 21H1.4l7.5-8.6L1 3h6.7l4.6 5.6L17.5 3zm-1.1 16.1h1.8L7.2 4.8H5.3l11.1 14.3z"/></svg></a>
+          <a href="https://www.instagram.com/sureshotfx_global/" target="_blank" rel="noopener nofollow" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@SureShotFX" target="_blank" rel="noopener nofollow" aria-label="YouTube" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-neutral-400 transition hover:border-brand-500/40 hover:text-white"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M23 12s0-3.5-.5-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.4 12 4.4 12 4.4s-6.9 0-8.6.5a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.5 5.2a2.7 2.7 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Services</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/forex-vip-signals" class="text-neutral-400 transition hover:text-white">Forex VIP Signals</a></li>
+          <li><a href="/gold-vip-signals" class="text-neutral-400 transition hover:text-white">Gold VIP Signals</a></li>
+          <li><a href="/indices-vip-signals" class="text-neutral-400 transition hover:text-white">Indices VIP Signals</a></li>
+          <li><a href="/combo" class="text-brand-400">Combo Offer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/trade-copier" class="text-neutral-400 transition hover:text-white">Trade Copier</a></li>
+          <li><a href="/algo" class="text-neutral-400 transition hover:text-white">SureShotFX Algo</a></li>
+          <li><a href="/sureshotfx-guardian" class="text-brand-400">Guardian</a></li>
+          <li><a href="/pip-calculator-mobile-app" class="text-neutral-400 transition hover:text-white">Pip Calculator App</a></li>
+          <li><a href="/lot-size-calculator" class="text-neutral-400 transition hover:text-white">Lot Size Calculator</a></li>
+          <li><a href="/currency-heatmap" class="text-neutral-400 transition hover:text-white">Currency Heatmap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Learn</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="/sure-profit-trading-secret" class="text-neutral-400 transition hover:text-white">Sure Profit Trading Secret</a></li>
+          <li><a href="/behind-the-candle" class="text-neutral-400 transition hover:text-white">Behind the Candle</a></li>
+          <li><a href="/live-signals" class="text-neutral-400 transition hover:text-white">Free Live Signals</a></li>
+          <li><a href="/blog" class="text-neutral-400 transition hover:text-white">Blog</a></li>
+          <li><a href="/news" class="text-neutral-400 transition hover:text-white">News</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-500">Help &amp; support</h3>
+        <ul class="mt-4 space-y-2.5 text-[13px]">
+          <li><a href="#faq" class="text-neutral-400 transition hover:text-white">FAQ</a></li>
+          <li><a href="/about" class="text-neutral-400 transition hover:text-white">About Us</a></li>
+          <li><a href="/risk-disclosure" class="text-neutral-400 transition hover:text-white">Risk Disclosure</a></li>
+          <li><a href="/privacy-policy" class="text-neutral-400 transition hover:text-white">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions" class="text-neutral-400 transition hover:text-white">Terms &amp; Conditions</a></li>
+          <li><a href="/scammer-list" class="text-neutral-400 transition hover:text-white">Scammer List</a></li>
+          <li><a href="https://sureshotfx.firstpromoter.com/" target="_blank" rel="noopener nofollow" class="text-neutral-400 transition hover:text-white">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-3 border-t border-white/5 py-6 text-[10.5px] leading-relaxed text-neutral-600">
+      <p><strong class="text-neutral-500">Trading disclaimer:</strong> Trading forex, commodities, indices, cryptocurrencies and CFDs involves a high level of risk and may result in total loss of capital. Past performance is not indicative of future results and we make no guarantee of profit. All trading decisions are yours.</p>
+      <p><strong class="text-neutral-500">Software disclaimer:</strong> Guardian is a drawdown management tool. It is not financial advice and does not guarantee that a prop firm challenge will be passed. Execution and slippage depend on your broker and market conditions.</p>
+      <p><strong class="text-neutral-500">Jurisdictional restrictions:</strong> Our services are not intended for distribution in jurisdictions where financial promotion or investment advice requires regulatory authorisation. You are responsible for compliance with your local laws.</p>
+    </div>
+
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-white/5 py-5 pb-24 text-[11px] text-neutral-600 sm:flex-row lg:pb-5">
+      <p>© 2026 SureShotFX. All rights reserved.</p>
+      <p>Guardian · Prop firm drawdown EA · <span class="text-neutral-500">$19.99 lifetime</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-900/95 px-3 py-2.5 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-xs font-semibold text-white">Guardian: $19.99 lifetime</p>
+      <p class="text-[10px] text-neutral-500">2 accounts · MT4 &amp; MT5</p>
+    </div>
+    <a href="#pricing" class="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-black">Get Guardian</a>
+  </div>
+</div>
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "SureShotFX Guardian",
+      "alternateName": "SSF Guardian",
+      "applicationCategory": "FinanceApplication",
+      "applicationSubCategory": "Prop firm drawdown protection",
+      "operatingSystem": "MetaTrader 4, MetaTrader 5",
+      "description": "A drawdown EA for prop firm challenges. Guardian monitors daily and overall loss limits, closes trades at the threshold and sends Telegram alerts.",
+      "dateModified": "2026-11-20",
+      "featureList": [
+        "Daily loss limit",
+        "Overall drawdown limit",
+        "Real-time monitoring",
+        "Automatic trade halt and close at the limit",
+        "CLOSE command from Telegram",
+        "Telegram and MT4/MT5 alerts",
+        "Daily limit reset",
+        "Runs alongside other EAs",
+        "Two accounts per licence"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "19.99",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-11-30",
+        "url": "https://sureshotfx.com/sureshotfx-guardian#pricing"
+      },
+      "publisher": { "@type": "Organization", "name": "SureShotFX", "url": "https://sureshotfx.com/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sureshotfx.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://sureshotfx.com/#products" },
+        { "@type": "ListItem", "position": 3, "name": "Guardian", "item": "https://sureshotfx.com/sureshotfx-guardian" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is SSF Guardian?",
+          "acceptedAnswer": { "@type": "Answer", "text": "SSF Guardian is a proprietary Expert Advisor for MT4 and MT5 that manages drawdown limits. It tracks daily and overall loss, warns you before the limit and closes or halts trades at the threshold set by your prop firm." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does it differ from other risk management tools?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Guardian is built around prop firm rules: a daily loss limit, an overall drawdown limit and a daily reset. It monitors in real time, stops trading at the limit and sends alerts to Telegram and MT4/MT5." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it close trades automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. When the loss limit is reached, Guardian closes open positions and stops new entries. You can also send the word CLOSE from Telegram to close everything immediately." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Guardian compatible with MT4 and MT5?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The same licence covers MetaTrader 4 and MetaTrader 5 on two accounts, so you can guard a challenge account and a funded account at the same time." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Guardian a trade copier?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Guardian manages drawdown and does not copy signals. If you want signals mirrored to your account, use the SureShotFX Trade Copier. The two products can run together." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work with any prop firm?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It works with any prop firm that allows MT4 or MT5 Expert Advisors. Check your firm's rules first, especially the daily loss calculation method." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  (function () {
+    const end = new Date('2026-11-30T23:59:59Z').getTime();
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const d = Math.max(0, end - Date.now());
+      const days = Math.floor(d / 86400000);
+      const hrs = Math.floor((d % 86400000) / 3600000);
+      const mins = Math.floor((d % 3600000) / 60000);
+      const secs = Math.floor((d % 60000) / 1000);
+      const out = pad(days) + 'd ' + pad(hrs) + 'h ' + pad(mins) + 'm ' + pad(secs) + 's';
+      ['bf-clock','bf-clock-2'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = out; });
+    }
+    tick(); setInterval(tick, 1000);
+
+    document.querySelectorAll('header details a').forEach((a) => {
+      a.addEventListener('click', () => { const d = a.closest('details'); if (d) d.open = false; });
+    });
+  })();
+</script>
+
+<!-- GitHub Pages preview: map production-absolute page links to this repo's folders -->
+<script>
+(function () {
+  if (!/(^|\.)github\.io$/.test(location.hostname)) return;
+  var repo = location.pathname.split('/')[1];
+  if (!repo) return;
+  var pages = ['forex-vip-signals','gold-vip-signals','indices-vip-signals','combo','trade-copier','lot-size-calculator','pip-calculator-mobile-app','currency-heatmap','sure-profit-trading-secret','behind-the-candle','scammer-list','sureshotfx-guardian'];
+  document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href.indexOf('//') === 0) return;
+    if (href === '/') { a.setAttribute('href', '/' + repo + '/'); return; }
+    var seg = href.split('/')[1];
+    if (pages.indexOf(seg) !== -1) {
+      a.setAttribute('href', '/' + repo + '/' + seg + '/' + seg + '.html' + href.slice(seg.length + 1));
+    }
+  });
+})();
+</script>
+</body>
+</html>

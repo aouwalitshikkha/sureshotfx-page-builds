@@ -1,6 +1,6 @@
 # SureShotFX page builds
 
-Eleven pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GSC keyword analysis and changelog.
+Twelve pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GSC keyword analysis and changelog.
 
 | Folder | Page | Live URL |
 |---|---|---|
@@ -15,6 +15,7 @@ Eleven pages rebuilt as standalone Tailwind-CDN HTML files, each with its own GS
 | `sure-profit-trading-secret/` | Sure Profit Trading Secret (beginner book) | `https://sureshotfx.com/sure-profit-trading-secret` |
 | `behind-the-candle/` | Behind the Candle (SMC book) | `https://sureshotfx.com/behind-the-candle` |
 | `scammer-list/` | Scam Alert (noindex) | `https://sureshotfx.com/scammer-list` |
+| `sureshotfx-guardian/` | SureShotFX Guardian (drawdown EA) | `https://sureshotfx.com/sureshotfx-guardian` |
 
 Each folder contains:
 
