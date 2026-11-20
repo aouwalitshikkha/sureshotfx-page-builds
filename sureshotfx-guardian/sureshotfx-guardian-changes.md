@@ -2,7 +2,7 @@
 
 Rebuild of `https://sureshotfx.com/sureshotfx-guardian` as a single Tailwind-CDN HTML file. Same design system as the other rebuilds, with a green-to-amber guard accent.
 
-**Size:** 70 KB, 1,953 visible words (live: 1,765), 12 FAQs.
+**Size:** 70 KB, 1,953 visible words (live: 1,765), 13 FAQs.
 
 ---
 
@@ -30,7 +30,7 @@ Rebuild of `https://sureshotfx.com/sureshotfx-guardian` as a single Tailwind-CDN
 | How it works | prop firm challenge EA | Three steps + a $10,000 limit example |
 | Compatibility | MT4/MT5 drawdown EA | Table: platforms, accounts, firms, updates |
 | Pricing | Guardian EA | $19.99, 2 accounts, GUARDIAN19 |
-| FAQ | commercial objections | 12 questions, including "is it a copier?" |
+| FAQ | commercial objections | 13 questions, including "is it a copier?" |
 
 ### 2.2 A visual explanation
 
@@ -77,6 +77,6 @@ The hero now includes an **illustrative Guardian console**: daily loss against a
 
 - Desktop 1440×1000, mobile 390×844 and 320×700: no horizontal overflow; hero, features and pricing checked visually.
 - Countdown ticks; anchors resolve (`features`, `how`, `compatibility`, `pricing`, `reviews`, `faq`); no duplicate IDs.
-- 12 FAQ items; JSON-LD parses (`SoftwareApplication`, `BreadcrumbList`, `FAQPage`); HTML balance checked.
+- 13 FAQ items; JSON-LD parses (`SoftwareApplication`, `BreadcrumbList`, `FAQPage`); HTML balance checked.
 - Zero em dashes and no AI-footprint filler.
 - Only console message is the Tailwind CDN warning.

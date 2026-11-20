@@ -62,5 +62,5 @@ Why: GSC shows only brand queries. The page had no category phrase and its body 
 - **Category first, brand second.** H1 says "Guardian" then "Prop Firm Drawdown Protection".
 - **No guaranteed pass.** The copy and disclaimer say Guardian manages limits; it does not guarantee a challenge pass.
 - **Qualified compatibility.** "Any MT4/MT5 prop firm that permits EAs", plus a warning to check the firm's loss calculation.
-- **LLM-friendly structure.** TL;DR, question headings, feature grid, three-step how-to, table, 12-question FAQ and matching schema.
+- **LLM-friendly structure.** TL;DR, question headings, feature grid, three-step how-to, table, 13-question FAQ and matching schema.
 - **No em dashes or AI filler.**

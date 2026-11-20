@@ -72,7 +72,7 @@ The rebuild links to the copier and the prop-firm EA guide instead of repeating 
 | Title | "SureShotFX Guardian - SureShotFX" | "Prop Firm Drawdown EA for MT4 & MT5 \| SureShotFX Guardian" |
 | H1 | "Protect Your Funded Account From Max/ Daily Loss Limit" | "Guardian: Prop Firm Drawdown Protection for MT4 & MT5" |
 | Visible words | 1,765 | 1,953 |
-| FAQ questions | 9 | 12 |
+| FAQ questions | 9 | 13 |
 | Category terms in title/H1 | 0 | prop firm, drawdown, EA |
 | Copier copy on the page | Yes, duplicated | Removed |
 | Schema | `SoftwareApplication`, `FAQPage` | `SoftwareApplication`, `Offer`, `BreadcrumbList`, `FAQPage` |
@@ -86,7 +86,7 @@ The rebuild links to the copier and the prop-firm EA guide instead of repeating 
 2. Defines a drawdown EA in the first content section.
 3. Replaces the copier block with eight Guardian-only features.
 4. Adds how-it-works, a $10,000 limit example, compatibility table and pricing.
-5. Adds three FAQs: automatic close, any prop firm, and "is it a trade copier?".
+5. Adds four FAQs: automatic close, any prop firm, "is it a trade copier?" and the official page..
 
 **What still needs work**
 
