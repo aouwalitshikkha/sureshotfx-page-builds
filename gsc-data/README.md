@@ -1,18 +1,60 @@
 # Blog audit workflow
 
-How to go from the cached Search Console CSV to a finished keyword audit and content plan.
+This folder contains a frozen export of Google Search Console data. You do not need Search Console access to use it.
 
-Input: `gsc-data/sureshotfx-com-query-page-480d.csv` (16 months, one row per query and page pair).
-Output: `blog-audits/<slug>.md`, plan only, no article copy.
+The export lists every search query that showed a sureshotfx.com page in Google, the page it showed, and how it performed. From that, you can audit any blog post and write a keyword coverage plan.
+
+**Data window:** 27 July 2025 to 19 November 2026.
+**Freshness:** everything is a 16-month total. Nothing here is live.
 
 ---
 
-## Load the file
+## 1. What you have
+
+| File | What it is |
+|---|---|
+| `sureshotfx-com-query-page-480d.csv` | The working file. One row per query and page pair |
+| `sureshotfx-com-queries-480d.csv` | Queries totalled across all pages |
+| `sureshotfx-com-pages-480d.csv` | Pages totalled across all queries |
+
+Start with the query-page file. The other two are shortcuts for site-wide questions.
+
+### Columns
+
+| Column | Meaning |
+|---|---|
+| `query` | What the person typed into Google |
+| `page` | The URL Google showed |
+| `clicks` | How many people clicked through |
+| `impressions` | How many times the page appeared in results |
+| `ctr` | Clicks divided by impressions. 0.024 means 2.4 percent |
+| `position` | Average ranking. 1 is the first result, 60 means page six |
+
+`position` is weighted by impressions, so a query that appeared once at position 3 and a thousand times at position 60 reads close to 60. That is the honest number.
+
+These are totals, not daily rows. A query that ran for ten months is summed into one line. That makes the file small enough to work with, and it means you cannot see trends inside it.
+
+### Two things to know before you read any number
+
+**Google hides rare queries.** The query rows will never add up to the site's real traffic. That is normal. Use the file to compare queries and pages against each other, never to report total traffic.
+
+**Most queries have no clicks.** 93 percent of the 47,074 queries have zero. That is not a bug. It is the long tail of searches where the page appeared deep in the results. Rank by impressions, not clicks, or you will see an empty table.
+
+---
+
+## 2. Set up
+
+You need:
+
+- Python with pandas, or Excel
+- A browser, to read the live article
+
+Load the file:
 
 ```python
 import pandas as pd
 
-PATH = r"D:\Clients\Running\sureshot content\gsc-data\sureshotfx-com-query-page-480d.csv"
+PATH = "sureshotfx-com-query-page-480d.csv"
 df = pd.read_csv(PATH, encoding="utf-8-sig")
 
 def page_key(url):
@@ -23,13 +65,13 @@ def page_key(url):
 df["page_key"] = df["page"].map(page_key)
 ```
 
-Columns: `query`, `page`, `clicks`, `impressions`, `ctr`, `position`.
+`encoding="utf-8-sig"` matters. Without it the first column name carries an invisible character.
 
-`position` is impression-weighted. `ctr` is a decimal: 0.024 means 2.4%. `encoding="utf-8-sig"` is required, otherwise the first column name carries an invisible character.
+**Excel instead:** open the CSV directly, turn on Filter, and filter the `page` column by the slug. Insert a PivotTable with `query` in Rows, `impressions` and `clicks` in Values set to Sum, and `position` in Values set to Average. Note that the Excel average is unweighted, so treat it as approximate.
 
 ---
 
-## Step 1: pull every row for the URL
+## 3. Pull every row for the URL
 
 ```python
 slug = "high-frequency-trading"
@@ -37,7 +79,11 @@ rows = df[df["page_key"].str.endswith("/" + slug)]
 print(rows["page"].value_counts())
 ```
 
-Every blog post exists under two URLs: `/blog/slug` and `/slug/`. The legacy URL often has more rows than the canonical one. Merge them before judging the page.
+Read that output before going further. Every blog post exists under two URLs: `/blog/slug` and `/slug/`. The old URL often has more rows than the current one. Both belong to the same article, so audit the union.
+
+If you skip this, you will undercount the page and may wrongly decide it is not worth fixing.
+
+Then build the query view:
 
 ```python
 view = (rows.groupby("query")
@@ -49,42 +95,48 @@ view = (rows.groupby("query")
 
 ---
 
-## Step 2: remove brand queries
+## 4. Remove brand queries
 
 ```python
 brand = view.index.str.contains("sureshot", case=False)
 nonbrand = view[~brand]
 ```
 
-Brand queries show whether the page is findable by name. They never justify a content change. Build the whole plan on non-brand queries. Site-wide, brand is about 6 percent of impressions, so a page that looks healthy on brand alone is usually invisible.
+Brand queries tell you the page is findable by name. They never justify a content change, because the person was already looking for the brand. Build the whole plan on non-brand queries.
+
+A page where almost all impressions are brand has a positioning problem, not a depth problem. Say that in the audit instead of padding the article.
 
 ---
 
-## Step 3: rank by impressions, not clicks
+## 5. Rank by impressions
 
-93 percent of queries in the file have zero clicks. Sorting by clicks returns an empty table.
+Impressions show demand. Position shows whether the page is close enough to matter.
 
-Impressions show demand. Position shows whether the page is close enough to matter. Work top down by impressions, and ignore anything with fewer than 3 impressions unless it is the head term.
+Work top down by impressions. Ignore anything under 3 impressions unless it is the head term for the topic. One impression at position 2 means nothing.
+
+Striking distance is **position 5 to 30 with real impressions**. Those are the queries a rewrite can realistically move.
 
 ---
 
-## Step 4: classify every query
+## 6. Classify every query
 
-| Label | Meaning | Test |
+| Label | Meaning | How to test |
 |---|---|---|
-| ✅ | Exact phrase appears in the page copy | Case-insensitive substring match on rendered text |
-| 🟡 | Concept covered, exact wording missing | Read the section, check the phrase |
-| ❌ | Missing, and this URL is the right home | Judge intent against the page's promise |
-| ↪ | Related, another page should own it | Name the owner URL or working title |
-| n/a | Brand, technical or synthetic | No content action |
+| ✅ | The exact phrase appears on the page | Case-insensitive search of the live text |
+| 🟡 | The idea is covered, the wording is not | Read the section, then check the phrase |
+| ❌ | Missing, and this page is the right home | Judge intent against what the page promises |
+| ↪ | Related, but another page should own it | Name that page or the article to create |
+| n/a | Brand, technical or fake | No content action |
 
-Classification is a judgement call, not a keyword match. A page can say "risk" 40 times and still be ❌ for "risk per trade" if it never states a number. Read the section before calling it partial.
+This is a judgement call, not a keyword match. A page can say "risk" forty times and still be ❌ for "risk per trade" if it never states a number. Read the section before calling it partial.
+
+Record the reason in the table. "Partial" with no explanation is not useful to the writer.
 
 ---
 
-## Step 5: check the live page, not the CSV
+## 7. Check the live page
 
-Search Console tells you the query. It does not tell you whether the page answers it.
+Search Console data tells you the query. It does not tell you whether the article answers it.
 
 ```python
 import re, html, urllib.request
@@ -103,69 +155,110 @@ for q in nonbrand.index[:40]:
 
 Two traps:
 
-- The Black Friday banner repeats 9 to 11 times on every page. Any query matching its wording gets a false positive. Discount counts of 9 and above, or strip the banner first.
+- The Black Friday banner repeats 9 to 11 times on every page. Any query that matches its wording looks covered when it is not. Discount counts of 9 and above.
 - Raw HTML includes menus, alt text and schema. A phrase that appears only in navigation is not coverage. Open the page and confirm.
-
-The audit table records what the article says, not what the template says.
 
 ---
 
-## Step 6: decide what belongs here and what does not
+## 8. Decide what does not belong
 
-- **Commercial** (`buy`, `best`, `broker`, `cheapest`, `which prop firm`): comparison or sign-up page. Do not bolt a product table onto a guide.
-- **B2B** (`how can prop firms automate challenge rules and payout workflows`): operator page, not a trader guide.
-- **Adjacent intent** (`tax`, `investing`, `strategy` vs `plan`): its own article. Adding a section creates cannibalisation.
-- **Synthetic** (high position, zero clicks, unnatural phrasing): ignore. Example: `top-rated hft trading rules for traders comparison` ranking 1.4 with 0 clicks. Ranking #1 with no clicks is the tell.
+This is where most of the value is. A page should not try to answer everything.
+
+- **Commercial** queries (`buy`, `best`, `broker`, `cheapest`, `which prop firm`) belong to a comparison or sign-up page. Do not bolt a product table onto a guide.
+- **B2B** queries (`how can prop firms automate challenge rules and payout workflows`) belong to an operator page, not a trader guide.
+- **Adjacent intent** (`tax`, `investing`, `strategy` when the page is about a plan) gets its own article. Adding a section here creates cannibalisation.
+- **Fake or synthetic** queries show a high position with zero clicks and unnatural phrasing. Example: `top-rated hft trading rules for traders comparison`, ranking 1.4 with 0 clicks. Ranking first with no clicks is the tell. Ignore them.
 
 For every ↪ query, name the owner. "Separate article" is not an owner. Write the working title.
 
 ---
 
-## Step 7: write the plan
+## 9. Write the plan
 
-Same structure for every audit:
+Same structure every time, so plans can be compared:
 
-1. **Header**: URL, property, window, audit date, content snapshot, scope.
-2. **The short version**: three to five findings, no preamble.
-3. **Status counts**: covered, partial, missing, related, not relevant.
-4. **Full query table**: query, impressions, position, status, gap or action. Every row, nothing dropped.
-5. **P1**: title, H1, meta, definition heading, the one structural fix that matters most.
-6. **P2**: sections, FAQs, schema, template.
-7. **P3**: internal links, dates, banner cleanup, schema refresh.
-8. **Related but separate**: query, why it does not belong, right owner.
-9. **Cannibalisation**: URL, what it owns, action here.
-10. **Head-term reality check**: biggest query, current position, honest statement of whether more mentions can move it.
-11. **Method and limits**: window, row count, small-sample warning.
+1. **Header:** URL, data file, window, audit date, content snapshot, scope.
+2. **The short version:** three to five findings, no preamble.
+3. **Status counts:** covered, partial, missing, related, not relevant.
+4. **Full query table:** query, impressions, position, status, gap or action. Every row, nothing dropped.
+5. **P1:** title, H1, meta, definition heading, the one structural fix that matters most.
+6. **P2:** sections, FAQs, schema, template.
+7. **P3:** internal links, dates, banner cleanup, schema refresh.
+8. **Related but separate:** query, why it does not belong, right owner.
+9. **Cannibalisation:** URL, what it owns, action here.
+10. **Head-term reality check:** biggest query, current position, and an honest answer to whether more mentions can move it.
+11. **Method and limits:** file, window, row count, what the data cannot show.
 
 Rules:
 
 - No article copy. Headings, tables and answer outlines only.
 - No invented facts, prices, ratings or dates.
 - No em dashes.
-- Exact phrase goes in the title, one H2, the definition and the FAQ. Repeating it 20 times is not a plan.
-- If the head term already appears many times and still ranks at 60+, say so. The fix is depth, structure and internal links.
-- Separate the 90-day and 480-day numbers, or use only one. Never mix them in one table unlabelled.
+- Put the exact phrase in the title, one H2, the definition and the FAQ. Repeating it twenty times is not a plan.
+- If the head term already appears many times and still sits at position 60, say so. The fix is depth, structure and internal links.
+- Never write "currently ranks" without the phrase "16-month average, to 19 November 2026". You do not know where it ranks today.
 
 Save as `blog-audits/<slug>.md`. Commit: `Add <topic> keyword audit and plan`.
 
+### Skeleton
+
+```markdown
+# <Topic>: keyword coverage audit and plan
+
+**Page:** <url>
+**Data:** 16-month export, 27 Jul 2025 to 19 Nov 2026
+**Audited:** <date>
+**Scope:** coverage audit and plan only. No article rewrite.
+
+## 1. The short version
+## 2. Query coverage
+## 3. Plan
+### P1
+### P2
+### P3
+## 4. Related but separate
+## 5. Cannibalisation
+## 6. Head-term reality check
+## 7. Method and limits
+```
+
 ---
 
-## Step 8: recheck at 60 and 90 days
+## 10. Handoff
 
-Pull 90-day page data with `get_top_queries_for_page` and compare:
+The audit is read by a writer who will not open the CSV. Make the file stand alone:
 
-- position on the head term
-- number of queries in the top 20
-- clicks on the page
-
-The 480-day file is a coverage map. It is not a trend line.
+- Quote the impressions and position for every query you mention.
+- State the window next to the first number, not only in the footer.
+- Explain why a query is ❌ or ↪ in one sentence, not in one word.
+- List the exact phrases the writer must use, and where.
+- Do not send the CSV as the deliverable. Send the audit.
 
 ---
 
-## Rules that keep the audit honest
+## 11. What this data cannot tell you
 
-- Use the file for relative comparison only. Dimension totals do not reconcile with the property total, so never quote the CSV as site traffic.
-- Weight decisions by impressions. A position of 3 on one impression means nothing.
-- Position 5 to 30 with real impressions is the striking distance worth planning for.
-- A page at 100 percent brand has a positioning problem, not a depth problem.
-- If the data contradicts the brief, say so at the top of the audit.
+Set expectations with whoever receives the audit.
+
+- **No live rankings.** Everything is an average over 16 months.
+- **No trends.** There are no dates in the file, so you cannot show growth or decline.
+- **No device, country or SERP feature data.** The export does not include it.
+- **No total traffic.** Google hides rare queries, so query rows never sum to the site total.
+- **No indexing or technical data.** If a page is missing from the file entirely, that is not proof it is deindexed. It may simply have no impressions in the window.
+
+If a decision depends on any of those, say it is out of scope rather than guessing.
+
+---
+
+## 12. Quick reference
+
+| Situation | Action |
+|---|---|
+| Query has 0 clicks and 200 impressions | Normal. Judge it on position |
+| Position 8, 40 impressions | Striking distance. Include in P1 or P2 |
+| Position 1, 0 clicks | Suspicious. Check for a fake or branded query |
+| Query matches the Black Friday banner | False coverage. Discount it |
+| Page has two URLs | Merge them before judging |
+| All traffic is brand | Positioning problem, not a content gap |
+| Query asks for a broker, price or sign-up | Send it to a commercial page |
+| Query asks about tax, investing or automation | Send it to its own article |
