@@ -1,0 +1,3 @@
+# Public repo: keep raw Search Console exports local.
+gsc-data/*
+!gsc-data/README.md
